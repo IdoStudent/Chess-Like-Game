@@ -4,8 +4,8 @@ import view.GameEngineGUI;
 
 public class GameEngine {
 	private GameEngineGUI gui = new GameEngineGUI();
-	private Board board = new Board();
-	private Piece[] pieces = new Piece[12];
+	private Board board;
+	private Piece[] pieces;
 	private Player[] players = new Player[2];
 	
 	private int maxMoves = 0;
@@ -13,23 +13,17 @@ public class GameEngine {
 	
 	public GameEngine()
 	{
-		registerLogin();
 		this.maxMoves = maxMoves();
 	}
 	
-	private void registerLogin()
+	public void addPlayer(Player Player)
 	{
 		
 	}
 	
-	public void addPlayer()
+	public Player[] getPlayers()
 	{
-		
-	}
-	
-	public void getPlayers()
-	{
-		
+		return players;
 	}
 	
 	public boolean validatePlayers()
@@ -40,6 +34,12 @@ public class GameEngine {
 	private int maxMoves()
 	{
 		return 0;
+	}
+	
+	public void renderBoard()
+	{
+		board = new Board();
+		pieces = new Piece[12];
 	}
 	
 	public void startGame()
