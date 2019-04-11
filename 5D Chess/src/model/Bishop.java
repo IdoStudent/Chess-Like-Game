@@ -10,14 +10,33 @@ public class Bishop extends Piece {
 	}
 	
 	@Override
-	public void move() {
+	public void move(int y, int x) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public boolean isValid() {
+	public boolean isValid(int y, int x) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public BufferedImage getImage() {
+		// TODO Auto-generated method stub
+		return image;
+	}
+	
+	@Override
+	public boolean getX() {
+		// TODO Auto-generated method stub
+		return xPosition;
+	}
+	
+	@Override
+	public boolean getY() {
+		// TODO Auto-generated method stub
+		return yPosition;
+	}
 }
+
+
