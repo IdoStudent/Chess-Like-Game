@@ -14,11 +14,18 @@ public class GameEngine {
 	public GameEngine()
 	{
 		this.maxMoves = maxMoves();
+		renderBoard();
 	}
 	
-	public void addPlayer(Player Player)
+	public void addPlayer(Player player)
 	{
-		
+		for(int i = 0; i < players.length; i++)
+		{
+			if(players[i] == null)
+			{
+				players[i] = player;
+			}
+		}
 	}
 	
 	public Player[] getPlayers()
@@ -44,7 +51,7 @@ public class GameEngine {
 	
 	public void startGame()
 	{
-		System.out.println("Game started");
+		System.out.println("Player 1 turn!");
 	}
 	
 	private boolean getPlayerTurn()

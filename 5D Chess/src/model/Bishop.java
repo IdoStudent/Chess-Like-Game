@@ -1,5 +1,23 @@
 package model;
 
-public class Bishop {
+import java.awt.image.BufferedImage;
 
+public class Bishop extends Piece {
+	
+	public Bishop(BufferedImage image, int xPosition, int yPosition, String name)
+	{
+		super(image, xPosition, yPosition, name);
+	}
+	
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isValid() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
