@@ -11,17 +11,23 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import model.Bishop;
 import model.GameEngine;
-import model.Player;
 
-class GameEngineTest {
+class BishopTest {
 
 	GameEngine gameEngine = new GameEngine();
-	BufferedImage blackBishopImage = ImageIO.read(new File("img/BlackBishop.jpg"));
+	
+	BufferedImage blackBishopImage;
 	Bishop bishop = new Bishop(blackBishopImage, 0, 0, "black");
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		try {
+			blackBishopImage = ImageIO.read(new File("img/BlackBishop.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@AfterEach
@@ -30,7 +36,7 @@ class GameEngineTest {
 
 	@Test
 	void testGetImage() {
-		assertEquals(bishop.getImage()[0], blackBishopImage);
+		assertEquals(bishop.getImage(), blackBishopImage);
 	}
 	
 	@Test
@@ -43,6 +49,6 @@ class GameEngineTest {
 	@Test
 	void testIsValid() {
 		bishop.isValid(2,2);
-		assertEquals(bishop.isValid, true);
+		assertEquals(bishop.isValid(), true);
 	}
 }
