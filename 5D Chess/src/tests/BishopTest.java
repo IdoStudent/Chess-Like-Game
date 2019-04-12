@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 
 import model.Bishop;
 import model.GameEngine;
-import model.Player;
 
 class BishopTest {
 
