@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 import model.GameEngine;
 import model.Player;
 
-class GameEngineTest {
+class BishopTest {
 
 	GameEngine gameEngine = new GameEngine();
 	BufferedImage blackBishopImage = ImageIO.read(new File("img/BlackBishop.jpg"));
