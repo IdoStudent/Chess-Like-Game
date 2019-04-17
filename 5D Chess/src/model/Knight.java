@@ -4,20 +4,77 @@ import java.awt.image.BufferedImage;
 
 public class Knight extends Piece{
 	
-	public Knight(BufferedImage image, int xPosition, int yPosition, String name)
+	public Knight(int xPosition, int yPosition, String name)
 	{
-		super(image, xPosition, yPosition, name);
+		super(xPosition, yPosition, name);
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+	public boolean isValid(int y, int x, int newY, int newX, GameEngine gameEngine) {
 		
+		if(newX == (x + 2) && 
+		   newY == (y + 1) &&
+		   boundsChecking(newY, newX) == true)
+		{
+			return true;
+		}
+		else if(newX == (x + 2) && 
+			    newY == (y - 1) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else if(newX == (x - 2) && 
+			    newY == (y + 1) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else if(newX == (x - 2) && 
+			    newY == (y - 1) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else if(newX == (x + 1) && 
+			    newY == (y - 2) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else if(newX == (x - 1) && 
+			    newY == (y - 2) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else if(newX == (x - 1) && 
+			    newY == (y + 2) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else if(newX == (x + 1) && 
+			    newY == (y + 2) &&
+				boundsChecking(newY, newX) == true)
+			{
+				return true;
+			}
+		else
+		{
+			return false;
+		}
 	}
-
-	@Override
-	public boolean isValid() {
-		// TODO Auto-generated method stub
-		return false;
+	
+	private boolean boundsChecking(int newY, int newX)
+	{
+		if(newX >= 0 && newX < 6 && newY >= 0 && newY < 6)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
