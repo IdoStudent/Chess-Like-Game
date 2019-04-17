@@ -1,12 +1,10 @@
 package model;
 
-import java.awt.image.BufferedImage;
-
 public class Bishop extends Piece {
 	
-	public Bishop(/*BufferedImage image,*/ int yPosition, int xPosition, String name)
+	public Bishop(int yPosition, int xPosition, String name)
 	{
-		super(/*image,*/ xPosition, yPosition, name);
+		super(xPosition, yPosition, name);
 	}
 
 	@Override

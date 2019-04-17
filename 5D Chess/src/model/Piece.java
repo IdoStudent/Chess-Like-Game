@@ -17,7 +17,7 @@ public abstract class Piece {
 		
 	}
 	
-	public void move(int x, int y) {
+	public void move(int y, int x) {
 		xPosition = x;
 		yPosition = y;
 	}

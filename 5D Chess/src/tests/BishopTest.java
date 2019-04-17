@@ -48,4 +48,13 @@ class BishopTest {
 		assertEquals(bishop.getY(), 3);
 	}
 	
+	@Test
+	void testMoveNotDiagonally() {
+		if(bishop.isValid(0, 0, 0, 2, gameEngine)) {
+			bishop.move(0,2);
+		}
+		assertEquals(bishop.getX(), 2);
+		assertEquals(bishop.getY(), 0);
+	}
+	
 }
