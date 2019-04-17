@@ -30,9 +30,19 @@ public class GameEngine {
 		//run addPlayer method and pass in new player object
 	}
 	
-	public boolean validatePlayers(String username, String password)
+	public void registerPlayer(String username, String password)
 	{
-		//check and see if the 
+		//validate username and password,
+		//check if username is already registered,
+		//create new player object,
+		//run addPlayer method and pass in new player object
+	}
+	
+	private boolean validatePlayers(String username, String password)
+	{
+		//check and see if the username and password requirements are correct and not blank
+		//exclude using the char ":" from usernames and passwords as this will cause conflicts
+		//with the writing to file.
 		return false;
 	}
 	
@@ -53,7 +63,7 @@ public class GameEngine {
 		return players;
 	}
 	
-	private int maxMoves()
+	private int maxMoves(int input)
 	{
 		int player1Input = 0;
 		int player2Input = 0;
@@ -71,6 +81,8 @@ public class GameEngine {
 	
 	private void renderMaxMovesGUI()
 	{
+		//Render a new MaxMovesGUI.java class.
+		
 		
 	}
 	
