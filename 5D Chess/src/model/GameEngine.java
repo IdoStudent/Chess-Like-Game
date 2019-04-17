@@ -47,7 +47,7 @@ public class GameEngine {
 	public void renderBoard()
 	{
 		board = new Board();
-		setPieces(new Piece[12]);
+		setPieces();
 	}
 	
 	public void startGame()
@@ -83,8 +83,20 @@ public class GameEngine {
 		return pieces;
 	}
 
-	public void setPieces(Piece[] pieces) {
-		//set pieces
+	public void setPieces() {
+		pieces = new Piece[12];
+		pieces[0] = new Bishop(0,0,"blackBishop");
+		pieces[1] = new Bishop(0,1,"blackRook");
+		pieces[2] = new Bishop(0,2,"blackKnight");
+		pieces[3] = new Bishop(0,3,"blackKnight");
+		pieces[4] = new Bishop(0,4,"blackRook");
+		pieces[5] = new Bishop(0,5,"blackBishop");
+		pieces[6] = new Bishop(5,0,"whiteBishop");
+		pieces[7] = new Bishop(5,1,"whiteRook");
+		pieces[8] = new Bishop(5,2,"whiteKnight");
+		pieces[9] = new Bishop(5,3,"whiteKnight");
+		pieces[10] = new Bishop(5,4,"whiteRook");
+		pieces[11] = new Bishop(5,5,"whiteBishop");
 	}
 	
 	
