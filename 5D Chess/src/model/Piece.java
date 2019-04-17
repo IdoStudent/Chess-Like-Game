@@ -1,25 +1,21 @@
 package model;
 
-import java.awt.image.BufferedImage;
-
 public abstract class Piece {
 
-	String name;
-	int xPosition;
-	int yPosition;
-	
+	private String name;
+	private int yPosition;
+	private int xPosition;
 	
 	public Piece(int yPosition, int xPosition, String name)
 	{
 		this.name = name;
-		this.xPosition = xPosition;
 		this.yPosition = yPosition;
-		
+		this.xPosition = xPosition;
 	}
 	
 	public void move(int y, int x) {
-		xPosition = x;
 		yPosition = y;
+		xPosition = x;
 	}
 	
 	public abstract boolean isValid(int y, int x, int newY, int newX, GameEngine gameEngine);
