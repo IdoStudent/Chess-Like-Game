@@ -1,11 +1,7 @@
 package model;
 
-import view.GameEngineGUI;
-
 public class GameEngine {
 	
-	//private GameEngineGUI gui = new GameEngineGUI();
-	private Board board;
 	private Piece[] pieces;
 	private Player[] players = new Player[2];
 	
@@ -14,7 +10,6 @@ public class GameEngine {
 	
 	public GameEngine()
 	{
-		this.maxMoves = maxMoves();
 		renderBoard();
 	}
 	
@@ -46,7 +41,6 @@ public class GameEngine {
 	
 	public void renderBoard()
 	{
-		board = new Board();
 		setPieces();
 	}
 	
@@ -97,6 +91,14 @@ public class GameEngine {
 		pieces[9] = new Bishop(5,3,"whiteKnight");
 		pieces[10] = new Bishop(5,4,"whiteRook");
 		pieces[11] = new Bishop(5,5,"whiteBishop");
+	}
+
+	public int getMaxMoves() {
+		return maxMoves;
+	}
+
+	public void setMaxMoves(int maxMoves) {
+		this.maxMoves = maxMoves;
 	}
 	
 	
