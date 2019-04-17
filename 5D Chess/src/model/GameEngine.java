@@ -10,11 +10,35 @@ public class GameEngine {
 	
 	public GameEngine()
 	{
-		renderBoard();
+		renderLoginRegisterGUI();
+		this.maxMoves = maxMoves();
 	}
 	
-	public void addPlayer(Player player)
+	private void renderLoginRegisterGUI()
 	{
+		//Render the GUI,
+		//run loginPlayer or registerPlayer method depending on what player1 clicks
+		//ONCE LOGGED IN SUCCESSFUL, run this method again for player2!!!!
+		//run loginPlayer or registerPlayer method depending on what player2 clicks
+	}
+	
+	public void loginPlayer(String username, String password)
+	{
+		//validate username and password,
+		//check if username is already logged in,
+		//create new player object,
+		//run addPlayer method and pass in new player object
+	}
+	
+	public boolean validatePlayers(String username, String password)
+	{
+		//check and see if the 
+		return false;
+	}
+	
+	private void addPlayer(Player player)
+	{
+		//Run a loop through players array and if its empty, add the player to the array
 		for(int i = 0; i < players.length; i++)
 		{
 			if(players[i] == null)
@@ -29,24 +53,40 @@ public class GameEngine {
 		return players;
 	}
 	
-	public boolean validatePlayers()
-	{
-		return false;
-	}
-	
 	private int maxMoves()
 	{
-		return 0;
+		int player1Input = 0;
+		int player2Input = 0;
+		
+		//renderMaxMovesGUI
+		//take input from player1 and validate
+		
+		//renderMaxMovesGUI
+		//take input from player2 and validate
+		
+		//RUN BOTH IN LOOPS WHILE VALIDATING
+		
+		return (player1Input + player2Input) / 2;
 	}
 	
-	public void renderBoard()
+	private void renderMaxMovesGUI()
+	{
+		
+	}
+	
+	public void renderBoardGUI()
 	{
 		setPieces();
 	}
 	
 	public void startGame()
 	{
-		System.out.println("Player 1 turn!");
+		//IN A LOOP,
+		//Render board GUI and check player turns,
+		//Once player moves, run the move/isValid commands
+		//once game is over,
+		//run writeDataToFile()
+		renderBoardGUI();
 	}
 	
 	private boolean getPlayerTurn()
@@ -54,8 +94,9 @@ public class GameEngine {
 		return playerTurn;
 	}
 	
-	public void move(String pieceName)
+	public void move()
 	{
+		
 	}
 	
 	private void isValid()
@@ -103,3 +144,138 @@ public class GameEngine {
 	
 	
 }
+
+
+/*
+package model;
+
+import view.GameEngineGUI;
+
+public class GameEngine {
+	private GameEngineGUI gui = new GameEngineGUI();
+	private Board board;
+	private Piece[] pieces;
+	private Player[] players = new Player[2];
+	
+	private int maxMoves = 0;
+	private boolean playerTurn = true;
+	
+	public GameEngine()
+	{
+		renderLoginRegisterGUI();
+		this.maxMoves = maxMoves();
+	}
+	
+	private void renderLoginRegisterGUI()
+	{
+		//Render the GUI,
+		//run loginPlayer or registerPlayer method depending on what player1 clicks
+		//ONCE LOGGED IN SUCCESSFUL, run this method again for player2!!!!
+		//run loginPlayer or registerPlayer method depending on what player2 clicks
+	}
+	
+	public void loginPlayer(String username, String password)
+	{
+		//validate username and password,
+		//check if username is already logged in,
+		//create new player object,
+		//run addPlayer method and pass in new player object
+	}
+	
+	public void registerPlayer(String username, String password)
+	{
+		//validate username and password,
+		//check if username is already registered,
+		//create new player object,
+		//run addPlayer method and pass in new player object
+	}
+	
+	public boolean validatePlayers(String username, String password)
+	{
+		//check and see if the 
+		return false;
+	}
+	
+	private void addPlayer(Player player)
+	{
+		//Run a loop through players array and if its empty, add the player to the array
+		for(int i = 0; i < players.length; i++)
+		{
+			if(players[i] == null)
+			{
+				players[i] = player;
+			}
+		}
+	}
+	
+	public Player[] getPlayers()
+	{
+		return players;
+	}
+	
+	private int maxMoves()
+	{
+		int player1Input = 0;
+		int player2Input = 0;
+		
+		//renderMaxMovesGUI
+		//take input from player1 and validate
+		
+		//renderMaxMovesGUI
+		//take input from player2 and validate
+		
+		//RUN BOTH IN LOOPS WHILE VALIDATING
+		
+		return (player1Input + player2Input) / 2;
+	}
+	
+	private void renderMaxMovesGUI()
+	{
+		
+	}
+	
+	public void renderBoardGUI()
+	{
+		board = new Board();
+		pieces = new Piece[12];
+	}
+	
+	public void startGame()
+	{
+		//IN A LOOP,
+		//Render board GUI and check player turns,
+		//Once player moves, run the move/isValid commands
+		//once game is over,
+		//run writeDataToFile()
+		renderBoardGUI();
+	}
+	
+	private boolean getPlayerTurn()
+	{
+		return playerTurn;
+	}
+	
+	public void move()
+	{
+		
+	}
+	
+	private void isValid()
+	{
+		
+	}
+	
+	public void endGame()
+	{
+		
+	}
+	
+	private void writeDataToFile()
+	{
+		
+	}
+	
+	
+}
+
+*/
