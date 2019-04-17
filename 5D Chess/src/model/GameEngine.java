@@ -3,7 +3,8 @@ package model;
 import view.GameEngineGUI;
 
 public class GameEngine {
-	private GameEngineGUI gui = new GameEngineGUI();
+	
+	//private GameEngineGUI gui = new GameEngineGUI();
 	private Board board;
 	private Piece[] pieces;
 	private Player[] players = new Player[2];
@@ -46,7 +47,7 @@ public class GameEngine {
 	public void renderBoard()
 	{
 		board = new Board();
-		pieces = new Piece[12];
+		setPieces(new Piece[12]);
 	}
 	
 	public void startGame()
@@ -59,9 +60,8 @@ public class GameEngine {
 		return playerTurn;
 	}
 	
-	public void move()
+	public void move(String pieceName)
 	{
-		
 	}
 	
 	private void isValid()
@@ -77,6 +77,14 @@ public class GameEngine {
 	private void writeDataToFile()
 	{
 		
+	}
+
+	public Piece[] getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(Piece[] pieces) {
+		//set pieces
 	}
 	
 	

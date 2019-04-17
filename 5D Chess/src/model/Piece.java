@@ -3,27 +3,38 @@ package model;
 import java.awt.image.BufferedImage;
 
 public abstract class Piece {
-	
-	BufferedImage image;
+
+	String name;
 	int xPosition;
 	int yPosition;
-	String name;
 	
-	public Piece(BufferedImage image, int xPosition, int yPosition, String name)
+	
+	public Piece(int yPosition, int xPosition, String name)
 	{
-		this.image = image;
+		this.name = name;
 		this.xPosition = xPosition;
 		this.yPosition = yPosition;
-		this.name = name;
+		
 	}
 	
-	public abstract void move();
+	public void move(int x, int y) {
+		xPosition = x;
+		yPosition = y;
+	}
 	
-	public abstract boolean isValid();
+	public abstract boolean isValid(int y, int x, int newY, int newX, GameEngine gameEngine);
 	
 	public String getName()
 	{
 		return name;
+	}
+	
+	public int getY() {
+		return yPosition;
+	}
+	
+	public int getX() {
+		return xPosition;
 	}
 	
 }

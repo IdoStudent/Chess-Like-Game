@@ -4,38 +4,41 @@ import java.awt.image.BufferedImage;
 
 public class Bishop extends Piece {
 	
-	public Bishop(BufferedImage image, int xPosition, int yPosition, String name)
+	public Bishop(/*BufferedImage image,*/ int yPosition, int xPosition, String name)
 	{
-		super(image, xPosition, yPosition, name);
-	}
-	
-	@Override
-	public void move(int y, int x) {
-		// TODO Auto-generated method stub
+		super(/*image,*/ xPosition, yPosition, name);
 	}
 
 	@Override
-	public boolean isValid(int y, int x) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	@Override
-	public BufferedImage getImage() {
-		// TODO Auto-generated method stub
-		return image;
-	}
-	
-	@Override
-	public boolean getX() {
-		// TODO Auto-generated method stub
-		return xPosition;
-	}
-	
-	@Override
-	public boolean getY() {
-		// TODO Auto-generated method stub
-		return yPosition;
+	public boolean isValid(int y, int x, int newY, int newX, GameEngine gameEngine) {
+		System.out.println("isValid");
+		boolean valid = false;
+		
+		int skipRow,skipCol;
+		if (newY == y + 2 || newY == y - 2) { //if row is 2 more or 2 less
+			if (newX == x + 2 || newX == x - 2) { //if column is 2 more or 2 less
+				valid = true;
+				
+				//check if there's a piece blocking the move
+				if (newY < y) {
+					skipRow = y - 1;
+				}else{
+					skipRow = y + 1;
+				}
+				if (newX < x) {
+					skipCol = x - 1;
+				}else {
+					skipCol = x + 1;
+				}
+				for(Piece piece : gameEngine.getPieces()) {
+					if(piece.getX() == skipCol && piece.getY() == skipRow) {
+						valid = false;
+					}
+				}
+			}
+		}
+		
+		return valid;
 	}
 }
 

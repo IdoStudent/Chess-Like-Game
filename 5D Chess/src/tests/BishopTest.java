@@ -6,49 +6,35 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
 import model.Bishop;
 import model.GameEngine;
+import model.Piece;
 
 class BishopTest {
 
 	GameEngine gameEngine = new GameEngine();
-	
-	BufferedImage blackBishopImage;
-	Bishop bishop = new Bishop(blackBishopImage, 0, 0, "black");
+	Piece bishop; 
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		try {
-			blackBishopImage = ImageIO.read(new File("img/BlackBishop.jpg"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		bishop = new Bishop(0, 0, "blackBishop");
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 	}
-
+	
 	@Test
-	void testGetImage() {
-		assertEquals(bishop.getImage(), blackBishopImage);
+	void testIsValid() {
+		assertEquals(bishop.isValid(0,0,2,2,gameEngine), true);
+		assertEquals(bishop.isValid(1,1,2,2,gameEngine), false);
 	}
 	
 	@Test
 	void testMove() {
-		bishop.move(1,1);
-		assertEquals(bishop.getX(), 1);
-		assertEquals(bishop.getY(), 1);
+		bishop.move(2,2);
+		assertEquals(bishop.getX(), 2);
+		assertEquals(bishop.getY(), 2);
 	}
 	
-	@Test
-	void testIsValid() {
-		bishop.isValid(2,2);
-		assertEquals(bishop.isValid(), true);
-	}
 }
