@@ -11,7 +11,6 @@ public class Bishop extends Piece {
 
 	@Override
 	public boolean isValid(int y, int x, int newY, int newX, GameEngine gameEngine) {
-		System.out.println("isValid");
 		boolean valid = false;
 		
 		int skipRow,skipCol;

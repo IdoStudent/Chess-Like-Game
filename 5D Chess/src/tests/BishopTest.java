@@ -32,9 +32,20 @@ class BishopTest {
 	
 	@Test
 	void testMove() {
-		bishop.move(2,2);
+		if(bishop.isValid(0, 0, 2, 2, gameEngine)) {
+			bishop.move(2,2);
+		}
 		assertEquals(bishop.getX(), 2);
 		assertEquals(bishop.getY(), 2);
+	}
+	
+	@Test
+	void testMoveMoreThanTwo() {
+		if(bishop.isValid(0, 0, 3, 3, gameEngine)) {
+			bishop.move(3,3);
+		}
+		assertEquals(bishop.getX(), 3);
+		assertEquals(bishop.getY(), 3);
 	}
 	
 }
