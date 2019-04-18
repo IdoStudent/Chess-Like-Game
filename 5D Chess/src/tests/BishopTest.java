@@ -27,16 +27,25 @@ class BishopTest {
 	@Test
 	void testIsValid() {
 		assertEquals(bishop.isValid(0,0,2,2,gameEngine), true);
-		assertEquals(bishop.isValid(1,1,2,2,gameEngine), false);
+		assertEquals(bishop.isValid(1,1,4,4,gameEngine), false);
 	}
 	
 	@Test
-	void testMove() {
+	void testMove2() {
 		if(bishop.isValid(0, 0, 2, 2, gameEngine)) {
 			bishop.move(2,2);
 		}
 		assertEquals(bishop.getX(), 2);
 		assertEquals(bishop.getY(), 2);
+	}
+	
+	@Test
+	void testMove() {
+		if(bishop.isValid(0, 0, 1, 1, gameEngine)) {
+			bishop.move(1,1);
+		}
+		assertEquals(bishop.getX(), 1);
+		assertEquals(bishop.getY(), 1);
 	}
 	
 	@Test

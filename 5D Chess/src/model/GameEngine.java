@@ -11,7 +11,8 @@ public class GameEngine {
 	public GameEngine()
 	{
 		renderLoginRegisterGUI();
-		this.maxMoves = maxMoves();
+		//this.maxMoves = maxMoves();
+		setPieces();
 	}
 	
 	private void renderLoginRegisterGUI()
