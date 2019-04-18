@@ -31,12 +31,21 @@ class RookTest {
 	}
 	
 	@Test
-	void testMove() {
+	void testMove2() {
 		if(rook.isValid(0, 1, 2, 1, gameEngine)) {
 			rook.move(2,1);
 		}
 		assertEquals(rook.getX(), 1);
 		assertEquals(rook.getY(), 2);
+	}
+	
+	@Test
+	void testMove() {
+		if(rook.isValid(0, 1, 1, 1, gameEngine)) {
+			rook.move(1,1);
+		}
+		assertEquals(rook.getX(), 1);
+		assertEquals(rook.getY(), 1);
 	}
 	
 	@Test
