@@ -37,6 +37,7 @@ public class GameControl {
 				view.validLoginMessage();
 				view.assignNumofMove();
 				model.assignNumofMove(id, input.nextInt());
+				model.addPieceToBoard(model.getPlayer(id));
 			} else {
 				view.errorLoginMessage();
 			}
@@ -50,9 +51,14 @@ public class GameControl {
 		   return model.getAllPlayers();	
 	   }
 	   
-//	   public void renderBoard(){
-//		   return model.getAllPlayers();	
-//	   }
+	   public boolean movePiece(String playerId, int fromX, int fromY, int toX, int toY){
+		   Player player = model.getPlayer(playerId);
+		   model.Piece piece = player.getPiece(fromX, fromY);
+		   System.out.println(piece.getName());
+		   System.out.println(piece.getColor());
+
+		   return model.getBoard().movePiece(piece, toX, toY); 
+	   }
 
 
 	}

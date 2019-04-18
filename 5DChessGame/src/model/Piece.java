@@ -72,7 +72,7 @@ public abstract class Piece {
 		this.posY = Y;
 	}
 	
-	public abstract boolean  validMove(int fromX, int fromY, int toX, int toY);
+	public abstract boolean  validMove(int toX, int toY);
 
 }
 

@@ -7,7 +7,9 @@ public class Bishop extends Piece{
 		// TODO Auto-generated constructor stub
 	}
 
-	public boolean validMove(int fromX, int fromY, int toX, int toY) {
+	public boolean validMove(int toX, int toY) {
+		int fromX = this.getPosX();
+		int fromY= this.getPosX(); 
 		if (toX == fromX + 2 || toX == fromX - 2) {
 			if (toY == fromY + 2 || toY == fromY - 2) {
 				return true;

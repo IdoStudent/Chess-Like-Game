@@ -71,9 +71,9 @@ public class GameView {
 	}
 	
 	public void renderBoard() {
-		for (int i=0;i<model.getBoard().getHeight();i++) {
-			for (int j=0;j<model.getBoard().getWidth();j++) {
-				System.out.print(model.getBoard().getSquares(i,j).getName());
+		for (int y=0;y<model.getBoard().getWidth();y++) {
+			for (int x=0;x<model.getBoard().getHeight();x++) {
+				System.out.print(model.getBoard().getSquares(x,y).getName());
 			}
 			System.out.print("\n");	
 		}	
@@ -88,7 +88,20 @@ public class GameView {
 	}
 	
 	public void movePiece() {
-		
+		System.out.println("Enter player ID");
+		String playerId = input.nextLine();
+		System.out.print("Enter the current X coordinate of the piece (X)");
+		int fromX = input.nextInt();
+		System.out.print("Enter the current Y coordinate of the piece (Y)");
+		int fromY = input.nextInt();
+		System.out.print("Move piece to a new X coordinate (X)");
+		int toX = input.nextInt();
+		System.out.print("Move piece to a new Y coordinate(Y)");
+		int toY = input.nextInt();
+	    input.nextLine();
+
+	    System.out.print(controller.movePiece(playerId, fromX, fromY, toX,toY));
+
 	}
 	
 	
@@ -104,7 +117,7 @@ public class GameView {
 	      System.out.format("%-20s - %4d\n","View all players",6);
 	      System.out.format("%-20s - %4d\n","End Game",7);
 	      System.out.println("\n**************************************");
-	      System.out.print("Your choice : " );
+	      System.out.println("Your choice : " );
 	      char ch = input.nextLine().charAt(0);
 	      return ch;
 	   }
