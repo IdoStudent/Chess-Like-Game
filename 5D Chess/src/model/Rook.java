@@ -52,6 +52,10 @@ public class Rook extends Piece{
 					valid = false;
 				}
 			}
+		}else if(newY == y && (newX == x + 1 || newX == x - 1)) {
+			valid = true;
+		}else if(newX == x && (newY == y + 1 || newY == y - 1)) {
+			valid = true;
 		}
 		
 		return valid;
