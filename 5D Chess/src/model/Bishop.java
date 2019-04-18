@@ -33,6 +33,10 @@ public class Bishop extends Piece {
 					}
 				}
 			}
+		}else if(newY == y + 1 || newY == y - 1) {
+			if (newX == x + 1 || newX == x - 1) {
+				valid = true;
+			}
 		}
 		
 		return valid;
