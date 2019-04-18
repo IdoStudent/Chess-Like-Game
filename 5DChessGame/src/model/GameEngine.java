@@ -1,32 +1,32 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class GameEngine {
-	private Map<String, User> users = new HashMap<String, User>();
+	private Map<String, User> members = new HashMap<String, User>();
 	private Player[] players = new Player[2];
 	private Board board ;
 	private int numPlayer=0;
 
+
 	int maxMove = 0 ;
-	
-	//changed
 
 
 	public GameEngine() {
 		// TODO Auto-generated constructor stub
+//		initBoard(6,6);
 		this.board = new Board(6,6);
 		
 	}
 
+
 	public boolean addUser(String id, String pwd) {
-		if(getUser(id)==null) {
+		if(getMember(id)==null) {
 			User user = new User(id,pwd);
-			this.users.put(id,user);
+			this.members.put(id,user);
 			return true;
 		}
 		return false;	
@@ -34,13 +34,20 @@ public class GameEngine {
 	
 	public boolean addPlayer(String id, String pwd) {
 		if(isValidUser(id,pwd)) {
-			Player player = new Player(id,pwd);
+			Player player = new Player(this,id,pwd);
 			players[numPlayer]=player;
+			players[numPlayer].setPlayerIndex(numPlayer);
+			players[numPlayer].initPieces();
 			this.numPlayer++;
 			return true;
 		} 
 		
 		return false;
+	}
+	
+	
+	public void addPieceToBoard(Player player) {
+				this.board.addAllPlayerPieces(player);
 	}
 	
 	public boolean isValidUser(String id, String pwd) {
@@ -53,14 +60,13 @@ public class GameEngine {
 		 return false;
 	}
 	
-	public User getUser(String id) {
+	public User getMember(String id) {
 		// Return the player if id exists in a key list of the players hash map
 		
-		 return users.get(id);
+		 return members.get(id);
 	}
 	
 	public Player getPlayer(String id) {
-		// Return the player if id exists in a key list of the players hash map
 		for (int i=0;i<numPlayer;i++) {	
 		if (this.players[i].getUserId().equals(id))
 			
@@ -68,10 +74,11 @@ public class GameEngine {
 		 }
 		return null;
 	}
+	
 
 
 	public Collection<User> getAllUser() {
-		Collection<User> userList = users.values();
+		Collection<User> userList = members.values();
 		return userList;
 	}
 	
@@ -93,6 +100,9 @@ public class GameEngine {
 	public Board getBoard() {
 		return board;
 	}
-
+	
+	
+	
+	
 
 }
