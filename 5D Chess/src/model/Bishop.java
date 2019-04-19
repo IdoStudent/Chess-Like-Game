@@ -4,7 +4,7 @@ public class Bishop extends Piece {
 	
 	public Bishop(int yPosition, int xPosition, String name)
 	{
-		super(xPosition, yPosition, name);
+		super(yPosition, xPosition, name);
 	}
 
 	@Override
