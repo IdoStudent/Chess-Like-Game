@@ -17,8 +17,8 @@ class GameEngineTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		gameEngine.addPlayer(player);
-		gameEngine.addPlayer(player2);
+		//gameEngine.addPlayer(player);
+		//gameEngine.addPlayer(player2);
 		gameEngine.startGame();
 	}
 
@@ -35,7 +35,7 @@ class GameEngineTest {
 	@Test //(expected=IndexOutOfBoundsException.class)
 	void add3Players() throws IndexOutOfBoundsException{
 		Player player3 = new Player("username3", "password3");
-		gameEngine.addPlayer(player3);
+		//gameEngine.addPlayer(player3);
 		
 	}
 

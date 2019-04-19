@@ -1,6 +1,10 @@
 package model;
 
+import view.GameEngineGUI;
+
 public class GameEngine {
+	
+	GameEngineGUI gameEngineGUI = new GameEngineGUI();
 	
 	private Piece[] pieces;
 	private Player[] players = new Player[2];
@@ -90,6 +94,7 @@ public class GameEngine {
 	public void renderBoardGUI()
 	{
 		setPieces();
+		gameEngineGUI.renderBoard();
 	}
 	
 	public void startGame()
