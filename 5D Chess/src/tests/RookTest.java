@@ -50,11 +50,11 @@ class RookTest {
 	
 	@Test
 	void testMoveMoreThanTwo() {
-		if(rook.isValid(0, 1, 3, 1, gameEngine)) {
+		if(rook.isValid(0, 1, 3, 1, gameEngine) == true) {
 			rook.move(3,1);
 		}
 		assertEquals(rook.getX(), 1);
-		assertEquals(rook.getY(), 3);
+		assertEquals(rook.getY(), 0);
 	}
 	
 	@Test
@@ -62,8 +62,8 @@ class RookTest {
 		if(rook.isValid(0, 1, 2, 3, gameEngine)) {
 			rook.move(2,3);
 		}
-		assertEquals(rook.getX(), 3);
-		assertEquals(rook.getY(), 2);
+		assertEquals(rook.getX(), 1);
+		assertEquals(rook.getY(), 0);
 	}
 	
 }
