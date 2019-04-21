@@ -21,6 +21,11 @@ public class GameEngine {
 	
 	private void renderLoginRegisterGUI()
 	{
+		gameEngineGUI.renderLoginRegister("Player 1");
+		while(players[0] == null)
+		{
+			
+		}
 		//Render the GUI,
 		//run loginPlayer or registerPlayer method depending on what player1 clicks
 		//ONCE LOGGED IN SUCCESSFUL, run this method again for player2!!!!
