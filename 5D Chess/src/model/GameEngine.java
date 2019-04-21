@@ -21,24 +21,23 @@ public class GameEngine {
 	
 	private void renderLoginRegisterGUI()
 	{
-		gameEngineGUI.renderLoginRegister("Player 1");
-		while(players[0] == null)
-		{
-			
-		}
+		gameEngineGUI.renderLoginRegister();
 		//Render the GUI,
 		//run loginPlayer or registerPlayer method depending on what player1 clicks
 		//ONCE LOGGED IN SUCCESSFUL, run this method again for player2!!!!
 		//run loginPlayer or registerPlayer method depending on what player2 clicks
 	}
 	
-	public void loginPlayer(String username, String password)
+	public boolean loginPlayer(String username, String password)
 	{
 		//validate username and password,
 		//check if username is already logged in,
 		//create new player object,
 		//run addPlayer method and pass in new player object
+		Player player = new Player(username, password);
+		addPlayer(player);
 		System.out.println("LOGGED IN");
+		return true;
 	}
 	
 	public void registerPlayer(String username, String password)

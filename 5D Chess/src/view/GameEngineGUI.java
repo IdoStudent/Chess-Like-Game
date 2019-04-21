@@ -12,10 +12,25 @@ public class GameEngineGUI {
 		this.gameEngine = gameEngine;
 	}
 	
-	public void renderLoginRegister(String player)
+	public void renderLoginRegister()
 	{
-		loginRegisterGUI = new LoginRegisterGUI(player);
+		boolean playerLoggedIn = false;
+		loginRegisterGUI = new LoginRegisterGUI("Player 1");
 		loginRegisterGUI.renderGUI(gameEngine);
+		while(playerLoggedIn == false)
+		{
+			if(gameEngine.getPlayers()[0] != null)
+			{
+				playerLoggedIn = true;
+				System.out.println("LOGGED");
+			}
+		}
+		loginRegisterGUI = new LoginRegisterGUI("Player 2");
+		loginRegisterGUI.renderGUI(gameEngine);
+		while(gameEngine.getPlayers()[1] == null)
+		{
+			
+		}
 	}
 
 	public void renderBoard()

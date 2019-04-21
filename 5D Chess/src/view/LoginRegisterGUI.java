@@ -17,6 +17,7 @@ import model.GameEngine;
 
 public class LoginRegisterGUI {
 	
+	JFrame frame;
 	Label player;
 	Label user = new Label("Username: ");
 	Label pass = new Label("Password: ");
@@ -37,7 +38,10 @@ public class LoginRegisterGUI {
 		loginButton.addActionListener(new LoginAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gameEngine.loginPlayer(userTextBox.getText(), passTextBox.getText());
+				if(gameEngine.loginPlayer(userTextBox.getText(), passTextBox.getText()) == true)
+				{
+					frame.dispose();
+				}
 			}
 		});
 		registerButton.addActionListener(new RegisterAction(){
@@ -49,7 +53,7 @@ public class LoginRegisterGUI {
 		
 		passTextBox.setEchoChar('*');
 		
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		Panel panel = new Panel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		frame.add(panel);
