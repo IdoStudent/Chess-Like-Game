@@ -4,7 +4,7 @@ import view.GameEngineGUI;
 
 public class GameEngine {
 	
-	GameEngineGUI gameEngineGUI = new GameEngineGUI();
+	GameEngineGUI gameEngineGUI = new GameEngineGUI(this);
 	
 	private Piece[] pieces;
 	private Player[] players = new Player[2];
@@ -38,6 +38,7 @@ public class GameEngine {
 		//check if username is already logged in,
 		//create new player object,
 		//run addPlayer method and pass in new player object
+		System.out.println("LOGGED IN");
 	}
 	
 	public void registerPlayer(String username, String password)

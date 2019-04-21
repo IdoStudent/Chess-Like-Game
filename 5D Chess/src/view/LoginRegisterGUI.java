@@ -1,14 +1,19 @@
 package view;
 
-import java.awt.Button;
 import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import conroller.LoginAction;
+import conroller.RegisterAction;
+import model.GameEngine;
 
 public class LoginRegisterGUI {
 	
@@ -19,16 +24,29 @@ public class LoginRegisterGUI {
 	TextField userTextBox = new TextField(15);
 	TextField passTextBox = new TextField(15);
 	
-	Button registerButton = new Button("Register");
-	Button loginButton = new Button("Login");
+	JButton registerButton = new JButton("Register");
+	JButton loginButton = new JButton("Login");
 	
 	public LoginRegisterGUI(String player)
 	{
-		this.player = new Label(player + " login:");
+		this.player = new Label(player + " enter details:");
 	}
 	
-	public void renderGUI()
+	public void renderGUI(GameEngine gameEngine)
 	{
+		loginButton.addActionListener(new LoginAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gameEngine.loginPlayer(userTextBox.getText(), passTextBox.getText());
+			}
+		});
+		registerButton.addActionListener(new RegisterAction(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gameEngine.registerPlayer(userTextBox.getText(), passTextBox.getText());
+			}
+		});
+		
 		passTextBox.setEchoChar('*');
 		
 		JFrame frame = new JFrame();
@@ -65,5 +83,7 @@ public class LoginRegisterGUI {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	
 	
 }
