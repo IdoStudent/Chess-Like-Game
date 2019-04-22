@@ -4,16 +4,13 @@ public class Board {
 	private int width;
 	private int height;
 	private Square[][] squares;
-//	private GameEngine game = new GameEngine();
 
 	public Board(int width, int height) {
 		// TODO Auto-generated constructor stub
 		this.width = width;
 		this.height = height;
-//		this.game = game;
 		this.squares = new Square[width][height] ;
-		this.addSquares();
-//		this.addPieces();
+		this.initSquares();
 	}
 	
 	
@@ -33,7 +30,23 @@ public class Board {
 		return squares[x][y];
 	}
 	
-	public void addSquares() {
+	public Square[][] getAllSquares() {
+		return squares;
+	}
+	
+	@Override
+	public String toString() {
+		String b="";
+		for (int y=0;y<this.width;y++) {
+			for (int x=0;x<this.height;x++) {
+				b += squares[x][y].toString();
+			}
+			b +="\n";
+		}
+		return b;
+	}
+	
+	public void initSquares() {
 		for (int y=0;y<this.width;y++) {
 			for (int x=0;x<this.height;x++) {
 				squares[x][y]= new Square(x,y);
@@ -41,30 +54,31 @@ public class Board {
 		}
 	}
 	
-	public void addAllPlayerPieces(Player player) {
+	public void addPlayerPieces(Player player) {
 		
-		for (Piece piece : player.getAllPieces())
+		for (CombinablePiece piece : player.getAllPieces())
 	      {
 			addPiece(piece,piece.getPosX(),piece.getPosY());
 	      }
 	
 	}
-	public boolean movePiece(Piece piece, int toX, int toY ) {
-		if (piece.validMove(toX, toY) && this.squares[toX][toY].getPiece()==null) {
-			dropPiece(piece.getPosX(),piece.getPosY());
-			piece.move(toX, toY);
-			addPiece(piece,toX,toY);
-			return true;
-		}
-		return false;
-	}
+
 	
 	public void dropPiece(int x, int y) {
-			squares[x][y].setName("(  )");
+			squares[x][y].setName("(  )");	
+			squares[x][y].setPiece(null);
+
 	}
 	
-	public void addPiece(Piece piece,int x, int y) {
-		squares[x][y].setName('(' +piece.getName()+piece.getColor()+')');
-}
-
+	public void addPiece(CombinablePiece piece,int x, int y) {
+		squares[x][y].setName("(" +piece.getCombinedName()+piece.getColor()+")");
+		squares[x][y].setPiece(piece);
+	}
+	
+	public void updatePiece(CombinablePiece piece) {
+		squares[piece.getPosX()][piece.getPosX()].setName("(" +piece.getCombinedName()+piece.getColor()+")");
+		squares[piece.getPosX()][piece.getPosX()].setPiece(piece);
+	}
+	
+	
 }

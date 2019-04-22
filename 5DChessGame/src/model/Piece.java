@@ -7,13 +7,16 @@ public abstract class Piece {
 	private Player player;
 	private boolean status; // Current status (die or alive)
 	private String name;
+	private Board board;
 
 	
-	public Piece(Player player,String name,String color, int X, int Y, boolean status) {
+	public Piece(Player player,Board board, String name,String color, int X, int Y, boolean status) {
 		this.player = player;
+		this.setBoard(board);
 		this.name = name;
 		this.color = color;
 		this.status = status;
+		this.status=true;
 		this.posX = X;
 		this.posY = Y;
 	}
@@ -72,7 +75,39 @@ public abstract class Piece {
 		this.posY = Y;
 	}
 	
+	public boolean equals(Piece piece) {
+		return (piece.getName().equals(this.getName()) && piece.getColor() == this.getColor());
+	}
+
+	@Override
+	public boolean equals(Object piece) {
+		if (!(piece instanceof Piece)) {
+			return false;
+		}
+		return this.equals((Piece) piece);
+	}
+
+
+	@Override
+	public int hashCode() {
+		return this.getName().hashCode();
+	}
+
+	
+	@Override
+	public String toString() {
+		return String.format("SName:%s, Color:%s, X:%s, Y:%s\n", this.name, this.color, this.posX, this.posY);
+	}
 	public abstract boolean  validMove(int toX, int toY);
+	public abstract boolean isMovingOverPiece(int toX, int toY);
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public void setBoard(Board board) {
+		this.board = board;
+	}
 
 }
 

@@ -77,6 +77,7 @@ public class GameView {
 			}
 			System.out.print("\n");	
 		}	
+		
 	}
 	
 	public void startGame() {
@@ -92,16 +93,32 @@ public class GameView {
 		String playerId = input.nextLine();
 		System.out.print("Enter the current X coordinate of the piece (X)");
 		int fromX = input.nextInt();
+		System.out.println(fromX);
+
 		System.out.print("Enter the current Y coordinate of the piece (Y)");
 		int fromY = input.nextInt();
+		System.out.println(fromY);
+
 		System.out.print("Move piece to a new X coordinate (X)");
 		int toX = input.nextInt();
+		System.out.println(toX);
+
 		System.out.print("Move piece to a new Y coordinate(Y)");
 		int toY = input.nextInt();
+		System.out.println(toY);
+
+		System.out.println(fromX + "-" +fromY + "-"  +toX+ "-" +toY);
 	    input.nextLine();
 
 	    System.out.print(controller.movePiece(playerId, fromX, fromY, toX,toY));
 
+	}
+	
+	public void viewPiece() {
+		System.out.println("Enter player ID");
+		String playerId = input.nextLine();
+		controller.viewPiece(playerId);
+		
 	}
 	
 	
@@ -115,7 +132,9 @@ public class GameView {
 	      System.out.format("%-20s - %4d\n","Move Piece",4);
 	      System.out.format("%-20s - %4d\n","View all members",5);
 	      System.out.format("%-20s - %4d\n","View all players",6);
-	      System.out.format("%-20s - %4d\n","End Game",7);
+	      System.out.format("%-20s - %4d\n","View Pieces",7);
+	      System.out.format("%-20s - %4d\n","Unmerge A Piece",8);
+	      System.out.format("%-20s - %4d\n","End Game",9);
 	      System.out.println("\n**************************************");
 	      System.out.println("Your choice : " );
 	      char ch = input.nextLine().charAt(0);
@@ -127,7 +146,7 @@ public class GameView {
 	      char ch;
 	      do { 
 	        ch = menu(); 
-	        if ( ch > '2' && ch < '7' && model.getAllPlayers() == null)
+	        if ( ch > '2' && ch < '9' && model.getAllPlayers() == null)
 	        {  System.out.println("Login first to commence a Game"); 
 	        	ch = input.nextLine().charAt(0);
 	        } else {
@@ -147,10 +166,42 @@ public class GameView {
                   		break;
 	              case '6' : this.viewAllPlayers();
                   		break;
-	              case '7' : this.endGame();
+	              case '7' : this.viewPiece();
+            		break;
+	              case '8' : this.unmergePiece();
+          			break;
+	              case '9' : this.endGame();
 	                   break;
 	            }
 	          }
-	       }  while ( ch != '7');         
+	       }  while ( ch != '9');         
 	   }
+	private void unmergePiece() {
+		// TODO Auto-generated method stub
+		System.out.println("Enter player ID");
+		String playerId = input.nextLine();
+		System.out.print("Enter the current X coordinate of the piece (X)");
+		int fromX = input.nextInt();
+		System.out.println(fromX);
+
+		System.out.print("Enter the current Y coordinate of the piece (Y)");
+		int fromY = input.nextInt();
+		System.out.println(fromY);
+
+		System.out.print("Unmerge piece to a new X coordinate (X)");
+		int toX = input.nextInt();
+		System.out.println(toX);
+
+		System.out.print("Unmerge piece to a new Y coordinate(Y)");
+		int toY = input.nextInt();
+		System.out.println(toY);
+
+		
+		System.out.print("Unmerge piece Name");
+		String name = input.next();
+		System.out.println(name);
+	    input.nextLine();
+
+	    controller.unmergePiece(playerId, name, fromX, fromY, toX,toY);
+	}
 }

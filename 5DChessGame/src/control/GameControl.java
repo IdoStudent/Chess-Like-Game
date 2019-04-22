@@ -53,12 +53,41 @@ public class GameControl {
 	   
 	   public boolean movePiece(String playerId, int fromX, int fromY, int toX, int toY){
 		   Player player = model.getPlayer(playerId);
-		   model.Piece piece = player.getPiece(fromX, fromY);
+		   model.CombinablePiece piece = player.getPiece(fromX, fromY);
+		   System.out.println(piece.getCombinedName());
 		   System.out.println(piece.getName());
-		   System.out.println(piece.getColor());
+		   System.out.println(piece.getPieces().toString());
+		   System.out.println(player.getAllPieces().toString());
+		   System.out.println(model.getBoard().toString());
 
-		   return model.getBoard().movePiece(piece, toX, toY); 
+//		   return player.movePiece(model, piece, toX, toY);
+		   return model.movePiece(piece, toX, toY);
+
+		   
+	   }
+	   
+	   public void unmergePiece(String playerId, String name, int fromX, int fromY, int toX, int toY){
+		   Player player = model.getPlayer(playerId);
+		   model.CombinablePiece piece = player.getPiece(fromX, fromY);
+		   System.out.println(piece.getCombinedName());
+		   System.out.println(piece.getName());
+		   System.out.println(piece.getPieces().toString());
+		   System.out.println(player.getAllPieces().toString());
+		   System.out.println(model.getBoard().toString());
+		   
+//		   return player.movePiece(model, piece, toX, toY);
+		   model.unmergePiece(piece, name, toX, toY);
+
+		   
 	   }
 
+	   
+	   
+	   public void viewPiece(String playerId){
+		   Player player = model.getPlayer(playerId);
+		   System.out.println(player.getAllPieces().toString());
+		   System.out.println(model.getBoard().toString());
+		   
+	   }
 
 	}

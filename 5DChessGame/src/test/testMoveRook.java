@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Board;
+import model.CombinablePiece;
 import model.GameEngine;
 import model.Piece;
 import model.Player;
@@ -17,7 +18,7 @@ import model.User;
 class testMoveRook {
 	User user1, user2;
 	Player player1, player2;
-	Piece rook1, rook2;
+	CombinablePiece rook1, rook2;
 	GameEngine game;
 	
 	@BeforeEach
@@ -36,7 +37,7 @@ class testMoveRook {
 	void tearDown() throws Exception {
 	}
 
-	@Test // Check if all vaid players have been added to game	
+	@Test // Check if all valid players have been added to the game	
 	 public void testGetAllPlayer() { 
 		 assertEquals(2,game.getAllPlayers().length); 
 		 assertEquals(false,game.addUser(user2.getUserId(), user2.getUserPwd())); 
@@ -54,8 +55,8 @@ class testMoveRook {
 		 square.setPiece(null);
 		 assertEquals(null, square.getPiece()); 
 		 // Move test
-		 assertEquals(true, board.movePiece(rook1, 2, 0)); 
-		 assertEquals(false, board.movePiece(rook1, 3, 0)); 
+		 assertEquals(true, game.movePiece(rook1, 2, 0)); 
+		 assertEquals(false, game.movePiece(rook1, 3, 0)); 
 	 
 	 } 
 	@Test // Attempt	to	register	two	members	with	the	same	login	ID	fails.	
@@ -70,8 +71,8 @@ class testMoveRook {
 		 square.setPiece(null);
 		 assertEquals(null, square.getPiece()); 
 		 // Move test
-		 assertEquals(true, board.movePiece(rook2, 0, 2)); 
-		 assertEquals(false, board.movePiece(rook2, 0, 3)); 
+		 assertEquals(true, game.movePiece(rook2, 0, 2)); 
+		 assertEquals(false, game.movePiece(rook2, 0, 3)); 
 
 	 
 	 } 
