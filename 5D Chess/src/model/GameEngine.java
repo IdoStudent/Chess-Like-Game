@@ -9,19 +9,44 @@ public class GameEngine {
 	private Piece[] pieces;
 	private Player[] players = new Player[2];
 	
-	private int maxMoves = 0;
+	private int player1MaxMoves = 0;
+	private int player2MaxMoves = 0;
+	private int maxMoves;
+	
 	private boolean playerTurn = true;
 	
 	public GameEngine()
 	{
 		renderLoginRegisterGUI();
+		renderMaxMovesGUI();
 		//this.maxMoves = maxMoves();
 		setPieces();
 	}
 	
 	private void renderLoginRegisterGUI()
 	{
-		gameEngineGUI.renderLoginRegister();
+		boolean player1LoggedIn = false;
+		boolean player2LoggedIn = false;
+		
+		gameEngineGUI.renderLoginRegister("Player 1");
+		while(player1LoggedIn == false)
+		{
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			if(getPlayers()[0] != null)
+			{
+				player1LoggedIn = true;
+			}
+		}
+		
+		gameEngineGUI.renderLoginRegister("Player 2");
+		while(player2LoggedIn == false)
+		{
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			if(getPlayers()[1] != null)
+			{
+				player2LoggedIn = true;
+			}
+		}
 		//Render the GUI,
 		//run loginPlayer or registerPlayer method depending on what player1 clicks
 		//ONCE LOGGED IN SUCCESSFUL, run this method again for player2!!!!
@@ -40,12 +65,13 @@ public class GameEngine {
 		return true;
 	}
 	
-	public void registerPlayer(String username, String password)
+	public boolean registerPlayer(String username, String password)
 	{
 		//validate username and password,
 		//check if username is already registered,
 		//create new player object,
 		//run addPlayer method and pass in new player object
+		return false;
 	}
 	
 	private boolean validatePlayers(String username, String password)
@@ -59,12 +85,13 @@ public class GameEngine {
 	private void addPlayer(Player player)
 	{
 		//Run a loop through players array and if its empty, add the player to the array
-		for(int i = 0; i < players.length; i++)
+		if(players[0] == null)
 		{
-			if(players[i] == null)
-			{
-				players[i] = player;
-			}
+			players[0] = player;
+		}
+		else if(players[1] == null)
+		{
+			players[1] = player;
 		}
 	}
 	
@@ -73,10 +100,8 @@ public class GameEngine {
 		return players;
 	}
 	
-	private int maxMoves(int input)
+	public void setMaxMoves(int maxMoves)
 	{
-		int player1Input = 0;
-		int player2Input = 0;
 		
 		//renderMaxMovesGUI
 		//take input from player1 and validate
@@ -86,14 +111,34 @@ public class GameEngine {
 		
 		//RUN BOTH IN LOOPS WHILE VALIDATING
 		
-		return (player1Input + player2Input) / 2;
+		if(player1MaxMoves == 0)
+		{
+			player1MaxMoves = maxMoves;
+		}
+		else if(player2MaxMoves == 0)
+		{
+			player2MaxMoves = maxMoves;
+		}
 	}
 	
 	private void renderMaxMovesGUI()
 	{
 		//Render a new MaxMovesGUI.java class.
 		
+		gameEngineGUI.renderMaxMoves("Player 1");
 		
+		while(this.player1MaxMoves == 0)
+		{
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+		}
+		
+		gameEngineGUI.renderMaxMoves("Player 2");
+		while(this.player2MaxMoves == 0)
+		{
+			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+		}
+		
+		this.maxMoves = player1MaxMoves / player2MaxMoves;
 	}
 	
 	public void renderBoardGUI()
@@ -160,8 +205,4 @@ public class GameEngine {
 	public int getMaxMoves() {
 		return maxMoves;
 	}
-
-	public void setMaxMoves(int maxMoves) {
-		this.maxMoves = maxMoves;
-	}	
 }

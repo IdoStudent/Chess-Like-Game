@@ -5,6 +5,7 @@ import model.GameEngine;
 public class GameEngineGUI {
 	BoardGUI boardGUI;
 	LoginRegisterGUI loginRegisterGUI;
+	MaxMovesGUI maxMovesGUI;
 	GameEngine gameEngine;
 	
 	public GameEngineGUI(GameEngine gameEngine)
@@ -12,25 +13,16 @@ public class GameEngineGUI {
 		this.gameEngine = gameEngine;
 	}
 	
-	public void renderLoginRegister()
+	public void renderLoginRegister(String player)
 	{
-		boolean playerLoggedIn = false;
-		loginRegisterGUI = new LoginRegisterGUI("Player 1");
+		loginRegisterGUI = new LoginRegisterGUI(player);
 		loginRegisterGUI.renderGUI(gameEngine);
-		while(playerLoggedIn == false)
-		{
-			if(gameEngine.getPlayers()[0] != null)
-			{
-				playerLoggedIn = true;
-				System.out.println("LOGGED");
-			}
-		}
-		loginRegisterGUI = new LoginRegisterGUI("Player 2");
-		loginRegisterGUI.renderGUI(gameEngine);
-		while(gameEngine.getPlayers()[1] == null)
-		{
-			
-		}
+	}
+	
+	public void renderMaxMoves(String player)
+	{
+		maxMovesGUI = new MaxMovesGUI(player);
+		maxMovesGUI.renderGUI(gameEngine);
 	}
 
 	public void renderBoard()
