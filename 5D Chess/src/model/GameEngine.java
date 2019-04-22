@@ -102,15 +102,7 @@ public class GameEngine {
 	
 	public void setMaxMoves(int maxMoves)
 	{
-		
-		//renderMaxMovesGUI
-		//take input from player1 and validate
-		
-		//renderMaxMovesGUI
-		//take input from player2 and validate
-		
-		//RUN BOTH IN LOOPS WHILE VALIDATING
-		
+		//sets the player1MaxMoves or player2MaxMoves depending on which one
 		if(player1MaxMoves == 0)
 		{
 			player1MaxMoves = maxMoves;
@@ -138,6 +130,7 @@ public class GameEngine {
 			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 		}
 		
+		//sets the max moves once both players inputs have been entered.
 		this.maxMoves = player1MaxMoves / player2MaxMoves;
 	}
 	
