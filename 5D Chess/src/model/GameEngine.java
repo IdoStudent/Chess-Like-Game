@@ -1,5 +1,10 @@
 package model;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import view.GameEngineGUI;
 
 public class GameEngine {
@@ -20,7 +25,6 @@ public class GameEngine {
 		renderLoginRegisterGUI();
 		renderMaxMovesGUI();
 		//this.maxMoves = maxMoves();
-		setPieces();
 	}
 	
 	private void renderLoginRegisterGUI()
@@ -136,8 +140,13 @@ public class GameEngine {
 	
 	public void renderBoardGUI()
 	{
-		setPieces();
 		gameEngineGUI.renderBoard();
+		
+		try {
+			setPieces();
+		} catch (IOException e) {
+			System.out.println("Could not render all pieces! File read error!");
+		}
 	}
 	
 	public void startGame()
@@ -147,7 +156,8 @@ public class GameEngine {
 		//Once player moves, run the move/isValid commands
 		//once game is over,
 		//run writeDataToFile()
-		renderBoardGUI();
+		gameEngineGUI.renderPieces();
+		System.out.println("Game Started...");
 	}
 	
 	private boolean getPlayerTurn()
@@ -179,20 +189,20 @@ public class GameEngine {
 		return pieces;
 	}
 
-	public void setPieces() {
+	public void setPieces() throws IOException {
 		pieces = new Piece[12];
-		pieces[0] = new Bishop(0,0,"blackBishop");
-		pieces[1] = new Bishop(0,1,"blackRook");
-		pieces[2] = new Bishop(0,2,"blackKnight");
-		pieces[3] = new Bishop(0,3,"blackKnight");
-		pieces[4] = new Bishop(0,4,"blackRook");
-		pieces[5] = new Bishop(0,5,"blackBishop");
-		pieces[6] = new Bishop(5,0,"whiteBishop");
-		pieces[7] = new Bishop(5,1,"whiteRook");
-		pieces[8] = new Bishop(5,2,"whiteKnight");
-		pieces[9] = new Bishop(5,3,"whiteKnight");
-		pieces[10] = new Bishop(5,4,"whiteRook");
-		pieces[11] = new Bishop(5,5,"whiteBishop");
+		pieces[0] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0, 0, "blackBishop");
+		pieces[1] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0, 1, "blackRook");
+		pieces[2] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,2,"blackKnight");
+		pieces[3] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,3,"blackKnight");
+		pieces[4] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,4,"blackRook");
+		pieces[5] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,5,"blackBishop");
+		pieces[6] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,0,"whiteBishop");
+		pieces[7] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,1,"whiteRook");
+		pieces[8] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,2,"whiteKnight");
+		pieces[9] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,3,"whiteKnight");
+		pieces[10] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,4,"whiteRook");
+		pieces[11] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,5,"whiteBishop");
 	}
 
 	public int getMaxMoves() {
