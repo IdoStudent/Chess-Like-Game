@@ -1,10 +1,12 @@
 package model;
 
+import java.awt.image.BufferedImage;
+
 public class Rook extends Piece{
 	
-	public Rook(int yPosition, int xPosition, String name)
+	public Rook(BufferedImage image, int yPosition, int xPosition, String name)
 	{
-		super(yPosition, xPosition, name);
+		super(image, yPosition, xPosition, name);
 	}
 
 	@Override

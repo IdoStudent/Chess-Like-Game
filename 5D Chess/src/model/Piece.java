@@ -1,16 +1,21 @@
 package model;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Piece {
 
 	private String name;
+	BufferedImage image;
 	private int yPosition;
 	private int xPosition;
 	
-	public Piece(int yPosition, int xPosition, String name)
+	public Piece(BufferedImage image, int yPosition, int xPosition, String name)
 	{
 		this.name = name;
 		this.yPosition = yPosition;
 		this.xPosition = xPosition;
+		//this.image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+		this.image = image;
 	}
 	
 	public void move(int y, int x) {
@@ -31,6 +36,11 @@ public abstract class Piece {
 	
 	public int getX() {
 		return xPosition;
+	}
+	
+	public BufferedImage getImage()
+	{
+		return image;
 	}
 	
 }

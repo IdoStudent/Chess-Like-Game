@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Knight extends Piece{
 	
-	public Knight(int yPosition, int xPosition, String name)
+	public Knight(BufferedImage image, int yPosition, int xPosition, String name)
 	{
-		super(yPosition, xPosition, name);
+		super(image, yPosition, xPosition, name);
 	}
 
 	@Override

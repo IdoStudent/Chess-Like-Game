@@ -30,4 +30,9 @@ public class GameEngineGUI {
 		boardGUI = new BoardGUI();
 		boardGUI.renderGUI(gameEngine);
 	}
+	
+	public void renderPieces()
+	{
+		boardGUI.renderPieces(gameEngine);
+	}
 }
