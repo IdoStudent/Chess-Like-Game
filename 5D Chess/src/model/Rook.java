@@ -16,37 +16,37 @@ public class Rook extends Piece{
 		if(newX == (x) && 
 		   newY == (y + 1) ||
 		   newX == (x) && 
-		   newY == (y + 2) &&
-		   gameEngine.movingOnOwnPiece(newX, newY) == false)
+		   newY == (y + 2))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			valid = true;
 		}
 		else if(newX == (x) && 
 		        newY == (y - 1) ||
 		        newX == (x) && 
-		        newY == (y - 2) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+		        newY == (y - 2))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			valid = true;
 		}
 		else if(newX == (x + 1) && 
 			    newY == (y) ||
 			    newX == (x + 2) && 
-			    newY == (y) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+			    newY == (y))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			valid = true;	
 		}
 		else if(newX == (x - 1) && 
 			    newY == (y) ||
 			    newX == (x - 2) && 
-			    newY == (y) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+			    newY == (y))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			valid = true;
 		}
 		

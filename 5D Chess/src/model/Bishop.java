@@ -16,37 +16,37 @@ public class Bishop extends Piece {
 		if(newX == (x + 1) && 
 		   newY == (y + 1) ||
 		   newX == (x + 2) && 
-		   newY == (y + 2) &&
-		   gameEngine.movingOnOwnPiece(newX, newY) == false)
+		   newY == (y + 2))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			isValid = true;
 		}
 		else if(newX == (x - 1) && 
 				newY == (y - 1) ||
 				newX == (x - 2) && 
-				newY == (y - 2) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+				newY == (y - 2))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			isValid = true;
 		}
 		else if(newX == (x - 1) && 
 				newY == (y + 1) ||
 				newX == (x - 2) && 
-				newY == (y + 2) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+				newY == (y + 2))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			isValid = true;
 		}
 		else if(newX == (x + 1) && 
 				newY == (y - 1) ||
 				newX == (x + 2) && 
-				newY == (y - 2) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+				newY == (y - 2))
 		{
-			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
+			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
+			   gameEngine.movingOnOwnPiece(newX, newY) == false)
 			isValid = true;
 		}
 		
