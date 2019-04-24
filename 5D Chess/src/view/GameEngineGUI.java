@@ -25,9 +25,12 @@ public class GameEngineGUI {
 		maxMovesGUI.renderGUI(gameEngine);
 	}
 
-	public void renderBoard()
+	public void renderBoard(GameEngine gameEngine)
 	{
-		boardGUI = new BoardGUI();
+		if(boardGUI == null)
+		{
+			boardGUI = new BoardGUI(gameEngine);
+		}
 		boardGUI.renderGUI(gameEngine);
 	}
 	
@@ -39,6 +42,16 @@ public class GameEngineGUI {
 	public void renderSelectedPiece(int x, int y)
 	{
 		boardGUI.renderSelectedPiece(x, y);
+	}
+	
+	public void unRenderPosition(int x, int y)
+	{
+		boardGUI.unRenderPosition(x, y);
+	}
+	
+	public void unRenderBoardColor()
+	{
+		boardGUI.unRenderBoardColor();
 	}
 	
 	public void renderPossibleMoves(int newX, int newY)

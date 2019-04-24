@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,9 +20,8 @@ public class GameEngine {
 	
 	private boolean playerTurn = true;
 	
-	private boolean pieceSelected = false;
-	private int selectedPieceXPos;
-	private int selectedPieceYPos;
+	private Piece pieceSelected;
+	
 	
 	public GameEngine()
 	{
@@ -145,7 +143,7 @@ public class GameEngine {
 	
 	public void renderBoardGUI()
 	{
-		gameEngineGUI.renderBoard();
+		gameEngineGUI.renderBoard(this);
 		
 		try {
 			setPieces();
@@ -175,15 +173,20 @@ public class GameEngine {
 	
 	public void buttonPressed(int x, int y)
 	{
-		if(pieceSelected == false)
+//		if(pieceSelected == null)
+//		{
+//			checkIfPieceClicked(x, y);
+//		}
+//		else if(pieceSelected != null)
+//		{
+//			checkIfPieceClicked(x, y);
+//			checkIfOtherButtonClicked(x, y);
+//		}
+		if(pieceSelected != null)
 		{
-			checkIfPieceClicked(x, y);
-		}
-		else if(pieceSelected == true)
-		{
-			checkIfPieceClicked(x, y);
 			checkIfOtherButtonClicked(x, y);
 		}
+		checkIfPieceClicked(x, y);
 	}
 	
 	private void checkIfPieceClicked(int x, int y)
@@ -199,9 +202,8 @@ public class GameEngine {
 			   playerTurn == false && 
 			   p.getType() == PieceType.BLACK)
 			{
-				pieceSelected = true;
-				selectedPieceXPos = x;
-				selectedPieceYPos = y;
+				pieceSelected = p;
+
 				System.out.println("Selected " + 
 								   p.getClass().getName().substring(p.getClass().getName().indexOf(".") + 1) + 
 								   " (" + x + "," + y + ")");
@@ -222,14 +224,29 @@ public class GameEngine {
 	
 	private void checkIfOtherButtonClicked(int x, int y)
 	{
-		
+		if(pieceSelected.isValid(pieceSelected.getY(), pieceSelected.getX(), y, x, this) == true)
+		{
+			gameEngineGUI.unRenderPosition(pieceSelected.getX(), pieceSelected.getY());
+			pieceSelected.move(y, x);
+			gameEngineGUI.unRenderBoardColor();
+			pieceSelected = null;
+			playerTurn = !playerTurn;
+			maxMoves = maxMoves - 1;
+			gameEngineGUI.renderBoard(this);
+			gameEngineGUI.renderPieces();
+		}
+		else
+		{
+			gameEngineGUI.unRenderBoardColor();
+			pieceSelected = null;
+		}
 	}
 	
-	public boolean movingOnOwnPiece(int newX, int newY)
+	public boolean movingOnOwnPiece(int newX, int newY, PieceType pieceType)
 	{
 		for(Piece p : pieces)
 		{
-			if(p.getX() == newX && p.getY() == newY && p.getType() == p.getType())
+			if(p.getX() == newX && p.getY() == newY && pieceType == p.getType())
 			{
 				return true;
 			}
@@ -240,11 +257,6 @@ public class GameEngine {
 	public boolean getPlayerTurn()
 	{
 		return playerTurn;
-	}
-	
-	public void move(int newY, int newX)
-	{
-		
 	}
 	
 	public void endGame()

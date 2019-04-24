@@ -14,49 +14,49 @@ public class Knight extends Piece{
 		
 		if(newX == (x + 2) && 
 		   newY == (y + 1) &&
-		   gameEngine.movingOnOwnPiece(newX, newY) == false)
+		   gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 		{
 			return true;
 		}
 		else if(newX == (x + 2) && 
 			    newY == (y - 1) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+			    gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 2) && 
 			    newY == (y + 1) &&
-				gameEngine.movingOnOwnPiece(newX, newY) == false)
+				gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 2) && 
 			    newY == (y - 1) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+			    gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}
 		else if(newX == (x + 1) && 
 			    newY == (y - 2) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+			    gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 1) && 
 			    newY == (y - 2) &&
-			    gameEngine.movingOnOwnPiece(newX, newY) == false)
+			    gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 1) && 
 			    newY == (y + 2) &&
-				gameEngine.movingOnOwnPiece(newX, newY) == false)
+				gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}
 		else if(newX == (x + 1) && 
 			    newY == (y + 2) &&
-				gameEngine.movingOnOwnPiece(newX, newY) == false)
+				gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			{
 				return true;
 			}

@@ -19,7 +19,7 @@ public class Rook extends Piece{
 		   newY == (y + 2))
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
-			   gameEngine.movingOnOwnPiece(newX, newY) == false)
+			   gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			valid = true;
 		}
 		else if(newX == (x) && 
@@ -28,7 +28,7 @@ public class Rook extends Piece{
 		        newY == (y - 2))
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
-			   gameEngine.movingOnOwnPiece(newX, newY) == false)
+			   gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			valid = true;
 		}
 		else if(newX == (x + 1) && 
@@ -37,7 +37,7 @@ public class Rook extends Piece{
 			    newY == (y))
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
-			   gameEngine.movingOnOwnPiece(newX, newY) == false)
+			   gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			valid = true;	
 		}
 		else if(newX == (x - 1) && 
@@ -46,7 +46,7 @@ public class Rook extends Piece{
 			    newY == (y))
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false &&
-			   gameEngine.movingOnOwnPiece(newX, newY) == false)
+			   gameEngine.movingOnOwnPiece(newX, newY, pieceType) == false)
 			valid = true;
 		}
 		
