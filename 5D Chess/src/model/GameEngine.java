@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,6 +20,10 @@ public class GameEngine {
 	private int maxMoves;
 	
 	private boolean playerTurn = true;
+	
+	private boolean pieceSelected = false;
+	private int selectedPieceXPos;
+	private int selectedPieceYPos;
 	
 	public GameEngine()
 	{
@@ -135,7 +140,7 @@ public class GameEngine {
 		}
 		
 		//sets the max moves once both players inputs have been entered.
-		this.maxMoves = player1MaxMoves / player2MaxMoves;
+		this.maxMoves = (player1MaxMoves + player2MaxMoves) / 2;
 	}
 	
 	public void renderBoardGUI()
@@ -158,19 +163,86 @@ public class GameEngine {
 		//run writeDataToFile()
 		gameEngineGUI.renderPieces();
 		System.out.println("Game Started...");
+		if(playerTurn == true)
+		{
+			System.out.println(players[0].getPlayerId() + "'s turn.");
+		}
+		else
+		{
+			System.out.println(players[1].getPlayerId() + "'s turn.");
+		}
 	}
 	
-	private boolean getPlayerTurn()
+	public void buttonPressed(int x, int y)
 	{
-		return playerTurn;
+		if(pieceSelected == false)
+		{
+			checkIfPieceClicked(x, y);
+		}
+		else if(pieceSelected == true)
+		{
+			checkIfPieceClicked(x, y);
+			checkIfOtherButtonClicked(x, y);
+		}
 	}
 	
-	public void move()
+	private void checkIfPieceClicked(int x, int y)
+	{
+		for(Piece p : pieces)
+		{
+			if(p.getX() == x && 
+			   p.getY() == y && 
+			   playerTurn == true && 
+			   p.getType() == PieceType.WHITE ||
+			   p.getX() == x && 
+			   p.getY() == y && 
+			   playerTurn == false && 
+			   p.getType() == PieceType.BLACK)
+			{
+				pieceSelected = true;
+				selectedPieceXPos = x;
+				selectedPieceYPos = y;
+				System.out.println("Selected " + 
+								   p.getClass().getName().substring(p.getClass().getName().indexOf(".") + 1) + 
+								   " (" + x + "," + y + ")");
+				gameEngineGUI.renderSelectedPiece(x, y);
+				for(int newY = 0; newY < 6; newY++)
+				{
+					for(int newX = 0; newX < 6; newX++)
+					{
+						if(p.isValid(p.getY(), p.getX(), newY, newX, this) == true)
+						{
+							gameEngineGUI.renderPossibleMoves(newX, newY);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	private void checkIfOtherButtonClicked(int x, int y)
 	{
 		
 	}
 	
-	private void isValid()
+	public boolean movingOnOwnPiece(int newX, int newY)
+	{
+		for(Piece p : pieces)
+		{
+			if(p.getX() == newX && p.getY() == newY && p.getType() == p.getType())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean getPlayerTurn()
+	{
+		return playerTurn;
+	}
+	
+	public void move(int newY, int newX)
 	{
 		
 	}
@@ -191,18 +263,18 @@ public class GameEngine {
 
 	public void setPieces() throws IOException {
 		pieces = new Piece[12];
-		pieces[0] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0, 0, "blackBishop");
-		pieces[1] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0, 1, "blackRook");
-		pieces[2] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,2,"blackKnight");
-		pieces[3] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,3,"blackKnight");
-		pieces[4] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,4,"blackRook");
-		pieces[5] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 0,5,"blackBishop");
-		pieces[6] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,0,"whiteBishop");
-		pieces[7] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,1,"whiteRook");
-		pieces[8] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,2,"whiteKnight");
-		pieces[9] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,3,"whiteKnight");
-		pieces[10] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,4,"whiteRook");
-		pieces[11] = new Bishop(ImageIO.read(new File("img/blackKnight.png")), 5,5,"whiteBishop");
+		pieces[0] = new Rook(ImageIO.read(new File("img/WhiteRook.png")), 0, 0, PieceType.WHITE);
+		pieces[1] = new Bishop(ImageIO.read(new File("img/WhiteBishop.png")), 0, 1, PieceType.WHITE);
+		pieces[2] = new Knight(ImageIO.read(new File("img/WhiteKnight.png")), 0,2, PieceType.WHITE);
+		pieces[3] = new Knight(ImageIO.read(new File("img/WhiteKnight.png")), 0,3, PieceType.WHITE);
+		pieces[4] = new Bishop(ImageIO.read(new File("img/WhiteBishop.png")), 0,4, PieceType.WHITE);
+		pieces[5] = new Rook(ImageIO.read(new File("img/WhiteRook.png")), 0,5, PieceType.WHITE);
+		pieces[6] = new Rook(ImageIO.read(new File("img/BlackRook.png")), 5,0, PieceType.BLACK);
+		pieces[7] = new Bishop(ImageIO.read(new File("img/BlackBishop.png")), 5,1, PieceType.BLACK);
+		pieces[8] = new Knight(ImageIO.read(new File("img/BlackKnight.png")), 5,2, PieceType.BLACK);
+		pieces[9] = new Knight(ImageIO.read(new File("img/BlackKnight.png")), 5,3, PieceType.BLACK);
+		pieces[10] = new Bishop(ImageIO.read(new File("img/BlackBishop.png")), 5,4, PieceType.BLACK);
+		pieces[11] = new Rook(ImageIO.read(new File("img/BlackRook.png")), 5,5, PieceType.BLACK);
 	}
 
 	public int getMaxMoves() {

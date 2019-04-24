@@ -35,4 +35,14 @@ public class GameEngineGUI {
 	{
 		boardGUI.renderPieces(gameEngine);
 	}
+	
+	public void renderSelectedPiece(int x, int y)
+	{
+		boardGUI.renderSelectedPiece(x, y);
+	}
+	
+	public void renderPossibleMoves(int newX, int newY)
+	{
+		boardGUI.renderPossibleMoves(newX, newY);
+	}
 }

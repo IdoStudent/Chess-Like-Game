@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Panel;
+import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.PrintStream;
 
@@ -18,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
+import conroller.LoginAction;
+import conroller.SquareAction;
 import model.GameEngine;
 import model.Piece;
 
@@ -44,6 +47,8 @@ public class BoardGUI {
 		frame.setBackground(Color.LIGHT_GRAY);
 		
 		frame.add(boardPanel(), BorderLayout.CENTER);
+		//Adds action listeners to each square button in the board chessBoardSquares[][]
+		addActionListener(gameEngine);
 		
 		//player info west panel which includes each players info
 		Panel playerInfo = new Panel();
@@ -52,10 +57,12 @@ public class BoardGUI {
 		Panel player1 = new Panel();
 		player1.setLayout(new BorderLayout());
 		player1.add(playerPanel("Player 1", gameEngine), BorderLayout.NORTH);
+		player1.add(new JLabel("Current Turn: " + currentTurn(gameEngine)), BorderLayout.SOUTH);
 		
 		Panel player2 = new Panel();
 		player2.setLayout(new BorderLayout());
 		player2.add(playerPanel("Player 2", gameEngine), BorderLayout.SOUTH);
+		player2.add(new JLabel("Moves Left: " + gameEngine.getMaxMoves()), BorderLayout.NORTH);
 		
 		playerInfo.add(player1);
 		playerInfo.add(player2);
@@ -71,6 +78,7 @@ public class BoardGUI {
 		
 		frame.setSize(700,700);
 		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		
@@ -88,7 +96,7 @@ public class BoardGUI {
         for (int i = 0; i < chessBoardSquares.length; i++) 
         {
             for (int j = 0; j < chessBoardSquares[i].length; j++)
-            {
+            {	
                 JButton b = new JButton();
                 b.setMargin(buttonMargin);
                 // our chess pieces are 64x64 px in size, so we'll
@@ -114,29 +122,50 @@ public class BoardGUI {
             	board.add(chessBoardSquares[j][i]);
             }
         }
-        
+
 		return board;
+	}
+	
+	private void addActionListener(GameEngine gameEngine)
+	{
+		for(int x = 0; x < 6; x++)
+		{
+			for(int y = 0; y < 6; y++)
+			{
+				int xPos = x;
+				int yPos = y;
+				chessBoardSquares[x][y].addActionListener(new SquareAction() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						gameEngine.buttonPressed(xPos, yPos);
+					}
+				});
+			}
+		}
 	}
 	
 	private Panel playerPanel(String player, GameEngine gameEngine)
 	{
 		int index;
+		String type;
 		
 		Panel PlayerInfo = new Panel();
 		
 		if(player.equals("Player 1"))
 		{
 			index = 0;
+			type = "(white)";
 		}
 		else
 		{
 			index = 1;
 			PlayerInfo.setLayout(new BorderLayout());
+			type = "(black)";
 		}
 		
 		PlayerInfo = new Panel();
 		PlayerInfo.setLayout(new BoxLayout(PlayerInfo, BoxLayout.PAGE_AXIS));
-		JLabel pH = new JLabel(player + " info:");
+		JLabel pH = new JLabel(player + " info " + type + ":");
 		PlayerInfo.add(pH);
 		JLabel pPoints = new JLabel("Points: " + gameEngine.getPlayers()[index].getScore());
 		JLabel pUsername = new JLabel("Username: " + gameEngine.getPlayers()[index].getPlayerId());
@@ -146,6 +175,16 @@ public class BoardGUI {
 		PlayerInfo.add(pMoves);
 		
 		return PlayerInfo;
+	}
+	
+	private String currentTurn(GameEngine gameEngine)
+	{
+		String currentTurn = gameEngine.getPlayers()[0].getPlayerId();
+		if(gameEngine.getPlayerTurn() == false)
+		{
+			currentTurn = gameEngine.getPlayers()[1].getPlayerId();
+		}	
+		return currentTurn;
 	}
 	
 	public void renderPieces(GameEngine gameEngine)
@@ -158,6 +197,34 @@ public class BoardGUI {
             ImageIcon icon = new ImageIcon(p.getImage());
             
 			chessBoardSquares[x][y].setIcon(icon);
+		}
+	}
+	
+	public void renderSelectedPiece(int x, int y)
+	{
+		unRenderBoardColor();
+		chessBoardSquares[x][y].setBackground(Color.blue);
+	}
+	
+	public void renderPossibleMoves(int newX, int newY)
+	{
+		chessBoardSquares[newX][newY].setBackground(Color.GREEN);
+	}
+	
+	private void unRenderBoardColor()
+	{
+		for(int x = 0; x < 6; x++)
+		{
+			for(int y = 0; y < 6; y++)
+			{
+                if ((y % 2 == 1 && x % 2 == 1)
+                        //) {
+                        || (y % 2 == 0 && x % 2 == 0)) {
+                	chessBoardSquares[x][y].setBackground(Color.DARK_GRAY);
+                } else {
+                	chessBoardSquares[x][y].setBackground(Color.LIGHT_GRAY);
+                }
+			}
 		}
 	}
 }

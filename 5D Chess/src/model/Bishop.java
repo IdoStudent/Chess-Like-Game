@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Bishop extends Piece {
 	
-	public Bishop(BufferedImage image, int yPosition, int xPosition, String name)
+	public Bishop(BufferedImage image, int yPosition, int xPosition, PieceType pieceType)
 	{
-		super(image, yPosition, xPosition, name);
+		super(image, yPosition, xPosition, pieceType);
 	}
 
 	@Override
@@ -16,7 +16,8 @@ public class Bishop extends Piece {
 		if(newX == (x + 1) && 
 		   newY == (y + 1) ||
 		   newX == (x + 2) && 
-		   newY == (y + 2))
+		   newY == (y + 2) &&
+		   gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			isValid = true;
@@ -24,7 +25,8 @@ public class Bishop extends Piece {
 		else if(newX == (x - 1) && 
 				newY == (y - 1) ||
 				newX == (x - 2) && 
-				newY == (y - 2))
+				newY == (y - 2) &&
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			isValid = true;
@@ -32,7 +34,8 @@ public class Bishop extends Piece {
 		else if(newX == (x - 1) && 
 				newY == (y + 1) ||
 				newX == (x - 2) && 
-				newY == (y + 2))
+				newY == (y + 2) &&
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			isValid = true;
@@ -40,7 +43,8 @@ public class Bishop extends Piece {
 		else if(newX == (x + 1) && 
 				newY == (y - 1) ||
 				newX == (x + 2) && 
-				newY == (y - 2))
+				newY == (y - 2) &&
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			isValid = true;

@@ -39,16 +39,16 @@ public class MaxMovesGUI {
 				try
 				{
 					max = Integer.parseInt(maxMoves.getText());
-				} catch(Exception x) {}
-				if(max >= 10 && max <= 90)
-				{
-					gameEngine.setMaxMoves(max);
-					frame.dispose();
-				}
-				else
-				{
-					renderError();
-				}
+					if(max >= 10 && max <= 90)
+					{
+						gameEngine.setMaxMoves(max);
+						frame.dispose();
+					}
+					else
+					{
+						renderError();
+					}
+				} catch(Exception x) {renderError();}
 			}
 		});
 		
@@ -79,7 +79,7 @@ public class MaxMovesGUI {
 	private void renderError()
 	{
 		frame.setSize(300,150);
-		Label error = new Label("ERROR: Enter number between 10 and 150!");
+		Label error = new Label("ERROR: Enter number between 10 and 90!");
 		error.setForeground(Color.RED);
 		JPanel errorPanel = new JPanel();
 		errorPanel.setLayout(new FlowLayout());

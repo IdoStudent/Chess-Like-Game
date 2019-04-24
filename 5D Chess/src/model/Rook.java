@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Rook extends Piece{
 	
-	public Rook(BufferedImage image, int yPosition, int xPosition, String name)
+	public Rook(BufferedImage image, int yPosition, int xPosition, PieceType pieceType)
 	{
-		super(image, yPosition, xPosition, name);
+		super(image, yPosition, xPosition, pieceType);
 	}
 
 	@Override
@@ -16,7 +16,8 @@ public class Rook extends Piece{
 		if(newX == (x) && 
 		   newY == (y + 1) ||
 		   newX == (x) && 
-		   newY == (y + 2))
+		   newY == (y + 2) &&
+		   gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			valid = true;
@@ -24,7 +25,8 @@ public class Rook extends Piece{
 		else if(newX == (x) && 
 		        newY == (y - 1) ||
 		        newX == (x) && 
-		        newY == (y - 2))
+		        newY == (y - 2) &&
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			valid = true;
@@ -32,7 +34,8 @@ public class Rook extends Piece{
 		else if(newX == (x + 1) && 
 			    newY == (y) ||
 			    newX == (x + 2) && 
-			    newY == (y))
+			    newY == (y) &&
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			valid = true;	
@@ -40,7 +43,8 @@ public class Rook extends Piece{
 		else if(newX == (x - 1) && 
 			    newY == (y) ||
 			    newX == (x - 2) && 
-			    newY == (y))
+			    newY == (y) &&
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			if(isMovingOverPiece(y, x, newY, newX, gameEngine) == false)
 			valid = true;

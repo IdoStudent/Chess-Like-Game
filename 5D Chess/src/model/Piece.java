@@ -4,18 +4,18 @@ import java.awt.image.BufferedImage;
 
 public abstract class Piece {
 
-	private String name;
 	BufferedImage image;
 	private int yPosition;
 	private int xPosition;
+	PieceType pieceType;
 	
-	public Piece(BufferedImage image, int yPosition, int xPosition, String name)
+	public Piece(BufferedImage image, int yPosition, int xPosition, PieceType pieceType)
 	{
-		this.name = name;
 		this.yPosition = yPosition;
 		this.xPosition = xPosition;
 		//this.image = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		this.image = image;
+		this.pieceType = pieceType;
 	}
 	
 	public void move(int y, int x) {
@@ -25,9 +25,9 @@ public abstract class Piece {
 	
 	public abstract boolean isValid(int y, int x, int newY, int newX, GameEngine gameEngine);
 	
-	public String getName()
+	public PieceType getType()
 	{
-		return name;
+		return pieceType;
 	}
 	
 	public int getY() {

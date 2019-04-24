@@ -4,9 +4,9 @@ import java.awt.image.BufferedImage;
 
 public class Knight extends Piece{
 	
-	public Knight(BufferedImage image, int yPosition, int xPosition, String name)
+	public Knight(BufferedImage image, int yPosition, int xPosition, PieceType pieceType)
 	{
-		super(image, yPosition, xPosition, name);
+		super(image, yPosition, xPosition, pieceType);
 	}
 
 	@Override
@@ -14,64 +14,52 @@ public class Knight extends Piece{
 		
 		if(newX == (x + 2) && 
 		   newY == (y + 1) &&
-		   boundsChecking(newY, newX) == true)
+		   gameEngine.movingOnOwnPiece(newX, newY) == false)
 		{
 			return true;
 		}
 		else if(newX == (x + 2) && 
 			    newY == (y - 1) &&
-				boundsChecking(newY, newX) == true)
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 2) && 
 			    newY == (y + 1) &&
-				boundsChecking(newY, newX) == true)
+				gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 2) && 
 			    newY == (y - 1) &&
-				boundsChecking(newY, newX) == true)
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
 		else if(newX == (x + 1) && 
 			    newY == (y - 2) &&
-				boundsChecking(newY, newX) == true)
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 1) && 
 			    newY == (y - 2) &&
-				boundsChecking(newY, newX) == true)
+			    gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
 		else if(newX == (x - 1) && 
 			    newY == (y + 2) &&
-				boundsChecking(newY, newX) == true)
+				gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
 		else if(newX == (x + 1) && 
 			    newY == (y + 2) &&
-				boundsChecking(newY, newX) == true)
+				gameEngine.movingOnOwnPiece(newX, newY) == false)
 			{
 				return true;
 			}
-		else
-		{
-			return false;
-		}
-	}
-	
-	private boolean boundsChecking(int newY, int newX)
-	{
-		if(newX >= 0 && newX < 6 && newY >= 0 && newY < 6)
-		{
-			return true;
-		}
 		else
 		{
 			return false;
