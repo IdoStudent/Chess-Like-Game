@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Panel;
@@ -31,6 +32,7 @@ public class BoardGUI {
 	
 	Panel console;
 	Panel playerInfo;
+	
 	Panel player1;
 	Panel player2;
 	
@@ -67,7 +69,7 @@ public class BoardGUI {
 		frame.add(console, BorderLayout.SOUTH);
 		
 		
-		frame.setSize(750,750);
+		frame.setSize(800,800);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,6 +92,7 @@ public class BoardGUI {
 		
 		playerInfo.revalidate();
 		frame.add(playerInfo, BorderLayout.WEST);
+		playerInfo.setPreferredSize(new Dimension(150, 150));
 	}
 	
 	private JPanel boardPanel()
@@ -202,9 +205,12 @@ public class BoardGUI {
 			int y = p.getY();
 			int x = p.getX();
 			
-            ImageIcon icon = new ImageIcon(p.getImage());
-            
-			chessBoardSquares[x][y].setIcon(icon);
+			if(p.getEliminated() == false)
+			{
+	            ImageIcon icon = new ImageIcon(p.getImage());
+	            
+				chessBoardSquares[x][y].setIcon(icon);
+			}
 		}
 	}
 	
@@ -214,9 +220,17 @@ public class BoardGUI {
 		chessBoardSquares[x][y].setBackground(Color.blue);
 	}
 	
-	public void renderPossibleMoves(int newX, int newY)
+	public void renderPossibleMoves(int newX, int newY, GameEngine gameEngine)
 	{
 		chessBoardSquares[newX][newY].setBackground(Color.GREEN);
+		for(Piece p : gameEngine.getPieces())
+		{
+			if(p.getX() == newX &&
+			   p.getY() == newY)
+			{
+				chessBoardSquares[newX][newY].setBackground(Color.RED);
+			}
+		}
 	}
 	
 	public void unRenderBoardColor()

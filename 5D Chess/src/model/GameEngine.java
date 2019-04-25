@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import conroller.ButtonPressed;
 import view.GameEngineGUI;
 
 public class GameEngine {
@@ -14,20 +15,18 @@ public class GameEngine {
 	private Piece[] pieces;
 	private Player[] players = new Player[2];
 	
-	private int player1MaxMoves = 0;
-	private int player2MaxMoves = 0;
 	private int maxMoves;
 	
 	private boolean playerTurn = true;
 	
-	private Piece pieceSelected;
+	private ButtonPressed buttonPressed;
 	
 	
 	public GameEngine()
 	{
 		renderLoginRegisterGUI();
 		renderMaxMovesGUI();
-		//this.maxMoves = maxMoves();
+		buttonPressed = new ButtonPressed(this, gameEngineGUI);
 	}
 	
 	private void renderLoginRegisterGUI()
@@ -110,13 +109,13 @@ public class GameEngine {
 	public void setMaxMoves(int maxMoves)
 	{
 		//sets the player1MaxMoves or player2MaxMoves depending on which one
-		if(player1MaxMoves == 0)
+		if(players[0].getMaxMoves() == 0)
 		{
-			player1MaxMoves = maxMoves;
+			players[0].setMaxMoves(maxMoves);
 		}
-		else if(player2MaxMoves == 0)
+		else if(players[1].getMaxMoves() == 0)
 		{
-			player2MaxMoves = maxMoves;
+			players[1].setMaxMoves(maxMoves);
 		}
 	}
 	
@@ -126,19 +125,19 @@ public class GameEngine {
 		
 		gameEngineGUI.renderMaxMoves("Player 1");
 		
-		while(this.player1MaxMoves == 0)
+		while(players[0].getMaxMoves() == 0)
 		{
 			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 		}
 		
 		gameEngineGUI.renderMaxMoves("Player 2");
-		while(this.player2MaxMoves == 0)
+		while(players[1].getMaxMoves() == 0)
 		{
 			try {Thread.sleep(1000);} catch (InterruptedException e) {}
 		}
 		
 		//sets the max moves once both players inputs have been entered.
-		this.maxMoves = (player1MaxMoves + player2MaxMoves) / 2;
+		this.maxMoves = (players[0].getMaxMoves() + players[1].getMaxMoves()) / 2;
 	}
 	
 	public void renderBoardGUI()
@@ -155,100 +154,22 @@ public class GameEngine {
 	
 	public void buttonPressed(int x, int y)
 	{
-		if(pieceSelected != null)
-		{
-			checkIfOtherButtonClicked(x, y);
-		}
-		checkIfPieceClicked(x, y);
-	}
-	
-	private void checkIfPieceClicked(int x, int y)
-	{
-		for(Piece p : pieces)
-		{
-			if(p.getX() == x && 
-			   p.getY() == y && 
-			   playerTurn == true && 
-			   p.getType() == PieceType.WHITE ||
-			   p.getX() == x && 
-			   p.getY() == y && 
-			   playerTurn == false && 
-			   p.getType() == PieceType.BLACK)
-			{
-				pieceSelected = p;
-				gameEngineGUI.renderSelectedPiece(x, y);
-				for(int newY = 0; newY < 6; newY++)
-				{
-					for(int newX = 0; newX < 6; newX++)
-					{
-						if(p.isValid(p.getY(), p.getX(), newY, newX, this) == true)
-						{
-							gameEngineGUI.renderPossibleMoves(newX, newY);
-						}
-					}
-				}
-			}
-		}
-	}
-	
-	private void checkIfOtherButtonClicked(int x, int y)
-	{
-		if(pieceSelected.isValid(pieceSelected.getY(), pieceSelected.getX(), y, x, this) == true)
-		{
-			moveAndUpdatePieces(x, y);
-		}
-		else
-		{
-			gameEngineGUI.unRenderBoardColor();
-			pieceSelected = null;
-		}
-	}
-	
-	private void moveAndUpdatePieces(int x, int y)
-	{
-		gameEngineGUI.unRenderPosition(pieceSelected.getX(), pieceSelected.getY());
-		pieceSelected.move(y, x);
-		gameEngineGUI.unRenderBoardColor();
-		if(playerTurn == true)
-		{
-			players[0].setNumOfMove(players[0].getNumOfMove() + 1);
-			System.out.println(players[0].getPlayerId() + " moved " + 
-					   pieceSelected.getClass().getName().substring(pieceSelected.getClass().getName().indexOf(".") + 1) + 
-					   " to " + x + "," + y);
-			System.out.println(players[1].getPlayerId() + "'s turn.");
-		}
-		else
-		{
-			players[1].setNumOfMove(players[1].getNumOfMove() + 1);
-			System.out.println(players[1].getPlayerId() + " moved " + 
-					   pieceSelected.getClass().getName().substring(pieceSelected.getClass().getName().indexOf(".") + 1) + 
-					   " to " + x + "," + y);
-			System.out.println(players[0].getPlayerId() + "'s turn.");
-		}
-		
-		pieceSelected = null;
-		
-		playerTurn = !playerTurn;
-		maxMoves = maxMoves - 1;
-		gameEngineGUI.renderBoard(this);
-		gameEngineGUI.renderPieces();
+		buttonPressed.buttonClicked(x, y);
 	}
 	
 	public boolean movingOnOwnPiece(int newX, int newY, PieceType pieceType)
 	{
-		for(Piece p : pieces)
-		{
-			if(p.getX() == newX && p.getY() == newY && pieceType == p.getType())
-			{
-				return true;
-			}
-		}
-		return false;
+		return buttonPressed.movingOnOwnPiece(newX, newY, pieceType);
 	}
 	
 	public boolean getPlayerTurn()
 	{
 		return playerTurn;
+	}
+	
+	public void setPlayerTurn(boolean turn)
+	{
+		playerTurn = turn;
 	}
 	
 	public void endGame()

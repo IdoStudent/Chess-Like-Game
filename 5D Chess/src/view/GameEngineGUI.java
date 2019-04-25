@@ -56,6 +56,6 @@ public class GameEngineGUI {
 	
 	public void renderPossibleMoves(int newX, int newY)
 	{
-		boardGUI.renderPossibleMoves(newX, newY);
+		boardGUI.renderPossibleMoves(newX, newY, gameEngine);
 	}
 }

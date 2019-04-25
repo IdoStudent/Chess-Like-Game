@@ -6,6 +6,7 @@ public class Player {
 	
 	private String playerId;
 	private String playerPwd;
+	private int maxMoves;
 	private int score;
 	private int numOfMove;
 	private boolean result;
@@ -14,6 +15,7 @@ public class Player {
 	public Player(String playerId, String playerPwd) {
 		this.playerId = playerId;
 		this.playerPwd = playerPwd;
+		maxMoves = 0;
 	}
 
 	public String getPlayerId() {
@@ -55,6 +57,15 @@ public class Player {
 
 	public void setResult(boolean result) {
 		this.result = result;
+	}
+	
+	public int getMaxMoves()
+	{
+		return maxMoves;
+	}
+	public void setMaxMoves(int maxMoves)
+	{
+		this.maxMoves = maxMoves;
 	}
 	
 	public Piece setPiece() {

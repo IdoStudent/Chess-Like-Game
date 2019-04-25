@@ -5,9 +5,13 @@ import java.awt.image.BufferedImage;
 public abstract class Piece {
 
 	BufferedImage image;
+	
 	private int yPosition;
 	private int xPosition;
+	
 	PieceType pieceType;
+	
+	private boolean eliminated = false;
 	
 	public Piece(BufferedImage image, int yPosition, int xPosition, PieceType pieceType)
 	{
@@ -41,6 +45,16 @@ public abstract class Piece {
 	public BufferedImage getImage()
 	{
 		return image;
+	}
+	
+	public void eliminated(boolean eliminated)
+	{
+		this.eliminated = eliminated;
+	}
+	
+	public boolean getEliminated()
+	{
+		return eliminated;
 	}
 	
 }
