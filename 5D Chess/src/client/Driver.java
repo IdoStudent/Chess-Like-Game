@@ -8,9 +8,6 @@ public class Driver {
 		GameEngine gameEngine = new GameEngine();
 		
 		gameEngine.renderBoardGUI();
-		
-		gameEngine.startGame();
-
 	}
 
 }

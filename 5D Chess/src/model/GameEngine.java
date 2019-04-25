@@ -147,41 +147,14 @@ public class GameEngine {
 		
 		try {
 			setPieces();
+			gameEngineGUI.renderPieces();
 		} catch (IOException e) {
 			System.out.println("Could not render all pieces! File read error!");
 		}
 	}
 	
-	public void startGame()
-	{
-		//IN A LOOP,
-		//Render board GUI and check player turns,
-		//Once player moves, run the move/isValid commands
-		//once game is over,
-		//run writeDataToFile()
-		gameEngineGUI.renderPieces();
-		System.out.println("Game Started...");
-		if(playerTurn == true)
-		{
-			System.out.println(players[0].getPlayerId() + "'s turn.");
-		}
-		else
-		{
-			System.out.println(players[1].getPlayerId() + "'s turn.");
-		}
-	}
-	
 	public void buttonPressed(int x, int y)
 	{
-//		if(pieceSelected == null)
-//		{
-//			checkIfPieceClicked(x, y);
-//		}
-//		else if(pieceSelected != null)
-//		{
-//			checkIfPieceClicked(x, y);
-//			checkIfOtherButtonClicked(x, y);
-//		}
 		if(pieceSelected != null)
 		{
 			checkIfOtherButtonClicked(x, y);
@@ -203,10 +176,6 @@ public class GameEngine {
 			   p.getType() == PieceType.BLACK)
 			{
 				pieceSelected = p;
-
-				System.out.println("Selected " + 
-								   p.getClass().getName().substring(p.getClass().getName().indexOf(".") + 1) + 
-								   " (" + x + "," + y + ")");
 				gameEngineGUI.renderSelectedPiece(x, y);
 				for(int newY = 0; newY < 6; newY++)
 				{
@@ -226,20 +195,43 @@ public class GameEngine {
 	{
 		if(pieceSelected.isValid(pieceSelected.getY(), pieceSelected.getX(), y, x, this) == true)
 		{
-			gameEngineGUI.unRenderPosition(pieceSelected.getX(), pieceSelected.getY());
-			pieceSelected.move(y, x);
-			gameEngineGUI.unRenderBoardColor();
-			pieceSelected = null;
-			playerTurn = !playerTurn;
-			maxMoves = maxMoves - 1;
-			gameEngineGUI.renderBoard(this);
-			gameEngineGUI.renderPieces();
+			moveAndUpdatePieces(x, y);
 		}
 		else
 		{
 			gameEngineGUI.unRenderBoardColor();
 			pieceSelected = null;
 		}
+	}
+	
+	private void moveAndUpdatePieces(int x, int y)
+	{
+		gameEngineGUI.unRenderPosition(pieceSelected.getX(), pieceSelected.getY());
+		pieceSelected.move(y, x);
+		gameEngineGUI.unRenderBoardColor();
+		if(playerTurn == true)
+		{
+			players[0].setNumOfMove(players[0].getNumOfMove() + 1);
+			System.out.println(players[0].getPlayerId() + " moved " + 
+					   pieceSelected.getClass().getName().substring(pieceSelected.getClass().getName().indexOf(".") + 1) + 
+					   " to " + x + "," + y);
+			System.out.println(players[1].getPlayerId() + "'s turn.");
+		}
+		else
+		{
+			players[1].setNumOfMove(players[1].getNumOfMove() + 1);
+			System.out.println(players[1].getPlayerId() + " moved " + 
+					   pieceSelected.getClass().getName().substring(pieceSelected.getClass().getName().indexOf(".") + 1) + 
+					   " to " + x + "," + y);
+			System.out.println(players[0].getPlayerId() + "'s turn.");
+		}
+		
+		pieceSelected = null;
+		
+		playerTurn = !playerTurn;
+		maxMoves = maxMoves - 1;
+		gameEngineGUI.renderBoard(this);
+		gameEngineGUI.renderPieces();
 	}
 	
 	public boolean movingOnOwnPiece(int newX, int newY, PieceType pieceType)

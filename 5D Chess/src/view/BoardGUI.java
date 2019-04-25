@@ -49,6 +49,15 @@ public class BoardGUI {
 		//Adds action listeners to each square button in the board chessBoardSquares[][]
 		addActionListener(gameEngine);
 		
+		//player info west panel which includes each players info
+		playerInfo = new Panel();
+		playerInfo.setLayout(new GridLayout(2,1));
+		
+		player1 = new Panel();
+		player1.setLayout(new BorderLayout());
+		player2 = new Panel();
+		player2.setLayout(new BorderLayout());
+		
 		//South panel which includes the console
 		console = new Panel();
 		console.setLayout(new BoxLayout(console, BoxLayout.PAGE_AXIS));
@@ -58,7 +67,7 @@ public class BoardGUI {
 		frame.add(console, BorderLayout.SOUTH);
 		
 		
-		frame.setSize(700,700);
+		frame.setSize(750,750);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,22 +76,19 @@ public class BoardGUI {
 	
 	public void renderGUI(GameEngine gameEngine)
 	{
-		//player info west panel which includes each players info
-		playerInfo = new Panel();
-		playerInfo.setLayout(new GridLayout(2,1));
+		player1.removeAll();
+		player2.removeAll();
 		
-		player1 = new Panel();
-		player1.setLayout(new BorderLayout());
 		player1.add(playerPanel("Player 1", gameEngine), BorderLayout.NORTH);
 		player1.add(new JLabel("Current Turn: " + currentTurn(gameEngine)), BorderLayout.SOUTH);
 		
-		player2 = new Panel();
-		player2.setLayout(new BorderLayout());
 		player2.add(playerPanel("Player 2", gameEngine), BorderLayout.SOUTH);
 		player2.add(new JLabel("Moves Left: " + gameEngine.getMaxMoves()), BorderLayout.NORTH);
 		
 		playerInfo.add(player1);
 		playerInfo.add(player2);
+		
+		playerInfo.revalidate();
 		frame.add(playerInfo, BorderLayout.WEST);
 	}
 	
