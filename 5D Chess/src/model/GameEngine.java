@@ -26,7 +26,11 @@ public class GameEngine {
 	{
 		renderLoginRegisterGUI();
 		renderMaxMovesGUI();
+		renderBoardGUI();
 		buttonPressed = new ButtonPressed(this, gameEngineGUI);
+		System.out.println("Game started...");
+		System.out.println("Credits to: Anna Tran, Walaa Aqeel, Brandon Sarkis, Ido Yaron & Yasir Fayrooz.");
+		System.out.println("Max moves is calculated by the average of Player 1: " + players[0].getMaxMoves() + " and Player 2: " + players[1].getMaxMoves());
 	}
 	
 	private void renderLoginRegisterGUI()
@@ -37,7 +41,7 @@ public class GameEngine {
 		gameEngineGUI.renderLoginRegister("Player 1");
 		while(player1LoggedIn == false)
 		{
-			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			if(getPlayers()[0] != null)
 			{
 				player1LoggedIn = true;
@@ -47,7 +51,7 @@ public class GameEngine {
 		gameEngineGUI.renderLoginRegister("Player 2");
 		while(player2LoggedIn == false)
 		{
-			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
 			if(getPlayers()[1] != null)
 			{
 				player2LoggedIn = true;
@@ -106,17 +110,13 @@ public class GameEngine {
 		return players;
 	}
 	
+	public int getMaxMoves() {
+		return maxMoves;
+	}
+	
 	public void setMaxMoves(int maxMoves)
 	{
-		//sets the player1MaxMoves or player2MaxMoves depending on which one
-		if(players[0].getMaxMoves() == 0)
-		{
-			players[0].setMaxMoves(maxMoves);
-		}
-		else if(players[1].getMaxMoves() == 0)
-		{
-			players[1].setMaxMoves(maxMoves);
-		}
+		this.maxMoves = maxMoves;
 	}
 	
 	private void renderMaxMovesGUI()
@@ -127,13 +127,13 @@ public class GameEngine {
 		
 		while(players[0].getMaxMoves() == 0)
 		{
-			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
 		}
 		
 		gameEngineGUI.renderMaxMoves("Player 2");
 		while(players[1].getMaxMoves() == 0)
 		{
-			try {Thread.sleep(1000);} catch (InterruptedException e) {}
+			try {Thread.sleep(500);} catch (InterruptedException e) {}
 		}
 		
 		//sets the max moves once both players inputs have been entered.
@@ -172,9 +172,51 @@ public class GameEngine {
 		playerTurn = turn;
 	}
 	
-	public void endGame()
+	//If pieces all destroyed OR If max moves = 0
+	public void winChecker()
 	{
+		int whiteEliminated = 0;
+		int blackEliminated = 0;
 		
+		for(Piece p : pieces)
+		{
+			if(p.getEliminated() == true)
+			{
+				if(p.getType() == PieceType.BLACK)
+					blackEliminated++;
+				else if(p.getType() == PieceType.WHITE)
+					whiteEliminated++;
+			}
+		}
+		
+		if(whiteEliminated == 6)
+		{
+			endGame(players[1]);
+		}
+		else if(blackEliminated == 6)
+		{
+			endGame(players[0]);
+		}
+		else if(maxMoves == 0)
+		{
+			if(players[0].getScore() > players[1].getScore())
+			{
+				endGame(players[0]);
+			}
+			else if(players[1].getScore() > players[0].getScore())
+			{
+				endGame(players[1]);
+			}
+			else
+			{
+				endGame(null);
+			}
+		}
+	}
+	
+	private void endGame(Player winner)
+	{
+		gameEngineGUI.endGame(winner);
 	}
 	
 	private void writeDataToFile()
@@ -200,9 +242,5 @@ public class GameEngine {
 		pieces[9] = new Knight(ImageIO.read(new File("img/BlackKnight.png")), 5,3, PieceType.BLACK);
 		pieces[10] = new Bishop(ImageIO.read(new File("img/BlackBishop.png")), 5,4, PieceType.BLACK);
 		pieces[11] = new Rook(ImageIO.read(new File("img/BlackRook.png")), 5,5, PieceType.BLACK);
-	}
-
-	public int getMaxMoves() {
-		return maxMoves;
 	}
 }

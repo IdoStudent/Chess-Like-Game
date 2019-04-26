@@ -70,6 +70,7 @@ public class ButtonPressed {
 			gameEngine.setMaxMoves(gameEngine.getMaxMoves() - 1);
 			gameEngineGUI.renderBoard(gameEngine);
 			gameEngineGUI.renderPieces();
+			gameEngine.winChecker();
 		}
 		else
 		{

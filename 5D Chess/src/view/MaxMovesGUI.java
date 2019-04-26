@@ -41,7 +41,14 @@ public class MaxMovesGUI {
 					max = Integer.parseInt(maxMoves.getText());
 					if(max >= 10 && max <= 90)
 					{
-						gameEngine.setMaxMoves(max);
+						if(gameEngine.getPlayers()[0].getMaxMoves() == 0)
+						{
+							gameEngine.getPlayers()[0].setMaxMoves(max);
+						}
+						else
+						{
+							gameEngine.getPlayers()[1].setMaxMoves(max);
+						}
 						frame.dispose();
 					}
 					else

@@ -1,6 +1,7 @@
 package view;
 
 import model.GameEngine;
+import model.Player;
 
 public class GameEngineGUI {
 	BoardGUI boardGUI;
@@ -57,5 +58,10 @@ public class GameEngineGUI {
 	public void renderPossibleMoves(int newX, int newY)
 	{
 		boardGUI.renderPossibleMoves(newX, newY, gameEngine);
+	}
+	
+	public void endGame(Player winner)
+	{
+		boardGUI.endGame(winner);
 	}
 }

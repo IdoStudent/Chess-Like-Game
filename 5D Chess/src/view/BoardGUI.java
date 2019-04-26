@@ -13,6 +13,7 @@ import java.io.PrintStream;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import conroller.LoginAction;
 import conroller.SquareAction;
 import model.GameEngine;
 import model.Piece;
+import model.Player;
 
 public class BoardGUI {
 	
@@ -74,6 +76,27 @@ public class BoardGUI {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+	
+	public void endGame(Player winner)
+	{
+		Panel winnerPanel = new Panel();
+		
+		winnerPanel.setLayout(new BoxLayout(winnerPanel, BoxLayout.PAGE_AXIS));
+		
+		JButton endGameButton = new JButton("exit");
+		
+		winnerPanel.add(new JLabel("Winner: " + winner.getPlayerId() + "! Thank you for playing."));
+		winnerPanel.add(endGameButton);
+		JDialog dialog = new JDialog(frame);
+		
+		dialog.add(winnerPanel, true);
+		
+		dialog.setSize(300,200);
+		dialog.setLocationRelativeTo(null);
+		dialog.setResizable(false);
+		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		dialog.setVisible(true);
 	}
 	
 	public void renderGUI(GameEngine gameEngine)
