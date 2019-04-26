@@ -1,14 +1,18 @@
 package view;
 
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import conroller.LoginAction;
@@ -42,6 +46,10 @@ public class LoginRegisterGUI {
 				{
 					frame.dispose();
 				}
+				else
+				{
+					renderLoginError();
+				}
 			}
 		});
 		registerButton.addActionListener(new RegisterAction(){
@@ -50,6 +58,10 @@ public class LoginRegisterGUI {
 				if(gameEngine.registerPlayer(userTextBox.getText(), passTextBox.getText()) == true)
 				{
 					frame.dispose();
+				}
+				else
+				{
+					renderRegisterError();
 				}
 			}
 		});
@@ -89,6 +101,72 @@ public class LoginRegisterGUI {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	private void renderLoginError()
+	{
+		JDialog dialog = new JDialog(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
+		
+		Panel centerText = new Panel();
+		centerText.setLayout(new FlowLayout());		
+		centerText.add(new JLabel("ERROR!"));
+		
+		Panel centerButton = new Panel();
+		centerButton.setLayout(new FlowLayout());
+		JButton okButton = new JButton("Ok");
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+			}
+		});
+		centerButton.add(okButton);
+		
+		Panel errorPanel = new Panel();
+		errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.Y_AXIS));
+		errorPanel.add(centerText);
+		errorPanel.add(centerButton);
+		
+		dialog.add(errorPanel);
+		
+		dialog.setSize(230,100);
+		dialog.setLocationRelativeTo(null);
+		dialog.setResizable(false);
+		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		dialog.setVisible(true);
+	}
+	
+	private void renderRegisterError()
+	{
+		JDialog dialog = new JDialog(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
+		
+		Panel centerText = new Panel();
+		centerText.setLayout(new FlowLayout());		
+		centerText.add(new JLabel("ERROR!"));
+		
+		Panel centerButton = new Panel();
+		centerButton.setLayout(new FlowLayout());
+		JButton okButton = new JButton("Ok");
+		okButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dialog.dispose();
+			}
+		});
+		centerButton.add(okButton);
+		
+		Panel errorPanel = new Panel();
+		errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.Y_AXIS));
+		errorPanel.add(centerText);
+		errorPanel.add(centerButton);
+		
+		dialog.add(errorPanel);
+		
+		dialog.setSize(230,100);
+		dialog.setLocationRelativeTo(null);
+		dialog.setResizable(false);
+		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		dialog.setVisible(true);
 	}
 	
 	
