@@ -62,6 +62,6 @@ public class GameEngineGUI {
 	
 	public void endGame(Player winner)
 	{
-		boardGUI.endGame(winner);
+		boardGUI.endGame(winner, gameEngine);
 	}
 }

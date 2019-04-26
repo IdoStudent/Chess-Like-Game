@@ -47,7 +47,10 @@ public class LoginRegisterGUI {
 		registerButton.addActionListener(new RegisterAction(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				gameEngine.registerPlayer(userTextBox.getText(), passTextBox.getText());
+				if(gameEngine.registerPlayer(userTextBox.getText(), passTextBox.getText()) == true)
+				{
+					frame.dispose();
+				}
 			}
 		});
 		

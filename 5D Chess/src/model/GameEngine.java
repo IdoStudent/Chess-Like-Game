@@ -1,7 +1,10 @@
 package model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -69,10 +72,17 @@ public class GameEngine {
 		//check if username is already logged in,
 		//create new player object,
 		//run addPlayer method and pass in new player object
-		Player player = new Player(username, password);
-		addPlayer(player);
-		System.out.println("LOGGED IN");
-		return true;
+		
+		if(checkUsernamePasswordCorrect(username, password) == false)
+		{
+			return false;
+		}
+		else
+		{
+			Player player = new Player(username, password);
+			addPlayer(player);
+			return true;
+		}
 	}
 	
 	public boolean registerPlayer(String username, String password)
@@ -81,15 +91,97 @@ public class GameEngine {
 		//check if username is already registered,
 		//create new player object,
 		//run addPlayer method and pass in new player object
+		
+		if(checkIfUsernameExists(username) == true)
+		{
+			return false;
+		}
+		else
+		{
+			if(requirements(username, password) == false)
+			{
+				return false;
+			}
+			else
+			{
+				Player player = new Player(username, password);
+				addPlayer(player);
+				writeDataToFile(username, password);
+				return true;
+			}
+		}
+	}
+	
+	private boolean checkUsernamePasswordCorrect(String username, String password)
+	{
+		Scanner inputStream = null;	
+		try
+		{
+			inputStream = new Scanner(new File("database.txt"));
+			inputStream.useDelimiter(":");
+			
+			while(inputStream.hasNextLine())
+			{
+				String user = inputStream.next();
+				String pass = inputStream.next();
+				
+				if(user.equals(username) && pass.equals(password))
+				{
+					inputStream.close();
+					return true;
+				}
+				
+				inputStream.nextLine();
+			}
+			
+			inputStream.close();
+		} catch(Exception e) {
+			return false;
+		}
 		return false;
 	}
 	
-	private boolean validatePlayers(String username, String password)
+	private boolean checkIfUsernameExists(String username)
 	{
-		//check and see if the username and password requirements are correct and not blank
-		//exclude using the char ":" from usernames and passwords as this will cause conflicts
-		//with the writing to file.
+		Scanner inputStream = null;	
+		try
+		{
+			inputStream = new Scanner(new File("database.txt"));
+			inputStream.useDelimiter(":");
+			
+			while(inputStream.hasNextLine())
+			{
+				String user = inputStream.next();
+				
+				if(user.equals(username))
+				{
+					inputStream.close();
+					return true;
+				}
+				inputStream.nextLine();
+			}
+			
+			inputStream.close();
+		} catch(Exception e) {
+			return true;
+		}
 		return false;
+	}
+	
+	private boolean requirements(String username, String password)
+	{
+		if(username.length() > 10)
+		{
+			return false;
+		}
+		else if(username.contains(":") || password.contains(":"))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	private void addPlayer(Player player)
@@ -219,9 +311,106 @@ public class GameEngine {
 		gameEngineGUI.endGame(winner);
 	}
 	
-	private void writeDataToFile()
+	public void writeDataToFile(Player winner)
 	{
+		int winnerIndex = 1;
+		int loserIndex = 0;
+		if(players[0].equals(winner))
+		{
+			winnerIndex = 0;
+			loserIndex = 1;
+		}
 		
+		Scanner scanner;
+		StringBuilder sb = new StringBuilder();
+		try
+		{
+			scanner = new Scanner(new File("database.txt"));
+			scanner.useDelimiter(":");
+			while(scanner.hasNextLine())
+			{
+				if(sb.length() != 0)
+				{
+					sb.append("\n");
+				}
+				
+				String username = scanner.next();
+				String password = scanner.next();
+				int win = Integer.parseInt(scanner.next());
+				int loss = Integer.parseInt(scanner.next());
+				
+				if(username.equals(players[winnerIndex].getPlayerId()))
+				{
+					win++;
+				}
+				else if(username.equals(players[loserIndex].getPlayerId()))
+				{
+					loss++;
+				}
+				
+				sb.append(username + ":" + 
+						  password + ":" + 
+						  win + ":" + 
+						  loss + ":");
+				
+				scanner.nextLine();
+			}
+			scanner.close();
+		}
+		catch(Exception e){}
+		
+		try 
+		{
+			PrintWriter out = new PrintWriter("database.txt");
+			
+			out.print(sb);
+			out.close();
+		}
+		catch (FileNotFoundException e) {}
+		
+		System.exit(0);
+	}
+	
+	public void writeDataToFile(String username, String password)
+	{
+		Scanner scanner;
+		StringBuilder sb = new StringBuilder();
+		try
+		{
+			scanner = new Scanner(new File("database.txt"));
+			scanner.useDelimiter(":");
+			while(scanner.hasNextLine())
+			{
+				if(sb.length() != 0)
+				{
+					sb.append("\n");
+				}
+				
+				String user = scanner.next();
+				String pass = scanner.next();
+				int win = Integer.parseInt(scanner.next());
+				int loss = Integer.parseInt(scanner.next());
+				
+				sb.append(user + ":" + 
+						  pass + ":" + 
+						  win + ":" + 
+						  loss + ":");
+				
+				scanner.nextLine();
+			}
+			scanner.close();
+		}
+		catch(Exception e){}
+		
+		try 
+		{
+			PrintWriter out = new PrintWriter("database.txt");
+			
+			out.println(sb);
+			out.print(username + ":" + password + ":" + 0 + ":" + 0 + ":");
+			out.close();
+		}
+		catch (FileNotFoundException e) {}
 	}
 
 	public Piece[] getPieces() {

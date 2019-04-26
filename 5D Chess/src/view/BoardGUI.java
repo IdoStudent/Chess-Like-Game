@@ -2,11 +2,14 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Panel;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.PrintStream;
 
@@ -44,7 +47,7 @@ public class BoardGUI {
 	
 	public BoardGUI(GameEngine gameEngine)
 	{
-		frame = new JFrame();
+		frame = new JFrame("5D Chess");
 		frame.setLayout(new BorderLayout());
 		frame.getContentPane();
 		frame.setBackground(Color.LIGHT_GRAY);
@@ -78,21 +81,34 @@ public class BoardGUI {
 		frame.setVisible(true);
 	}
 	
-	public void endGame(Player winner)
+	public void endGame(Player winner, GameEngine gameEngine)
 	{
-		Panel winnerPanel = new Panel();
 		
-		winnerPanel.setLayout(new BoxLayout(winnerPanel, BoxLayout.PAGE_AXIS));
+		Panel centerText = new Panel();
+		centerText.setLayout(new FlowLayout());		
+		centerText.add(new JLabel("Winner: " + winner.getPlayerId() + "! Thank you for playing."));
 		
+		Panel centerButton = new Panel();
+		centerButton.setLayout(new FlowLayout());
 		JButton endGameButton = new JButton("exit");
+		endGameButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				gameEngine.writeDataToFile(winner);
+			}
+		});
+		centerButton.add(endGameButton);
 		
-		winnerPanel.add(new JLabel("Winner: " + winner.getPlayerId() + "! Thank you for playing."));
-		winnerPanel.add(endGameButton);
-		JDialog dialog = new JDialog(frame);
+		Panel winnerPanel = new Panel();
+		winnerPanel.setLayout(new BoxLayout(winnerPanel, BoxLayout.Y_AXIS));
+		winnerPanel.add(centerText);
+		winnerPanel.add(centerButton);
 		
-		dialog.add(winnerPanel, true);
+		JDialog dialog = new JDialog(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
 		
-		dialog.setSize(300,200);
+		dialog.add(winnerPanel);
+		
+		dialog.setSize(230,100);
 		dialog.setLocationRelativeTo(null);
 		dialog.setResizable(false);
 		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
