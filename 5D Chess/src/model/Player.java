@@ -1,37 +1,26 @@
 package model;
 
+import java.io.File;
 import java.util.Scanner;
 
 public class Player {
 	
 	private String playerId;
-	private String playerPwd;
 	private int maxMoves;
 	private int score;
 	private int numOfMove;
-	private boolean result;
-	private Scanner scanner = new Scanner(System.in);
+	private int wins;
+	private int losses;
 	
-	public Player(String playerId, String playerPwd) {
+	public Player(String playerId) {
 		this.playerId = playerId;
-		this.playerPwd = playerPwd;
+		this.wins = getWinLossFromFile("win");
+		this.losses = getWinLossFromFile("loss");
 		maxMoves = 0;
 	}
 
 	public String getPlayerId() {
 		return playerId;
-	}
-
-	public void setPlayerId(String playerId) {
-		this.playerId = playerId;
-	}
-
-	public String getPlayerPwd() {
-		return playerPwd;
-	}
-
-	public void setPlayerPwd(String playerPwd) {
-		this.playerPwd = playerPwd;
 	}
 
 	public int getScore() {
@@ -50,15 +39,6 @@ public class Player {
 		this.numOfMove = numOfMove;
 	}
 	
-
-	public boolean getResult() {
-		return result;
-	}
-
-	public void setResult(boolean result) {
-		this.result = result;
-	}
-	
 	public int getMaxMoves()
 	{
 		return maxMoves;
@@ -68,11 +48,54 @@ public class Player {
 		this.maxMoves = maxMoves;
 	}
 	
-	public Piece setPiece() {
-		return null;
+	public int getWins()
+	{
+		return wins;
 	}
 	
-	public void movePiece(Piece p, int x, int y) {
-	
+	public int getLosses()
+	{
+		return losses;
 	}
+	
+	private int getWinLossFromFile(String winLoss)
+	{
+		Scanner scanner;
+		int result = 0;
+		
+		try
+		{
+			scanner = new Scanner(new File("database.txt"));
+			scanner.useDelimiter(":");
+			while(scanner.hasNextLine())
+			{
+				String user = scanner.next();
+				String pass = scanner.next();
+				int win = Integer.parseInt(scanner.next());
+				int loss = Integer.parseInt(scanner.next());
+				
+				if(playerId.equals(user))
+				{
+					if(winLoss.equals("win"))
+					{
+						result = win;
+						scanner.close();
+						return result;
+					}
+					else if(winLoss.equals("loss"))
+					{
+						result = loss;
+						scanner.close();
+						return result;
+					}
+				}
+				
+				scanner.nextLine();
+			}
+			scanner.close();
+		}
+		catch(Exception e){}
+		return result;
+	}
+	
 }

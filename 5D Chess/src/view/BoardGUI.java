@@ -217,10 +217,12 @@ public class BoardGUI {
 		PlayerInfo.setLayout(new BoxLayout(PlayerInfo, BoxLayout.PAGE_AXIS));
 		JLabel pH = new JLabel(player + " info " + type + ":");
 		PlayerInfo.add(pH);
-		JLabel pPoints = new JLabel("Points: " + gameEngine.getPlayers()[index].getScore());
 		JLabel pUsername = new JLabel("Username: " + gameEngine.getPlayers()[index].getPlayerId());
+		JLabel winLossratio = new JLabel("Win/Loss ratio: " + gameEngine.getPlayers()[index].getWins() + "-" + gameEngine.getPlayers()[index].getLosses());
+		JLabel pPoints = new JLabel("Points: " + gameEngine.getPlayers()[index].getScore());
 		JLabel pMoves = new JLabel("Moves: " + gameEngine.getPlayers()[index].getNumOfMove());
 		PlayerInfo.add(pUsername);
+		PlayerInfo.add(winLossratio);
 		PlayerInfo.add(pPoints);
 		PlayerInfo.add(pMoves);
 		

@@ -79,7 +79,7 @@ public class GameEngine {
 		}
 		else
 		{
-			Player player = new Player(username, password);
+			Player player = new Player(username);
 			addPlayer(player);
 			return true;
 		}
@@ -104,7 +104,7 @@ public class GameEngine {
 			}
 			else
 			{
-				Player player = new Player(username, password);
+				Player player = new Player(username);
 				addPlayer(player);
 				writeDataToFile(username, password);
 				return true;

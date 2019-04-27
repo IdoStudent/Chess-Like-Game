@@ -32,6 +32,8 @@ public class LoginRegisterGUI {
 	JButton registerButton = new JButton("Register");
 	JButton loginButton = new JButton("Login");
 	
+	JDialog dialog;
+	
 	public LoginRegisterGUI(String player)
 	{
 		this.player = new Label(player + " enter details:");
@@ -48,7 +50,7 @@ public class LoginRegisterGUI {
 				}
 				else
 				{
-					renderLoginError();
+					renderDialog(loginError());
 				}
 			}
 		});
@@ -61,7 +63,7 @@ public class LoginRegisterGUI {
 				}
 				else
 				{
-					renderRegisterError();
+					renderDialog(registerError());
 				}
 			}
 		});
@@ -103,13 +105,23 @@ public class LoginRegisterGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	private void renderLoginError()
+	private Panel loginError()
 	{
-		JDialog dialog = new JDialog(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
-		
 		Panel centerText = new Panel();
 		centerText.setLayout(new FlowLayout());		
-		centerText.add(new JLabel("ERROR!"));
+		centerText.add(new JLabel("ERROR due to one of the following:"));
+		
+		Panel errorType1 = new Panel();
+		errorType1.setLayout(new FlowLayout());		
+		errorType1.add(new JLabel("1. Username does not exist in system."));
+		
+		Panel errorType2 = new Panel();
+		errorType2.setLayout(new FlowLayout());		
+		errorType2.add(new JLabel("2. Password is incorrect."));
+		
+		Panel errorType3 = new Panel();
+		errorType3.setLayout(new FlowLayout());		
+		errorType3.add(new JLabel("3. Username or password includes illegal character \':\' "));
 		
 		Panel centerButton = new Panel();
 		centerButton.setLayout(new FlowLayout());
@@ -123,26 +135,34 @@ public class LoginRegisterGUI {
 		centerButton.add(okButton);
 		
 		Panel errorPanel = new Panel();
-		errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.Y_AXIS));
+		errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
 		errorPanel.add(centerText);
+		errorPanel.add(errorType1);
+		errorPanel.add(errorType2);
+		errorPanel.add(errorType3);
 		errorPanel.add(centerButton);
 		
-		dialog.add(errorPanel);
-		
-		dialog.setSize(230,100);
-		dialog.setLocationRelativeTo(null);
-		dialog.setResizable(false);
-		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		dialog.setVisible(true);
+		return errorPanel;
 	}
 	
-	private void renderRegisterError()
+	private Panel registerError()
 	{
-		JDialog dialog = new JDialog(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		Panel centerText = new Panel();
 		centerText.setLayout(new FlowLayout());		
-		centerText.add(new JLabel("ERROR!"));
+		centerText.add(new JLabel("ERROR due to one of the following:"));
+		
+		Panel errorType1 = new Panel();
+		errorType1.setLayout(new FlowLayout());		
+		errorType1.add(new JLabel("1. Username already exists in the system."));
+		
+		Panel errorType2 = new Panel();
+		errorType2.setLayout(new FlowLayout());		
+		errorType2.add(new JLabel("2. Username or password includes illegal character \':\' "));
+		
+		Panel errorType3 = new Panel();
+		errorType3.setLayout(new FlowLayout());		
+		errorType3.add(new JLabel("3. Username must be 10 characters or less."));
 		
 		Panel centerButton = new Panel();
 		centerButton.setLayout(new FlowLayout());
@@ -156,13 +176,23 @@ public class LoginRegisterGUI {
 		centerButton.add(okButton);
 		
 		Panel errorPanel = new Panel();
-		errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.Y_AXIS));
+		errorPanel.setLayout(new BoxLayout(errorPanel, BoxLayout.PAGE_AXIS));
 		errorPanel.add(centerText);
+		errorPanel.add(errorType1);
+		errorPanel.add(errorType2);
+		errorPanel.add(errorType3);
 		errorPanel.add(centerButton);
+		
+		return errorPanel;
+	}
+	
+	private void renderDialog(Panel errorPanel)
+	{
+		dialog = new JDialog(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		dialog.add(errorPanel);
 		
-		dialog.setSize(230,100);
+		dialog.setSize(350,250);
 		dialog.setLocationRelativeTo(null);
 		dialog.setResizable(false);
 		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
