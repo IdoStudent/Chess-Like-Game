@@ -85,8 +85,15 @@ public class BoardGUI {
 	{
 		
 		Panel centerText = new Panel();
-		centerText.setLayout(new FlowLayout());		
-		centerText.add(new JLabel("Winner: " + winner.getPlayerId() + "! Thank you for playing."));
+		centerText.setLayout(new FlowLayout());	
+		if(winner != null)
+		{
+			centerText.add(new JLabel("Winner: " + winner.getPlayerId() + "! Thank you for playing."));
+		}
+		else
+		{
+			centerText.add(new JLabel("The game is a draw! Thank you for playing."));
+		}
 		
 		Panel centerButton = new Panel();
 		centerButton.setLayout(new FlowLayout());
@@ -108,7 +115,7 @@ public class BoardGUI {
 		
 		dialog.add(winnerPanel);
 		
-		dialog.setSize(230,100);
+		dialog.setSize(260,100);
 		dialog.setLocationRelativeTo(null);
 		dialog.setResizable(false);
 		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);

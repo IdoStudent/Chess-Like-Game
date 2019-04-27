@@ -341,10 +341,12 @@ public class GameEngine {
 				
 				if(username.equals(players[winnerIndex].getPlayerId()))
 				{
+					if(winner != null)
 					win++;
 				}
 				else if(username.equals(players[loserIndex].getPlayerId()))
 				{
+					if(winner != null)
 					loss++;
 				}
 				
