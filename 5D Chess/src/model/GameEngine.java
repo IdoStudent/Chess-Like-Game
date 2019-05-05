@@ -45,7 +45,7 @@ public class GameEngine {
 		while(player1LoggedIn == false)
 		{
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
-			if(getPlayers()[0] != null)
+			if(players[0] != null)
 			{
 				player1LoggedIn = true;
 			}
@@ -55,7 +55,7 @@ public class GameEngine {
 		while(player2LoggedIn == false)
 		{
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
-			if(getPlayers()[1] != null)
+			if(players[1] != null)
 			{
 				player2LoggedIn = true;
 			}
