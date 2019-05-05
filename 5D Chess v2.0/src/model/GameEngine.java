@@ -19,12 +19,17 @@ public class GameEngine {
 	{
 		gameEngineGUI.renderLoginRegister("Player 1");
 		while(players[0] == null) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
+		
 		gameEngineGUI.renderLoginRegister("Player 2");
 		while(players[1] == null) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
+		
 		gameEngineGUI.renderMaxMoves("Player 1");
 		while(players[0].getMaxMoves() == 0) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
+		
 		gameEngineGUI.renderMaxMoves("Player 2");
 		while(players[1].getMaxMoves() == 0) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
+		
+		gameEngineGUI.renderBoard();
 	}
 	
 	public boolean loginPlayer(String username, String password)

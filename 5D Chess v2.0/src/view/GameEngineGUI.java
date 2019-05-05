@@ -29,7 +29,11 @@ public class GameEngineGUI {
 	
 	public void renderBoard() 
 	{
-		
+		if(boardGUI == null)
+		{
+			boardGUI = new BoardGUI();
+		}
+		boardGUI.renderGUI(gameEngine);
 	}
 
 
