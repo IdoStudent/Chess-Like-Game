@@ -35,13 +35,12 @@ public class SquareActionListener implements ActionListener{
 		// TODO Auto-generated method stub
 		CombinablePiece selectedPiece = this.model.getSelectedPiece();
 		
-
 			if (model.isGameOver()) {
 				JOptionPane.showMessageDialog(frame, "GAME OVER\n" + "Result:\n" + this.model.getGameResult());
 				frame.getChessBoard().disableBoard();
 
 			} else {
-				if (selectedPiece==null) {
+				if (selectedPiece==null) { // Set the selected Piece
 					if (square.getPiece()!=null) {
 						int playerIndex = square.getPiece().getPlayer().getPlayerIndex();
 						piece= this.model.getBoard().getSquares(x, y).getPiece();
@@ -49,10 +48,8 @@ public class SquareActionListener implements ActionListener{
 						if (this.model.getTurn()==playerIndex)
 						this.frame.getChessBoard().highlightValidMove(this.squareBtn);
 
-						} else {
-		//					JOptionPane.showMessageDialog(frame, "info[x,y]"+x + y);
-						}
-				} else {
+						} 
+				} else { // In case of a piece had been selected
 					if (selectedPiece.getPosX()!=x || selectedPiece.getPosY()!=y) {
 						 model.movePiece(selectedPiece, x, y);
 						 frame.updateGameGUI();	 
