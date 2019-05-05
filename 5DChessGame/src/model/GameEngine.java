@@ -17,7 +17,6 @@ public class GameEngine {
 	private boolean isGameOver;
 
 	public GameEngine() {
-		// TODO Auto-generated constructor stub
 		this.board = new Board(6, 6);
 		this.isGameOver = false;
 	}

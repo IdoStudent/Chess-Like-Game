@@ -14,7 +14,7 @@ public class GameEngineGUI {
 		this.gameEngine = gameEngine;
 	}
 	
-	public void renderLoginRegister(String player)
+	public void renderLoginRegisterGUI(String player)
 	{
 		loginRegisterGUI = new LoginRegisterGUI(player);
 		loginRegisterGUI.renderGUI(gameEngine);

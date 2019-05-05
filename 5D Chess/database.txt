@@ -5,3 +5,5 @@ test123:123test:1:0:
 user:pass:0:1:
 newplayer:password:0:0:
 1234567890:1234567890:2:0:
+Ido:Ido:0:0:
+Yasir:Yasir:0:0:

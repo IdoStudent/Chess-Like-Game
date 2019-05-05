@@ -23,7 +23,7 @@ public class RegisterForm extends JFrame implements ActionListener
 	 private JPasswordField memberPwd;
 
     private GameEngineGUI frame;
-	private GameEngine model;
+	private GameEngine gameEngine;
 
 	public RegisterForm(GameEngineGUI frame, GameEngine model) {
 		// TODO Auto-generated constructor stub
@@ -70,7 +70,7 @@ public class RegisterForm extends JFrame implements ActionListener
 		 String uname = memberID.getText();
 		 String pass = memberPwd.getText();
 		 
-			   if (this.model.addUser(uname, pass)) {
+			   if (this.gameEngine.addUser(uname, pass)) {
 					JOptionPane.showMessageDialog(this, "You have successfully registered an account");
 			        this.setVisible(false);	
 
