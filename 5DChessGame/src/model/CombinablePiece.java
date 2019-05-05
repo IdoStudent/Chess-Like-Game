@@ -1,14 +1,21 @@
 package model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 public abstract class CombinablePiece extends Piece {
 
-	private HashSet<Piece> pieces = new HashSet<Piece>();
+//	private HashSet<Piece> pieces = new HashSet<Piece>();
+	private HashMap<String,CombinablePiece> pieces = new HashMap<String,CombinablePiece>();
+
 	private String combinedName;
 
-	public CombinablePiece(Player player, Board board, String name, String color, int X, int Y, boolean status) {
-		super(player, board, name, color, X, Y, status);
+	public CombinablePiece(Player player, Board board, String name, String color, int X, int Y) {
+		super(player, board, name, color, X, Y);
 		// TODO Auto-generated constructor stub
 		combinedName = this.getName();
 	}
@@ -18,7 +25,7 @@ public abstract class CombinablePiece extends Piece {
 
 	public boolean combinedValidMove(int toX, int toY) {
 		// TODO Auto-generated method stub
-		for (Piece piece : pieces) {
+		for (CombinablePiece piece : this.getPieces()) {
 			if (piece.validMove(toX, toY) && !piece.isMovingOverPiece(toX, toY))
 				return true;
 		}
@@ -28,7 +35,7 @@ public abstract class CombinablePiece extends Piece {
 
 	public boolean validCombineTo(CombinablePiece destinationPiece) {
 	
-		for (Piece piece : this.getPieces()) {
+		for (CombinablePiece piece : this.getPieces()) {
 			if (destinationPiece.getPieces().contains(piece))
 				return false;
 		}
@@ -38,51 +45,46 @@ public abstract class CombinablePiece extends Piece {
 
 	public void combinedMove(int toX, int toY) {
 		// TODO Auto-generated method stub
-		for (Piece piece : pieces) {
+		for (CombinablePiece piece : pieces.values()) {
 			piece.move(toX, toY);
 		}
 	}
 
-	public HashSet<Piece> getPieces() {
-		return pieces;
+	public Collection<CombinablePiece> getPieces() {
+		 Collection<CombinablePiece> p = new ArrayList<CombinablePiece>();
+		 TreeMap<String, CombinablePiece> sorted = new TreeMap<>(pieces);
+		 Set<Entry<String, CombinablePiece>> mappings = sorted.entrySet();
+		 
+		 for(Entry<String, CombinablePiece> mapping : mappings){
+	           p.add(mapping.getValue());
+	        }
+		 
+		 return p;
 	}
 
-	public void addPiece(Piece piece) {
-		// if(!pieces.contains(piece)) {
-		this.pieces.add(piece);
-		// }
+	public void addPiece(CombinablePiece piece) {
+		 if(!pieces.containsKey(piece.getName())) {
+		this.pieces.put(piece.getName(), piece);
+		 }
 	}
 	
-	public void removePieceMember(String name) {
-		Piece p=null;
-		for (Piece piece : pieces) {
-			if (piece.getName().equals(name)) {
-				p=piece;
-				break;
-			}
-		}
-		pieces.remove(p);
+	public void removePieceMember(CombinablePiece piece) {
+		pieces.remove(piece.getName());
 	}
 	
 	public Piece getPieceMember(String name) {
-		Piece p=null;
-		for (Piece piece : pieces) {
-			if (piece.getName().equals(name)) {
-				p=piece;
-				break;
-			}
-		}
-		return p;
+		return pieces.get(name);
 	}
 
-	public void setPieces(HashSet<Piece> pieces) {
+	public void setPieces(HashMap<String,CombinablePiece> pieces) {
 		this.pieces = pieces;
 	}
 
-	public void setCombinedName(HashSet<Piece> pieces) {
+	public void setCombinedName(CombinablePiece piece) {
+		
 		String combinedName = "";
-		for (Piece piece : pieces) {
-			combinedName += piece.getName();
+		for (CombinablePiece p : piece.getPieces()) {
+			combinedName += p.getName();
 		}
 		this.combinedName = combinedName;
 	}

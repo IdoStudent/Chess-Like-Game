@@ -10,7 +10,7 @@ public abstract class Piece {
 	private Board board;
 
 	
-	public Piece(Player player,Board board, String name,String color, int X, int Y, boolean status) {
+	public Piece(Player player,Board board, String name,String color, int X, int Y) {
 		this.player = player;
 		this.setBoard(board);
 		this.name = name;

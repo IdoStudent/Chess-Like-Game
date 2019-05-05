@@ -7,13 +7,13 @@ import control.GameControl;
 import model.GameEngine;
 import model.Player;
 
-public class GameView {
+public class GameTextView {
 	Scanner input = new Scanner(System.in);
 	GameEngine model = new GameEngine();
 
 	GameControl controller = new GameControl(model, this);
 
-	public GameView() {
+	public GameTextView() {
 		// TODO Auto-generated constructor stub
 	}
 	public void signup() {

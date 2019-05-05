@@ -2,10 +2,10 @@ package model;
 
 public class Bishop extends CombinablePiece{
 
-	public Bishop(Player player,Board board, String name, String color, int X, int Y, boolean status) {
-		super(player, board, name, color, X, Y, status);
+	public Bishop(Player player,Board board, String name, String color, int X, int Y) {
+		super(player, board, name, color, X, Y);
 		// TODO Auto-generated constructor stub
-		this.getPieces().add(this);
+		this.addPiece(this);
 	}
 	
 	@Override

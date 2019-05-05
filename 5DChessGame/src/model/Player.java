@@ -12,7 +12,9 @@ public class Player extends User{
 	private GameEngine game = new GameEngine();
 //	private Board board;
 	private int playerIndex;
-	private int numOfPiece;
+	private int numOfRemainingPiece;
+
+
 	private int score;
 
 
@@ -35,33 +37,31 @@ public class Player extends User{
 		this.numOfMove = numOfMove;
 	}
 	
+	public boolean isPlayerTurn() {
+		return this.playerIndex == game.getTurn();
+	}
+	
 	public void initPieces() {
 		int w = game.getBoard().getWidth();
 		Board board = this.game.getBoard();
 
-		for (int i = 0; i <  w/ 2; i++) {
-			String color = this.getPlayerIndex() == 0?"b":"w";
-			int y = this.getPlayerIndex() ==0?0:5;
-			if (i==0) { // Add 02 Rook
-				pieces.add(new Rook(this,board,"R",color,i,y,false));
-				pieces.add(new Rook(this,board,"R",color,w-1-i,y,false));
-				numOfPiece+=2;
-			}
-			if (i==1) { // Add 02 Bishop
-				pieces.add(new Bishop(this,board,"B",color,i,y,false));
-				pieces.add(new Bishop(this,board,"B",color,w-1-i,y,false));
-				numOfPiece+=2;
-
-			}
-			if (i==2) { // Add 02 Knight
-				pieces.add(new Knight(this,board,"K",color,i,y,false));
-				pieces.add(new Knight(this,board,"K",color,w-1-i,y,false));
-				numOfPiece+=2;
-
-			}
-		}
+		// Select color based on player index
+		String color = this.getPlayerIndex() == 1 ? "b" : "w";
+		
+		// Select initial y position
+		int y = this.getPlayerIndex() == 1 ? 0 : 5;
+		
+		// Assign 06 pieces to a player
+		pieces.add(new Rook(this, board, "R", color, 0, y));
+		pieces.add(new Bishop(this, board, "B", color, 1, y));
+		pieces.add(new Knight(this, board, "K", color, 2, y));
+		pieces.add(new Knight(this, board, "K", color, 3, y));
+		pieces.add(new Bishop(this, board, "B", color, 4, y));
+		pieces.add(new Rook(this, board, "R", color, 5, y));
+		
+		numOfRemainingPiece += 6;
 	}
-
+	
 
 	public int getPlayerIndex() {
 		return playerIndex;
@@ -87,11 +87,16 @@ public class Player extends User{
 		return null;
 	}
 
-	public int getNumOfPiece() {
-		return numOfPiece;
+	public int getNumOfRemainingPiece() {
+		return numOfRemainingPiece;
 	}
 
 
+	public void updateRemainingPiece(int num) {
+		this.numOfRemainingPiece += num;
+	}
+
+	
 	public int getScore() {
 		return score;
 	}

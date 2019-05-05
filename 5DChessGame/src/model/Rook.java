@@ -3,10 +3,10 @@ package model;
 public class Rook extends CombinablePiece{
 
 	
-	public Rook(Player player, Board board, String name, String color, int X, int Y, boolean status) {
-		super(player, board, name, color, X, Y, status);
+	public Rook(Player player, Board board, String name, String color, int X, int Y) {
+		super(player, board, name, color, X, Y);
 		// TODO Auto-generated constructor stub
-		this.getPieces().add(this);
+		this.addPiece(this);
 
 	}
 

@@ -13,7 +13,6 @@ public class Board {
 		this.initSquares();
 	}
 	
-	
 	public int getWidth() {
 		return width;
 	}
@@ -58,27 +57,18 @@ public class Board {
 		
 		for (CombinablePiece piece : player.getAllPieces())
 	      {
-			addPiece(piece,piece.getPosX(),piece.getPosY());
+			connectPiece(piece,piece.getPosX(),piece.getPosY());
 	      }
-	
 	}
 
-	
-	public void dropPiece(int x, int y) {
+	public void disconnectPiece(int x, int y) {
 			squares[x][y].setName("(  )");	
 			squares[x][y].setPiece(null);
-
 	}
 	
-	public void addPiece(CombinablePiece piece,int x, int y) {
+	public void connectPiece(CombinablePiece piece,int x, int y) {
 		squares[x][y].setName("(" +piece.getCombinedName()+piece.getColor()+")");
 		squares[x][y].setPiece(piece);
 	}
-	
-	public void updatePiece(CombinablePiece piece) {
-		squares[piece.getPosX()][piece.getPosX()].setName("(" +piece.getCombinedName()+piece.getColor()+")");
-		squares[piece.getPosX()][piece.getPosX()].setPiece(piece);
-	}
-	
 	
 }
