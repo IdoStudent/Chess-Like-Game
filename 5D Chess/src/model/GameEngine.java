@@ -27,7 +27,7 @@ public class GameEngine {
 	
 	public GameEngine()
 	{
-		renderLoginRegisterGUI();
+		renderLoginRegister();
 		renderMaxMovesGUI();
 		renderBoardGUI();
 		buttonPressed = new ButtonPressed(this, gameEngineGUI);
@@ -36,12 +36,12 @@ public class GameEngine {
 		System.out.println("Max moves is calculated by the average of Player 1: " + players[0].getMaxMoves() + " and Player 2: " + players[1].getMaxMoves());
 	}
 	
-	private void renderLoginRegisterGUI()
+	private void renderLoginRegister()
 	{
 		boolean player1LoggedIn = false;
 		boolean player2LoggedIn = false;
 		
-		gameEngineGUI.renderLoginRegister("Player 1");
+		gameEngineGUI.renderLoginRegisterGUI("Player 1");
 		while(player1LoggedIn == false)
 		{
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
@@ -51,7 +51,7 @@ public class GameEngine {
 			}
 		}
 		
-		gameEngineGUI.renderLoginRegister("Player 2");
+		gameEngineGUI.renderLoginRegisterGUI("Player 2");
 		while(player2LoggedIn == false)
 		{
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
