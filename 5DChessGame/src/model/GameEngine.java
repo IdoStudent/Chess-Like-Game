@@ -13,10 +13,13 @@ public class GameEngine {
 	private int turn;
 	private int maxMove = 0;
 	private Player winner = null;
+	
+
 	private CombinablePiece selectedPiece;
 	private boolean isGameOver;
 
 	public GameEngine() {
+		// TODO Auto-generated constructor stub
 		this.board = new Board(6, 6);
 		this.isGameOver = false;
 	}
@@ -131,9 +134,6 @@ public class GameEngine {
 		return turn;
 	}
 
-	public boolean isValidToCommence() {
-		return this.numOfPlayers == 2;
-	}
 
 	public boolean movePiece(CombinablePiece piece, int toX, int toY) {
 		// Prerequisite condition to commence a game and move a piece
@@ -234,7 +234,7 @@ public class GameEngine {
 				winner = players[0];
 			}
 
-			if (players[0].getScore() > players[1].getScore()) {
+			if (players[0].getScore() < players[1].getScore()) {
 				winner = players[1];
 			}
 
@@ -262,6 +262,10 @@ public class GameEngine {
 
 	public void setWinner(Player winner) {
 		this.winner = winner;
+	}
+	
+	public Player getWinner() {
+		return winner;
 	}
 
 	public boolean isGameOver() {
@@ -325,15 +329,6 @@ public class GameEngine {
 		}
 	}
 
-	public void calculateResult() {
-
-	}
-
-	@Override
-	public String toString() {
-		return String.format("numOfMoves:%s, Score-Player1:%s, Score-Player1:%s\n", this.numOfMoves,
-				this.players[0].getScore(), this.players[1].getScore());
-	}
 
 	public CombinablePiece getSelectedPiece() {
 		return selectedPiece;
@@ -341,6 +336,12 @@ public class GameEngine {
 
 	public void setSelectedPiece(CombinablePiece selectedPiece) {
 		this.selectedPiece = selectedPiece;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("numOfMoves:%s, Score-Player1:%s, Score-Player1:%s\n", this.numOfMoves,
+				this.players[0].getScore(), this.players[1].getScore());
 	}
 
 }

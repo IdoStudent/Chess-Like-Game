@@ -12,83 +12,90 @@ import javax.swing.JPanel;
 import control.LoginActionListener;
 import control.RegisterActionListener;
 import model.GameEngine;
+import model.Player;
 
 @SuppressWarnings("serial")
 public class ScorePanel extends JPanel {
     	private GameEngineGUI frame;
     	private GameEngine model;
-
 	 	private JButton login = new JButton("login");
 	    private JButton register = new JButton("register");
-	    private CustomJLabel[] playerScore = new CustomJLabel[2];
-	    private CustomJLabel[] playerColor= new CustomJLabel[2];
+	    private CustomJLabel[] playerinfo;
+//	    private CustomJLabel player2info;
+	    private CustomJLabel[] playerNumOfMove;
+	    private CustomJLabel[] playerScore;
 
-	    private CustomJLabel[] playerNumOfMove = new CustomJLabel[2];
-	    private CustomJLabel currentTurn = new CustomJLabel();
-	    private CustomJLabel winner = new CustomJLabel();
+	    private CustomJLabel currentTurn;
+	    private CustomJLabel remainMove;
+	    private CustomJLabel gameResult;
+
+
+
+	    
 
 	public ScorePanel(GameEngineGUI frame, GameEngine model) {
 		this.frame = frame;
 		this.model = model;
 		
+		this.renderLoginRegisterGUI(model);
+		if (this.model.getNumOfPlayers()==2) {
+			this.renderScoreInfo(model);
+		}
+		this.setBackground(new Color(255, 222, 173));   
+		this.setLayout(new GridLayout(19,1));
+		this.setPreferredSize(new Dimension(300, 0));
+	}
+
+	public void renderLoginRegisterGUI(GameEngine model) {
+		// Login button
 		login.setSize(new Dimension(200, 200));
 		login.setFont(new Font("Serif", Font.PLAIN, 20));
 		LoginActionListener loginActionListener = new LoginActionListener(this.frame, this.model);
 	    login.addActionListener(loginActionListener);
 		this.add(login);
 
-
+		// Register button
 		register.setPreferredSize(new Dimension(200, 200));
 		register.setFont(new Font("Serif", Font.PLAIN, 20));
 		RegisterActionListener registerActionListener = new RegisterActionListener(this.frame, this.model);
 		register.addActionListener(registerActionListener);
 		this.add(register);
-		
-		this.add(new CustomJLabel("Player 1:"));
-		this.add(playerColor[0]= new CustomJLabel());
-		this.add(new CustomJLabel("Num of moves:"));
-		this.add(playerNumOfMove[0]= new CustomJLabel());
-		this.add(new CustomJLabel("Score:"));
-		this.add(playerScore[0]= new CustomJLabel());
-
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-				
-		this.add(new CustomJLabel("Current turn:"));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel("Remain moves:"));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel("WINNER:"));
-		this.add(new CustomJLabel(""));
-
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		this.add(new CustomJLabel(""));
-		
-		this.add(new CustomJLabel("Player 2:"));
-		this.add(playerColor[1]= new CustomJLabel());
-		this.add(new CustomJLabel("Num of moves:"));
-		this.add(playerNumOfMove[1]= new CustomJLabel());
-		this.add(new CustomJLabel("Score:"));
-		this.add(playerScore[1]= new CustomJLabel());
-
-		this.setBackground(new Color(255, 222, 173));   
-		this.setLayout(new GridLayout(18,2, 2, 2));
-		this.setPreferredSize(new Dimension(300, 0));
+		if (this.model.getNumOfPlayers()==2) {
+		}
 	}
+	
+	public void renderScoreInfo(GameEngine model) {
+	
+		//Score bar information
+			Player player1 = this.model.getAllPlayers()[0];
+			Player player2 = this.model.getAllPlayers()[1];
+			playerNumOfMove[0]=new CustomJLabel("Player 1:" + player1.getUserId());
+			this.add(playerNumOfMove[0]);
+			this.add(new CustomJLabel("Num of moves: " + player1.getNumOfMove() ));
+			this.add(new CustomJLabel("Score: " + player1.getScore() ));
 
+			this.add(new CustomJLabel(""));
+			this.add(new CustomJLabel(""));
+			this.add(new CustomJLabel(""));
+			this.add(new CustomJLabel(""));
+			
+					
+			this.add(new CustomJLabel("Current turn:" + this.model.getTurn()));
+			this.add(new CustomJLabel("Remain moves: " + (this.model.getMaxMove() - this.model.getNumOfMoves())));
+			this.add(new CustomJLabel(this.model.getGameResult()));
+
+			this.add(new CustomJLabel(""));
+			this.add(new CustomJLabel(""));
+			this.add(new CustomJLabel(""));
+			this.add(new CustomJLabel(""));
+			
+			this.add(new CustomJLabel("Player 2: "+  player2.getUserId()));
+			this.add(new CustomJLabel("Num of moves:" + player2.getNumOfMove()));
+			this.add(new CustomJLabel("Score: " + player2.getScore() ));
+		
+	}
 }
+
 
 @SuppressWarnings("serial")
 class CustomJLabel extends JLabel {

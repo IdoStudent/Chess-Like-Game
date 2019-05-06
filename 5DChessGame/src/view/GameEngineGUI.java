@@ -15,9 +15,9 @@ public class GameEngineGUI extends JFrame{
 	private GameEngine model = new GameEngine();
 	private ChessBoard chessBoard;
 	private JTextArea console;
-    private ScorePanel rightPanel;
+    private ScorePanel scorePanel;
 
-   
+
 	public GameEngineGUI() {
 		// TODO Auto-generated constructor stub
 		// Set the title of the frame
@@ -43,8 +43,8 @@ public class GameEngineGUI extends JFrame{
         chessBoard.setPreferredSize(new Dimension(600, 600));
 		add(chessBoard, BorderLayout.CENTER);
 
-		rightPanel = new ScorePanel(this, this.model);      
-		add(rightPanel, BorderLayout.EAST);	
+		scorePanel = new ScorePanel(this, this.model);      
+		add(scorePanel, BorderLayout.EAST);	
 		
 		console = new JTextArea("Test Area");
 		console.setPreferredSize(new Dimension(0,100));
@@ -54,27 +54,9 @@ public class GameEngineGUI extends JFrame{
 	
 	public void updateGameGUI() {
         
-		chessBoard.drawBoardPieces();
-             
+		chessBoard.drawBoardPieces();             
 	}
-		 
-	public static void main(String[] args) {
-		 // GUI code should run on the AWT Event dispatch/UI Thread
-
-	      // could use a Java 8 lambda
-	      // SwingUtilities.invokeLater(() -> new JHelloWorld());
-
-	      // but let's keep it explicit so we can see more clearly what is actually happening!
-	      SwingUtilities.invokeLater(new Runnable()
-	      {
-	         @Override
-	         public void run()
-	         {
-	        	new GameEngineGUI();
-	         }
-	         
-	      });
-	}
+		
 	
 	public GameEngine getModel() {
 		return model;
@@ -82,6 +64,10 @@ public class GameEngineGUI extends JFrame{
 	
     public ChessBoard getChessBoard() {
 		return chessBoard;
+	}
+    
+	public ScorePanel getScorePanel() {
+		return scorePanel;
 	}
 
 }

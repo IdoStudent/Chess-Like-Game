@@ -75,6 +75,7 @@ public class NumOfMoveForm extends JFrame implements ActionListener
 				model.addPieceToBoard(model.getPlayer(playerId));
 				if (model.getNumOfPlayers()==2) {
 					this.model.StartGame();
+					this.frame.getScorePanel().renderScoreInfo(model);
 				}
 				this.frame.updateGameGUI();
 			
