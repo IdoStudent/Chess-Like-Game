@@ -8,3 +8,6 @@ newplayer:password:0:0:
 Ido:Ido:0:0:
 Yasir:Yasir:0:0:
 ido:yaron:0:0:
+Check:Check:0:0:
+Check2:Cehck2:0:0:
+TF:TF:0:0:

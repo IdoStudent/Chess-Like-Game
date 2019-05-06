@@ -41,7 +41,6 @@ public class LoginRegisterGUI {
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		frame.add(panel);
 		
-		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout());
 		topPanel.add(player);

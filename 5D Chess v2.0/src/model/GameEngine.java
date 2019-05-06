@@ -8,11 +8,11 @@ public class GameEngine {
 	
 	User user = new User(this);
 	
-	GameEngineGUI gameEngineGUI = new GameEngineGUI(this);
+	GameEngineGUI gameEngineGUI;
 	
 	public GameEngine()
 	{
-		
+		gameEngineGUI = new GameEngineGUI(this);
 	}
 	
 	public void startGame() 
