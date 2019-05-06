@@ -44,8 +44,8 @@ public class GameEngine {
 		gameEngineGUI.renderLoginRegisterGUI("Player 1");
 		while(player1LoggedIn == false)
 		{
-			try {Thread.sleep(500);} catch (InterruptedException e) {}
-			if(players[0] != null)
+			try {Thread.sleep(500);} catch (InterruptedException e) {}				// ?
+			if(players[0] != null)													//check if player 1 had logged in
 			{
 				player1LoggedIn = true;
 			}
@@ -55,7 +55,7 @@ public class GameEngine {
 		while(player2LoggedIn == false)
 		{
 			try {Thread.sleep(500);} catch (InterruptedException e) {}
-			if(players[1] != null)
+			if(players[1] != null)													//check if player 2 had logged in
 			{
 				player2LoggedIn = true;
 			}

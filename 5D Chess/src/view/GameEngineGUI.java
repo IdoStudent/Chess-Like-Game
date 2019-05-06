@@ -23,7 +23,7 @@ public class GameEngineGUI {
 	public void renderMaxMoves(String player)
 	{
 		maxMovesGUI = new MaxMovesGUI(player);
-		maxMovesGUI.renderGUI(gameEngine);
+		maxMovesGUI.renderGUI(gameEngine);						// ?
 	}
 
 	public void renderBoard(GameEngine gameEngine)

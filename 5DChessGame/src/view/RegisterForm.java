@@ -25,11 +25,11 @@ public class RegisterForm extends JFrame implements ActionListener
     private GameEngineGUI frame;
 	private GameEngine gameEngine;
 
-	public RegisterForm(GameEngineGUI frame, GameEngine model) {
+	public RegisterForm(GameEngineGUI frame, GameEngine gameEngine) {
 		// TODO Auto-generated constructor stub
 		super("Register Form");
 		this.frame = frame;
-		this.model = model;
+		this.gameEngine = gameEngine;
 
 		labelID = new CustomJLabel("Member ID:");
 		memberID = new JTextField();
