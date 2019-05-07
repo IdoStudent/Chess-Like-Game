@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 import model.GameEngine;
 
 @SuppressWarnings("serial")
-public class NumOfMoveForm extends JFrame implements ActionListener
+public class MaxMoveForm extends JFrame implements ActionListener
 {
 	private JLabel labelNumOfMove;
 	private JTextField numOfMove;
@@ -24,7 +24,7 @@ public class NumOfMoveForm extends JFrame implements ActionListener
 	private String playerId;
 
 
-	public NumOfMoveForm(String playerId, GameEngineGUI frame, GameEngine model) {
+	public MaxMoveForm(String playerId, GameEngineGUI frame, GameEngine model) {
 		// TODO Auto-generated constructor stub
 		super("Login Form");
 		this.frame = frame;
@@ -72,12 +72,11 @@ public class NumOfMoveForm extends JFrame implements ActionListener
 			if (num > 0) {
 		        this.setVisible(false);	
 				model.assignNumofMove(playerId, num);
-				model.addPieceToBoard(model.getPlayer(playerId));
 				if (model.getNumOfPlayers()==2) {
+//					this.frame.getScorePanel().renderScoreInfo(model);
 					this.model.StartGame();
-					this.frame.getScorePanel().renderScoreInfo(model);
+					this.frame.updateGameGUI();
 				}
-				this.frame.updateGameGUI();
 			
 			} else {
 				JOptionPane.showMessageDialog(this, "Negative number! Try again", "Error", JOptionPane.ERROR_MESSAGE);

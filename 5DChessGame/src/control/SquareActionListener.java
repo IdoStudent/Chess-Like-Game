@@ -45,7 +45,7 @@ public class SquareActionListener implements ActionListener{
 						int playerIndex = square.getPiece().getPlayer().getPlayerIndex();
 						piece= this.model.getBoard().getSquares(x, y).getPiece();
 						this.model.setSelectedPiece(piece);
-						if (this.model.getTurn()==playerIndex)
+						if (this.model.getCurrentTurn()==playerIndex)
 						this.frame.getChessBoard().highlightValidMove(this.squareBtn);
 
 						} 
