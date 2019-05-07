@@ -30,6 +30,7 @@ public class Player extends User{
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	public int getNumOfMove() {
 		return numOfMove;
 	}
@@ -38,7 +39,7 @@ public class Player extends User{
 	}
 	
 	public boolean isPlayerTurn() {
-		return this.playerIndex == game.getTurn();
+		return this.playerIndex == game.getCurrentTurn();
 	}
 	
 	public void initPieces() {

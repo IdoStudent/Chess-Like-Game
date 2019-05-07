@@ -20,17 +20,13 @@ public class ScorePanel extends JPanel {
     	private GameEngine model;
 	 	private JButton login = new JButton("login");
 	    private JButton register = new JButton("register");
-	    private CustomJLabel[] playerinfo;
-//	    private CustomJLabel player2info;
-	    private CustomJLabel[] playerNumOfMove;
-	    private CustomJLabel[] playerScore;
+	    private CustomJLabel[] playerinfo = new CustomJLabel[2];
+	    private CustomJLabel[] playerId  = new CustomJLabel[2];;
+	    private CustomJLabel[] playerScore  = new CustomJLabel[2];;
 
 	    private CustomJLabel currentTurn;
 	    private CustomJLabel remainMove;
 	    private CustomJLabel gameResult;
-
-
-
 	    
 
 	public ScorePanel(GameEngineGUI frame, GameEngine model) {
@@ -38,9 +34,10 @@ public class ScorePanel extends JPanel {
 		this.model = model;
 		
 		this.renderLoginRegisterGUI(model);
-		if (this.model.getNumOfPlayers()==2) {
-			this.renderScoreInfo(model);
-		}
+//		if (this.model.getNumOfPlayers()==2) {
+			this.renderScoreInfo();
+//		}
+//		this.renderScoreInfo(model);
 		this.setBackground(new Color(255, 222, 173));   
 		this.setLayout(new GridLayout(19,1));
 		this.setPreferredSize(new Dimension(300, 0));
@@ -60,41 +57,69 @@ public class ScorePanel extends JPanel {
 		RegisterActionListener registerActionListener = new RegisterActionListener(this.frame, this.model);
 		register.addActionListener(registerActionListener);
 		this.add(register);
-		if (this.model.getNumOfPlayers()==2) {
-		}
+//		if (this.model.getNumOfPlayers()==2) {
+//		}
 	}
 	
-	public void renderScoreInfo(GameEngine model) {
+	public void renderScoreInfo() {
 	
 		//Score bar information
-			Player player1 = this.model.getAllPlayers()[0];
-			Player player2 = this.model.getAllPlayers()[1];
-			playerNumOfMove[0]=new CustomJLabel("Player 1:" + player1.getUserId());
-			this.add(playerNumOfMove[0]);
-			this.add(new CustomJLabel("Num of moves: " + player1.getNumOfMove() ));
-			this.add(new CustomJLabel("Score: " + player1.getScore() ));
+//			Player player1 = this.model.getAllPlayers()[0];
+//			Player player2 = this.model.getAllPlayers()[1];
+			
+			playerinfo[0]=new CustomJLabel("");
+			playerId[0] = new CustomJLabel(""); 
+			playerScore[0] = new CustomJLabel(""); 
+			this.add(playerinfo[0]);
+			this.add(playerId[0]);
+			this.add(playerScore[0]);
+
 
 			this.add(new CustomJLabel(""));
 			this.add(new CustomJLabel(""));
 			this.add(new CustomJLabel(""));
 			this.add(new CustomJLabel(""));
 			
-					
-			this.add(new CustomJLabel("Current turn:" + this.model.getTurn()));
-			this.add(new CustomJLabel("Remain moves: " + (this.model.getMaxMove() - this.model.getNumOfMoves())));
-			this.add(new CustomJLabel(this.model.getGameResult()));
+			currentTurn = new CustomJLabel("");		
+			remainMove = new CustomJLabel("");
+			gameResult = new CustomJLabel("");
+			this.add(remainMove);
+			this.add(currentTurn);
+			this.add(gameResult);
 
 			this.add(new CustomJLabel(""));
 			this.add(new CustomJLabel(""));
 			this.add(new CustomJLabel(""));
 			this.add(new CustomJLabel(""));
 			
-			this.add(new CustomJLabel("Player 2: "+  player2.getUserId()));
-			this.add(new CustomJLabel("Num of moves:" + player2.getNumOfMove()));
-			this.add(new CustomJLabel("Score: " + player2.getScore() ));
+			playerinfo[1]=new CustomJLabel("");
+			playerId[1] = new CustomJLabel(""); 
+			playerScore[1] = new CustomJLabel(""); 
+			this.add(playerinfo[1]);
+			this.add(playerScore[1]);
+			this.add(playerId[1]);
 		
 	}
+	
+	public void updateScoreInfo() {
+		Player player1 = this.model.getAllPlayers()[0];
+		Player player2 = this.model.getAllPlayers()[1];
+//		this.playerNumOfMove[0].setText("Num of moves: " + player1.getNumOfMove());
+
+		this.playerinfo[0].setText("Player 1: BLACK");
+		this.playerId[0].setText("Num of moves: " + player1.getNumOfMove());
+		this.playerScore[0].setText("Score: " + player1.getScore());
+		
+		this.currentTurn.setText("Current turn:" + this.model.getCurrentTurn());
+		this.remainMove.setText("Remain moves: " + (this.model.getMaxMove() - this.model.getNumOfMoves()));
+		this.gameResult.setText(this.model.getGameResult().toString());
+		
+		this.playerinfo[1].setText("Player 2: WHITE");
+		this.playerId[1].setText("Num of moves: " + player2.getNumOfMove());
+		this.playerScore[1].setText("Score: " + player2.getScore());
+	}
 }
+
 
 
 @SuppressWarnings("serial")

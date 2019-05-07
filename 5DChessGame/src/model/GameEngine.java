@@ -10,7 +10,9 @@ public class GameEngine {
 	private Board board;
 	private int numOfPlayers = 0;
 	private int numOfMoves = 0;
-	private int turn;
+	private int currentTurn;
+	
+
 	private int maxMove = 0;
 	private Player winner = null;
 	
@@ -19,7 +21,6 @@ public class GameEngine {
 	private boolean isGameOver;
 
 	public GameEngine() {
-		// TODO Auto-generated constructor stub
 		this.board = new Board(6, 6);
 		this.isGameOver = false;
 	}
@@ -34,15 +35,23 @@ public class GameEngine {
 	}
 
 	public void StartGame() {
-		this.setMaxMove();
-		this.turn = (int) (Math.random() * 2 + 1); // will return either 1 or 2
+		// Set max moves
+		this.setMaxMove()
+		;
+		// Randomly select the first turn
+		this.setCurrentTurn((int) (Math.random() * 2 + 1)); // will return either 1 or 2
+		
+		// Connect player's pieces to the board
+		for(Player player: this.getAllPlayers()){
+			this.board.connectPlayerPieces(player);
+		}
 	}
 
 	public void flipTurn() {
-		if (this.turn == 1) {
-			turn = 2;
+		if (this.currentTurn == 1) {
+			currentTurn = 2;
 		} else {
-			turn = 1;
+			currentTurn = 1;
 		}
 	}
 
@@ -60,7 +69,7 @@ public class GameEngine {
 	}
 
 	public void addPieceToBoard(Player player) {
-		this.board.addPlayerPieces(player);
+		this.board.connectPlayerPieces(player);
 	}
 
 	public boolean isValidUser(String id, String pwd) {
@@ -128,10 +137,6 @@ public class GameEngine {
 
 	public void setNumOfMoves(int numOfMoves) {
 		this.numOfMoves = numOfMoves;
-	}
-
-	public int getTurn() {
-		return turn;
 	}
 
 
@@ -253,11 +258,16 @@ public class GameEngine {
 	}
 
 	public String getGameResult() {
-		if (this.winner != null) {
-			return "WINNER:" + winner.getUserId();
+		if (this.isGameOver) {	
+			if (this.winner != null) {
+			String color = winner.getPlayerIndex()==1?"BLACK":"WHITE";
+			return "WINNER: " + winner.getUserId() + "(" + color + ")" ;
+			} else {
+				return "DRAW";
+			}
 		} else {
-			return "DRAW";
-		}
+			return "";
+		}	
 	}
 
 	public void setWinner(Player winner) {
@@ -274,6 +284,14 @@ public class GameEngine {
 
 	public void setGameStatus(boolean gameStatus) {
 		this.isGameOver = gameStatus;
+	}
+	
+	public int getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(int currentTurn) {
+		this.currentTurn = currentTurn;
 	}
 
 	public MoveType decideMoveType(CombinablePiece piece, int x, int y) {
@@ -343,5 +361,7 @@ public class GameEngine {
 		return String.format("numOfMoves:%s, Score-Player1:%s, Score-Player1:%s\n", this.numOfMoves,
 				this.players[0].getScore(), this.players[1].getScore());
 	}
+	
+	
 
 }
