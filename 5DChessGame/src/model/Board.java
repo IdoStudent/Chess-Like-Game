@@ -53,7 +53,7 @@ public class Board {
 		}
 	}
 	
-	public void connectPlayerPieces(Player player) {
+	public void addPlayerPieces(Player player) {
 		
 		for (CombinablePiece piece : player.getAllPieces())
 	      {

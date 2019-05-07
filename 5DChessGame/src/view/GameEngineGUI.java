@@ -54,8 +54,7 @@ public class GameEngineGUI extends JFrame{
 	
 	public void updateGameGUI() {
         
-		chessBoard.drawBoardPieces();   
-		scorePanel.updateScoreInfo();
+		chessBoard.drawBoardPieces();             
 	}
 		
 	

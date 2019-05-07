@@ -87,7 +87,7 @@ public class LoginForm extends JFrame implements ActionListener
 
 		if (model.addPlayer(uid, pass)) {
 			JOptionPane.showMessageDialog(this, "Assign number of move");
-			new MaxMoveForm(uid,frame, model);
+			new NumOfMoveForm(uid,frame, model);
 			this.setVisible(false);
 			
 		} else {

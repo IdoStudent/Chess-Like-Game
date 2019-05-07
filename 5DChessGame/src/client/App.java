@@ -2,7 +2,6 @@ package client;
 
 import javax.swing.SwingUtilities;
 
-import model.GameEngine;
 import view.GameEngineGUI;
 
 public class App {
@@ -18,7 +17,6 @@ public class App {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-//				GameEngine model = new GameEngine();
 				new GameEngineGUI();
 			}
 
