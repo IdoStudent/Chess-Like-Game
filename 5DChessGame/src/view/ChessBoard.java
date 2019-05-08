@@ -52,7 +52,7 @@ public class ChessBoard extends JPanel {
 //        		squareBtn[x][y].setLabel("["+x+y+"]");
                 if (y%2==0) {
                 	if (x%2==0) {
-                    	squareBtn[x][y].setBackground(Color.GRAY);
+                    	squareBtn[x][y].setBackground(Color.DARK_GRAY);
 
                 	} else {
                     	squareBtn[x][y].setBackground(Color.LIGHT_GRAY);
@@ -61,7 +61,7 @@ public class ChessBoard extends JPanel {
                 	if (x%2==0) {
                     	squareBtn[x][y].setBackground(Color.LIGHT_GRAY);
                 	} else {
-                    	squareBtn[x][y].setBackground(Color.GRAY);
+                    	squareBtn[x][y].setBackground(Color.DARK_GRAY);
                 	}
                 }
                

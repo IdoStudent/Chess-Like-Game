@@ -26,9 +26,14 @@ public class Player extends User{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public Player(String userId) {
+		super(userId);
+		// TODO Auto-generated constructor stub
+	}
+	
 	
 	public Player(GameEngine game, String userId, String userPwd) {
-		super(userId, userPwd);
+		super(userId);
 		this.game=game;
 		// TODO Auto-generated constructor stub
 	}

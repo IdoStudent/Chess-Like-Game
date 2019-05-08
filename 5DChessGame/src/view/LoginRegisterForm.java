@@ -61,8 +61,8 @@ public class LoginRegisterForm {
 		JPanel loginRegisterPanel = new JPanel();
 		loginRegisterPanel.add(registerButton);
 		loginRegisterPanel.add(loginButton);
-		loginButton.addActionListener(new LoginActionListener(gameEngine, userTextBox, passTextBox));
-		registerButton.addActionListener(new RegisterActionListener(gameEngine, userTextBox, passTextBox));
+		loginButton.addActionListener(new LoginActionListener(gameEngine, userTextBox, passTextBox, frame));
+		registerButton.addActionListener(new RegisterActionListener(gameEngine, userTextBox, passTextBox, frame));
 		panel.add(loginRegisterPanel);
 		
 		frame.add(panel);

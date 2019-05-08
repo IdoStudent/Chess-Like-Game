@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Label;
 import java.awt.Panel;
@@ -46,7 +47,7 @@ public class MaxMovesForm {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout());
 		bottomPanel.add(submitButton);
-		submitButton.addActionListener(new MaxMovesActionListener(gameEngine, maxMovesText, this));
+		submitButton.addActionListener(new MaxMovesActionListener(gameEngine, maxMovesText, this, frame));
 		panel.add(bottomPanel);
 		
 		
@@ -55,6 +56,17 @@ public class MaxMovesForm {
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public void renderError()
+	{
+		frame.setSize(300,150);
+		Label error = new Label("ERROR: Enter number between 10 and 90!");
+		error.setForeground(Color.RED);
+		JPanel errorPanel = new JPanel();
+		errorPanel.setLayout(new FlowLayout());
+		errorPanel.add(error);
+		panel.add(errorPanel);
 	}
 
 }

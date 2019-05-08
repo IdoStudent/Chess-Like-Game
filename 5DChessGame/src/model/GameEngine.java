@@ -55,6 +55,52 @@ public class GameEngine {
 		}
 	}
 	
+	
+	//YASIR CODE BEGIN
+	public boolean login(String username, String password)
+	{
+		User user = new User(username, password);
+		return user.loginPlayer(username, password, this);
+	}
+	
+	public boolean register(String username, String password)
+	{
+		User user = new User(username, password);
+		return user.registerPlayer(username, password, this);
+	}
+	
+	public void addPlayer(Player player)
+	{
+		if(players[0] == null)
+		{
+			players[0] = player;
+		}
+		else if(players[1] == null)
+		{
+			players[1] = player;
+		}
+	}
+	
+	public void addMaxMoves(int maxMoves)
+	{
+		if(players[0].getNumOfMove() == 0)
+		{
+			players[0].setNumOfMove(maxMoves);
+		}
+		else if(players[1].getNumOfMove() == 0)
+		{
+			players[1].setNumOfMove(maxMoves);
+		}
+	}
+	
+	public void writeDataToFile(String username, String password)
+	{
+		
+	}
+	
+	
+	//YASIR CODE END
+	
 	public boolean addPlayer(String id, String pwd) {
 		if (isValidUser(id, pwd)) {
 			Player player = new Player(this, id, pwd);
