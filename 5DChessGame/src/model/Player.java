@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Player extends User{
-	private int numOfMove;
+	private int numOfMove = 0;
 //	private Rook[] rooks = new Rook[2];
 //	private Knight[] knights = new Knight[2];
 //	private Bishop[] bishops = new Bishop[2];
@@ -13,6 +13,9 @@ public class Player extends User{
 //	private Board board;
 	private int playerIndex;
 	private int numOfRemainingPiece;
+	
+	private int win;
+	private int loss;
 
 
 	private int score;
@@ -105,6 +108,15 @@ public class Player extends User{
 	public void setScore(int score) {
 		this.score = score;
 	}
-
+	
+	public int getWins()
+	{
+		return win;
+	}
+	
+	public int getLosses()
+	{
+		return loss;
+	}
 
 }
