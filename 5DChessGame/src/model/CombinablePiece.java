@@ -10,7 +10,7 @@ import java.util.TreeMap;
 public abstract class CombinablePiece extends Piece {
 
 //	private HashSet<Piece> pieces = new HashSet<Piece>();
-	private HashMap<String,CombinablePiece> pieces = new HashMap<String,CombinablePiece>();
+	private HashMap<String,CombinablePiece> pieceMembers = new HashMap<String,CombinablePiece>();
 
 	private String combinedName;
 
@@ -33,7 +33,7 @@ public abstract class CombinablePiece extends Piece {
 		return false;
 	}
 
-	public boolean validCombineTo(CombinablePiece destinationPiece) {
+	public boolean isValidToCombine(CombinablePiece destinationPiece) {
 	
 		for (CombinablePiece piece : this.getPieces()) {
 			if (destinationPiece.getPieces().contains(piece))
@@ -45,14 +45,14 @@ public abstract class CombinablePiece extends Piece {
 
 	public void combinedMove(int toX, int toY) {
 		// TODO Auto-generated method stub
-		for (CombinablePiece piece : pieces.values()) {
+		for (CombinablePiece piece : pieceMembers.values()) {
 			piece.move(toX, toY);
 		}
 	}
 
 	public Collection<CombinablePiece> getPieces() {
 		 Collection<CombinablePiece> p = new ArrayList<CombinablePiece>();
-		 TreeMap<String, CombinablePiece> sorted = new TreeMap<>(pieces);
+		 TreeMap<String, CombinablePiece> sorted = new TreeMap<>(pieceMembers);
 		 Set<Entry<String, CombinablePiece>> mappings = sorted.entrySet();
 		 
 		 for(Entry<String, CombinablePiece> mapping : mappings){
@@ -63,21 +63,21 @@ public abstract class CombinablePiece extends Piece {
 	}
 
 	public void addPiece(CombinablePiece piece) {
-		 if(!pieces.containsKey(piece.getName())) {
-		this.pieces.put(piece.getName(), piece);
+		 if(!pieceMembers.containsKey(piece.getName())) {
+		this.pieceMembers.put(piece.getName(), piece);
 		 }
 	}
 	
 	public void removePieceMember(CombinablePiece piece) {
-		pieces.remove(piece.getName());
+		pieceMembers.remove(piece.getName());
 	}
 	
 	public Piece getPieceMember(String name) {
-		return pieces.get(name);
+		return pieceMembers.get(name);
 	}
 
-	public void setPieces(HashMap<String,CombinablePiece> pieces) {
-		this.pieces = pieces;
+	public void setPieceMembers(HashMap<String,CombinablePiece> pieces) {
+		this.pieceMembers = pieces;
 	}
 
 	public void setCombinedName(CombinablePiece piece) {

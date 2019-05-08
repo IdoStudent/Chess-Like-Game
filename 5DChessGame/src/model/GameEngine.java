@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameEngine {
-	private Map<String, User> members = new HashMap<String, User>();
+	private Map<String, User> users = new HashMap<String, User>();
 	private Player[] players = new Player[2];
 	private Board board;
 	private int numOfPlayers = 0;
@@ -28,7 +28,7 @@ public class GameEngine {
 	public boolean addUser(String id, String pwd) {
 		if (getMember(id) == null) {
 			User user = new User(id, pwd);
-			this.members.put(id, user);
+			this.users.put(id, user);
 			return true;
 		}
 		return false;
@@ -54,7 +54,7 @@ public class GameEngine {
 			currentTurn = 1;
 		}
 	}
-
+	
 	public boolean addPlayer(String id, String pwd) {
 		if (isValidUser(id, pwd)) {
 			Player player = new Player(this, id, pwd);
@@ -84,7 +84,7 @@ public class GameEngine {
 
 	public User getMember(String id) {
 		// Return the player if id exists in a key list of the players hash map
-		return members.get(id);
+		return users.get(id);
 	}
 
 	public Player getPlayer(String id) {
@@ -97,7 +97,7 @@ public class GameEngine {
 	}
 
 	public Collection<User> getAllUser() {
-		Collection<User> userList = members.values();
+		Collection<User> userList = users.values();
 		return userList;
 	}
 
@@ -300,7 +300,7 @@ public class GameEngine {
 		if ((destinationPiece == null)) {
 			return MoveType.NormalMove;
 		}
-		if (destinationPiece.getPlayer().equals(piece.getPlayer()) && piece.validCombineTo(destinationPiece)) {
+		if (destinationPiece.getPlayer().equals(piece.getPlayer()) && piece.isValidToCombine(destinationPiece)) {
 			return MoveType.MergePiece;
 		}
 
