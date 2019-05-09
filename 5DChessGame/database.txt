@@ -6,5 +6,7 @@ user:pass:0:1:
 newplayer:password:0:0:
 1234567890:1234567890:2:0:
 Ido:Ido:0:0:
-Yasir:Yasir:0:0:
+Yasir:Yasirr:0:0:
 ido:yaron:0:0:
+1:a:0:0:
+2:b:0:0:

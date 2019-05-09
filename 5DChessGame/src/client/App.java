@@ -1,6 +1,7 @@
 package client;
 
-import view.GameEngineGUI;
+import model.GameEngine;
+import view.LoginRegisterForm;
 
 public class App {
 
@@ -12,8 +13,9 @@ public class App {
 
 		// but let's keep it explicit so we can see more clearly what is actually
 		// happening!
-		GameEngineGUI game = new GameEngineGUI();
-		game.renderGameGUI();
+		GameEngine gameEngine = new GameEngine();
+		new LoginRegisterForm(gameEngine);
+		
 	}
 
 }

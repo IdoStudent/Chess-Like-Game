@@ -1,84 +1,80 @@
 package view;
-import java.awt.*;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.Panel;
+import java.io.PrintStream;
 
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
 
 import model.GameEngine;
 
+public class GameEngineGUI extends JFrame {
 
-public class GameEngineGUI {
-	private GameEngine model = new GameEngine();
+	private GameEngine gameEngine;
+	private ChessBoard chessBoard;
+	private ScorePanel scorePanel;
+	private Panel console;
 
-	ChessBoard chessBoard = new ChessBoard(this, model);
-	GameGUI game;
 
-	public GameEngineGUI() {
-		// TODO Auto-generated constructor stub
-		// Set the title of the frame
-		// the frame that contains the close component
- 
+	private JTextArea text = new JTextArea(7, 70);
+
+	public GameEngineGUI(GameEngine gameEngine) {
+		// this = new JFrame("5D Chess");
+		super("5D Chess Like Game");
+		this.gameEngine = gameEngine;
+
+		this.setLayout(new BorderLayout());
+		this.getContentPane();
+		this.setBackground(Color.LIGHT_GRAY);
+		this.renderGUI(this, gameEngine);
+		this.setSize(1200, 1000);
+		this.setLocationRelativeTo(null);
+		// this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 	}
 
+	public void renderGUI(GameEngineGUI frame, GameEngine model) {
 
-	public void renderGameGUI() {
-		
-		renderLoginRegister("Player 1");
-		while(model.getAllPlayers()[0] == null) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
-		
-		renderLoginRegister("Player 2");
-		while(model.getAllPlayers()[1] == null) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
-		
-		renderMaxMoves("Player 1");
-		while(model.getAllPlayers()[0].getNumOfMove() == 0) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
-		
-		renderMaxMoves("Player 2");
-		while(model.getAllPlayers()[1].getNumOfMove() == 0) {try {Thread.sleep(500);} catch (InterruptedException e) {}}
-		
-		renderGame();
-		
+		// Center chess board
+		chessBoard = new ChessBoard(this, this.gameEngine);
+		chessBoard.setPreferredSize(new Dimension(600, 600));
+		add(chessBoard, BorderLayout.CENTER);
+
+		// West score panel
+		scorePanel = new ScorePanel(this, this.gameEngine);
+		add(scorePanel, BorderLayout.WEST);
+
+		// South panel which includes the console
+		console = new Panel();
+		console.setLayout(new BoxLayout(console, BoxLayout.PAGE_AXIS));
+		Console cons = new Console(text, 10);
+		System.setOut(new PrintStream(cons));
+		console.add(new JScrollPane(text));
+		frame.add(console, BorderLayout.SOUTH);
 		System.out.println("Game started...");
 		System.out.println("Credits to: Anna Tran, Walaa Aqeel, Brandon Sarkis, Ido Yaron & Yasir Fayrooz.");
-		System.out.println("Max moves is calculated by the average of Player 1: " + model.getAllPlayers()[0].getNumOfMove() + " and Player 2: " + model.getAllPlayers()[1].getNumOfMove());
-        
+		System.out.println(
+				"Max moves is calculated by the average of Player 1: " + gameEngine.getAllPlayers()[0].getNumOfMove()
+						+ " and Player 2: " + gameEngine.getAllPlayers()[1].getNumOfMove());
+
 	}
-	
-	private void renderGame()
-	{
-		GameGUI game = new GameGUI(this, model, chessBoard);
-		this.game = game;
-		game.renderGUI(model);
-	}
-	
-	private void renderLoginRegister(String player)
-	{
-		LoginRegisterForm loginRegister = new LoginRegisterForm(player);
-		loginRegister.renderGUI(model);
-	}
-	
-	private void renderMaxMoves(String player)
-	{
-		MaxMovesForm maxMoves = new MaxMovesForm(player);
-		maxMoves.renderGUI(model);
-	}
-	
-	public void updateGameGUI() {
-        
-		chessBoard.drawBoardPieces();   
-		game.renderGUI(model);
-	}
-		
-	
-	public GameEngine getModel() {
-		return model;
-	}
-	
-    public ChessBoard getChessBoard() {
+
+	public ChessBoard getChessBoard() {
 		return chessBoard;
 	}
 
+	public void updateGameGUI() {
+		this.getChessBoard().drawBoardPieces();
+		scorePanel.updateScoreInfo();
+	}
 }

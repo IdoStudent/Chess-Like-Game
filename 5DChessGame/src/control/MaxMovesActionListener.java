@@ -7,21 +7,23 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import model.GameEngine;
+import view.GameEngineGUI;
+import view.LoginRegisterForm;
 import view.MaxMovesForm;
 
 public class MaxMovesActionListener implements ActionListener {
 
-	GameEngine gameEngine;
+	String playerID;
 	TextField maxMovesText;
 	MaxMovesForm maxMovesForm;
-	JFrame frame;
+	GameEngine gameEngine;
 	
-	public MaxMovesActionListener(GameEngine gameEngine, TextField maxMovesText, MaxMovesForm maxMovesForm, JFrame frame)
+	public MaxMovesActionListener(String playerID, GameEngine gameEngine, TextField maxMovesText, MaxMovesForm maxMovesForm)
 	{
-		this.gameEngine = gameEngine;
+		this.playerID = playerID;
 		this.maxMovesText = maxMovesText;
+		this.gameEngine = gameEngine;
 		this.maxMovesForm = maxMovesForm;
-		this.frame = frame;
 	}
 	
 	@Override
@@ -33,8 +35,18 @@ public class MaxMovesActionListener implements ActionListener {
 			max = Integer.parseInt(maxMovesText.getText());
 			if(max >= 10 && max <= 90)
 			{
-				gameEngine.addMaxMoves(max);
-				frame.dispose();
+				gameEngine.assignNumofMove(playerID, Integer.parseInt(maxMovesText.getText()));
+				
+				if (this.gameEngine.getNumOfPlayers()==1) {
+					new LoginRegisterForm(gameEngine);
+				}
+				
+				if (gameEngine.getNumOfPlayers()==2) {
+					gameEngine.StartGame();
+					GameEngineGUI gameGUI = new GameEngineGUI(gameEngine);
+					gameGUI.updateGameGUI();
+				}
+				maxMovesForm.dispose();
 			}
 			else
 			{

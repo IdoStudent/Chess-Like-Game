@@ -73,7 +73,7 @@ public class User {
 			else
 			{
 				Player player = new Player(username);
-				gameEngine.addPlayer(player);
+				gameEngine.addPlayer(username,username);
 				gameEngine.writeDataToFile(username, password);
 				return true;
 			}

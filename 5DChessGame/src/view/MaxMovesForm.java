@@ -14,9 +14,8 @@ import javax.swing.JPanel;
 import control.MaxMovesActionListener;
 import model.GameEngine;
 
-public class MaxMovesForm {
+public class MaxMovesForm extends JFrame{
 	
-	JFrame frame;
 	Panel panel;
 	
 	Label player;
@@ -25,18 +24,18 @@ public class MaxMovesForm {
 	
 	JButton submitButton = new JButton("Submit");
 	
-	public MaxMovesForm(String player)
+	public MaxMovesForm(String player, GameEngine gameEngine)
 	{
-		this.player = new Label(player + " enter maximum moves:");
+		this.player = new Label("Enter maximum moves: ( " + player + " )");
+		this.renderGUI(player, gameEngine);
 	}
 	
-	public void renderGUI(GameEngine gameEngine)
+	public void renderGUI(String playerID, GameEngine gameEngine)
 	{
 		
-		frame = new JFrame();
 		panel = new Panel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.add(panel);
+		this.add(panel);
 		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout());
@@ -47,20 +46,20 @@ public class MaxMovesForm {
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout());
 		bottomPanel.add(submitButton);
-		submitButton.addActionListener(new MaxMovesActionListener(gameEngine, maxMovesText, this, frame));
+		submitButton.addActionListener(new MaxMovesActionListener(playerID, gameEngine, maxMovesText, this));
 		panel.add(bottomPanel);
 		
 		
-		frame.setSize(300,100);
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(300,120);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void renderError()
 	{
-		frame.setSize(300,150);
+		this.setSize(300,150);
 		Label error = new Label("ERROR: Enter number between 10 and 90!");
 		error.setForeground(Color.RED);
 		JPanel errorPanel = new JPanel();

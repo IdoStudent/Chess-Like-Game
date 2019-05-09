@@ -3,25 +3,24 @@ package control;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JFrame;
-
 import model.GameEngine;
 import view.LoginErrorGUI;
+import view.LoginRegisterForm;
+import view.MaxMovesForm;
 
 public class LoginActionListener implements ActionListener  {
 
 	GameEngine model;
 	
-	TextField user;
-	TextField pass;
-	JFrame frame;
+	TextField playerId;
+	TextField playerPwd;
+	LoginRegisterForm frame;
 	
-	public LoginActionListener(GameEngine model, TextField user, TextField pass, JFrame frame) {
+	public LoginActionListener(GameEngine model, TextField user, TextField passTextBox, LoginRegisterForm frame) {
 		
 		this.model = model;
-		this.user = user;
-		this.pass = pass;
+		this.playerId = user;
+		this.playerPwd = passTextBox;
 		this.frame = frame;
 	}
 
@@ -31,9 +30,12 @@ public class LoginActionListener implements ActionListener  {
 		//LoginForm loginForm = new LoginForm(frame, model);
 //		   JOptionPane.showMessageDialog(frame, "Simple Information Message"); 
 		
-		if(model.login(user.getText(), pass.getText()) == true)
+		if(model.addPlayer(playerId.getText(), playerPwd.getText()))
 		{
-			frame.dispose();
+			this.frame.dispose();
+			new MaxMovesForm(playerId.getText(),model);
+//			maxMovesForm.renderGUI(playerId.getText(),model);
+			
 		}
 		else
 		{

@@ -6,8 +6,7 @@ import java.util.*;
 import java.util.List;
 import javax.swing.*;
 
-public class Console
-extends OutputStream
+public class Console extends OutputStream
 {
 
 // *************************************************************************************************
@@ -15,7 +14,7 @@ extends OutputStream
 // *************************************************************************************************
 
 private byte[]                          oneByte;                                                    // array for write(int val);
-private Appender                        appender;                                                   // most recent action
+private Appender                        appender;// most recent action
 
 public Console(JTextArea txtara) {
     this(txtara,1000);

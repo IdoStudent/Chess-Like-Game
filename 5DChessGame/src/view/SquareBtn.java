@@ -22,8 +22,6 @@ public class SquareBtn extends JButton{
 		this.model = model;
 		this.x = x;
 		this.y =y;
-//		SquareActionListener squareActionListener = new SquareActionListener(this, frame, model);
-//		this.addActionListener(squareActionListener);
 	}
 	
 	public int getPosX() {

@@ -14,10 +14,9 @@ import control.LoginActionListener;
 import control.RegisterActionListener;
 import model.GameEngine;
 
-public class LoginRegisterForm {
+public class LoginRegisterForm extends JFrame{
 	
-	JFrame frame;
-	Label player;
+	Label playerLabel;
 	Label user = new Label("Username: ");
 	Label pass = new Label("Password: ");
 	
@@ -27,23 +26,25 @@ public class LoginRegisterForm {
 	JButton registerButton = new JButton("Register");
 	JButton loginButton = new JButton("Login");
 	
-	public LoginRegisterForm(String player)
+	public LoginRegisterForm(GameEngine gameEngine)
 	{
-		this.player = new Label(player + " enter details:");
+		super("5D Chess");
+		int playerNo = gameEngine.getNumOfPlayers()+1;
+		this.playerLabel = new Label("Player " + playerNo + " enter details:");
+		this.renderGUI(gameEngine);
 	}
 	
 	public void renderGUI(GameEngine gameEngine)
 	{
 		passTextBox.setEchoChar('*');
-		
-		frame = new JFrame("5D Chess");
+
 		Panel panel = new Panel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		frame.add(panel);
+		this.add(panel);
 		
 		JPanel topPanel = new JPanel();
 		topPanel.setLayout(new FlowLayout());
-		topPanel.add(player);
+		topPanel.add(playerLabel);
 		panel.add(topPanel);
 		
 		JPanel usernamePanel = new JPanel();
@@ -61,16 +62,16 @@ public class LoginRegisterForm {
 		JPanel loginRegisterPanel = new JPanel();
 		loginRegisterPanel.add(registerButton);
 		loginRegisterPanel.add(loginButton);
-		loginButton.addActionListener(new LoginActionListener(gameEngine, userTextBox, passTextBox, frame));
-		registerButton.addActionListener(new RegisterActionListener(gameEngine, userTextBox, passTextBox, frame));
+		loginButton.addActionListener(new LoginActionListener(gameEngine, userTextBox, passTextBox, this));
+		registerButton.addActionListener(new RegisterActionListener(gameEngine, userTextBox, passTextBox, this));
 		panel.add(loginRegisterPanel);
 		
-		frame.add(panel);
+		this.add(panel);
 		
-		frame.setSize(300,200);
-		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(300,200);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

@@ -1,8 +1,14 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class GameEngine {
 	private Map<String, User> users = new HashMap<String, User>();
@@ -23,6 +29,7 @@ public class GameEngine {
 	public GameEngine() {
 		this.board = new Board(6, 6);
 		this.isGameOver = false;
+		this.loadUserData();
 	}
 
 	public boolean addUser(String id, String pwd) {
@@ -95,14 +102,52 @@ public class GameEngine {
 	
 	public void writeDataToFile(String username, String password)
 	{
+		Scanner scanner;
+		StringBuilder sb = new StringBuilder();
+		try
+		{
+			scanner = new Scanner(new File("database.txt"));
+			scanner.useDelimiter(":");
+			while(scanner.hasNextLine())
+			{
+				if(sb.length() != 0)
+				{
+					sb.append("\n");
+				}
+				
+				String user = scanner.next();
+				String pass = scanner.next();
+				int win = Integer.parseInt(scanner.next());
+				int loss = Integer.parseInt(scanner.next());
+				
+				sb.append(user + ":" + 
+						  pass + ":" + 
+						  win + ":" + 
+						  loss + ":");
+				
+				scanner.nextLine();
+			}
+			scanner.close();
+		}
+		catch(Exception e){}
 		
+		try 
+		{
+			PrintWriter out = new PrintWriter("database.txt");
+			
+			out.println(sb);
+			out.print(username + ":" + password + ":" + 0 + ":" + 0 + ":");
+			out.close();
+		}
+		catch (FileNotFoundException e) {}
 	}
+
 	
 	
 	//YASIR CODE END
 	
 	public boolean addPlayer(String id, String pwd) {
-		if (isValidUser(id, pwd)) {
+		if (isValidUser(id, pwd)&&!isDuplicatedPlayer(id)) {
 			Player player = new Player(this, id, pwd);
 			players[numOfPlayers] = player;
 			players[numOfPlayers].setPlayerIndex(numOfPlayers + 1);
@@ -127,6 +172,17 @@ public class GameEngine {
 
 		return false;
 	}
+	
+	public boolean isDuplicatedPlayer(String id) {
+		// Return true if the player id already exists
+		if (this.getNumOfPlayers()==1)
+		if (players[0].getUserId().equals(id)) {
+		return true;
+		} 
+		
+		return false;
+	}
+
 
 	public User getMember(String id) {
 		// Return the player if id exists in a key list of the players hash map
@@ -146,6 +202,35 @@ public class GameEngine {
 		Collection<User> userList = users.values();
 		return userList;
 	}
+	
+	public void loadUserData() {
+		
+		String filePath = "database.txt";
+	    String line;
+	    try  {
+		    BufferedReader reader = new BufferedReader(new FileReader(filePath));
+
+		    while ((line = reader.readLine()) != null)
+		    {
+		        String[] parts = line.split(":", 4);
+		        if (parts.length >= 2)
+		        {
+		            String id = parts[0];
+		            String pwd = parts[1];
+		            User user = new User(id, pwd);
+					this.users.put(id, user);
+		        } 
+		    }
+		    reader.close();
+	    	
+	    }
+	    catch(Exception e) {
+	    	  //  Block of code to handle errors
+	    }
+	   
+	}
+	
+	
 
 	public Player[] getAllPlayers() {
 		// Collection<Player> playerList = new ArrayList<Player>(players);

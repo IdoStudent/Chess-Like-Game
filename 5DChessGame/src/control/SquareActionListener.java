@@ -9,6 +9,7 @@ import model.CombinablePiece;
 import model.GameEngine;
 import model.Square;
 import view.GameEngineGUI;
+import view.GameEngineGUI;
 import view.SquareBtn;
 
 public class SquareActionListener implements ActionListener{
@@ -34,6 +35,7 @@ public class SquareActionListener implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		CombinablePiece selectedPiece = this.model.getSelectedPiece();
+		boolean moveResult=false;
 		
 			if (model.isGameOver()) {
 				JOptionPane.showMessageDialog(frame, "GAME OVER\n" + "Result:\n" + this.model.getGameResult());
@@ -51,7 +53,7 @@ public class SquareActionListener implements ActionListener{
 						} 
 				} else { // In case of a piece had been selected
 					if (selectedPiece.getPosX()!=x || selectedPiece.getPosY()!=y) {
-						 model.movePiece(selectedPiece, x, y);
+						 moveResult = model.movePiece(selectedPiece, x, y);
 						 frame.updateGameGUI();	 
 						 this.model.setSelectedPiece(null);
 						 this.frame.getChessBoard().removeHighLine();
@@ -61,8 +63,13 @@ public class SquareActionListener implements ActionListener{
 						 this.frame.getChessBoard().removeHighLine();
 					}
 				}
+				
+				System.out.println("Selected [x,y] " + selectedPiece.getPosX()+ ":" + selectedPiece.getPosY());
+				System.out.println("Move Result:" + moveResult);
+				System.out.println("Current tuen:" + this.model.getCurrentTurn());
 
 			}
+			
 	}
 
 }
