@@ -32,14 +32,14 @@ public class GameGUI {
 	
 	JButton[][] chessBoardSquares;
 	
-	public GameGUI(GameEngineGUI gameEngineGUI, GameEngine gameEngine)
+	public GameGUI(GameEngineGUI gameEngineGUI, GameEngine gameEngine, ChessBoard chessBoard)
 	{
 		frame = new JFrame("5D Chess");
 		frame.setLayout(new BorderLayout());
 		frame.getContentPane();
 		frame.setBackground(Color.LIGHT_GRAY);
 		
-		frame.add(new ChessBoard(gameEngineGUI, gameEngine), BorderLayout.CENTER);
+		frame.add(chessBoard, BorderLayout.CENTER);
 
 		//player info west panel which includes each players info
 		playerInfo = new Panel();

@@ -14,7 +14,8 @@ import model.GameEngine;
 public class GameEngineGUI {
 	private GameEngine model = new GameEngine();
 
-
+	ChessBoard chessBoard = new ChessBoard(this, model);
+	GameGUI game;
 
 	public GameEngineGUI() {
 		// TODO Auto-generated constructor stub
@@ -48,7 +49,8 @@ public class GameEngineGUI {
 	
 	private void renderGame()
 	{
-		GameGUI game = new GameGUI(this, model);
+		GameGUI game = new GameGUI(this, model, chessBoard);
+		this.game = game;
 		game.renderGUI(model);
 	}
 	
@@ -67,7 +69,7 @@ public class GameEngineGUI {
 	public void updateGameGUI() {
         
 		chessBoard.drawBoardPieces();   
-		scorePanel.updateScoreInfo();
+		game.renderGUI(model);
 	}
 		
 	
@@ -77,10 +79,6 @@ public class GameEngineGUI {
 	
     public ChessBoard getChessBoard() {
 		return chessBoard;
-	}
-    
-	public ScorePanel getScorePanel() {
-		return scorePanel;
 	}
 
 }

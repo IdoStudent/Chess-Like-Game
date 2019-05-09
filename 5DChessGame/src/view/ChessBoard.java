@@ -1,6 +1,8 @@
 package view;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -43,32 +45,65 @@ public class ChessBoard extends JPanel {
 	}
 
 	public void initBoard() {
-		 // add JButtons dynamically
-        for(int y=0; y < this.row; y++) {
-        	for (int x=0; x<this.column; x++) {
-        		squareBtn[x][y] = new SquareBtn(frame, model, x,y);
-        		SquareActionListener squareActionListener = new SquareActionListener(squareBtn[x][y], frame,model);
-        		squareBtn[x][y].addActionListener(squareActionListener);
-//        		squareBtn[x][y].setLabel("["+x+y+"]");
-                if (y%2==0) {
-                	if (x%2==0) {
-                    	squareBtn[x][y].setBackground(Color.DARK_GRAY);
-
-                	} else {
-                    	squareBtn[x][y].setBackground(Color.LIGHT_GRAY);
-                	}
+		
+		setBorder(new LineBorder(Color.BLACK));
+	    
+		// create the chess board squares
+        Insets buttonMargin = new Insets(0,0,0,0);
+        for (int i = 0; i < squareBtn.length; i++) 
+        {
+            for (int j = 0; j < squareBtn[i].length; j++)
+            {	
+            	SquareBtn b = new SquareBtn(frame, model, j, i);
+                b.setMargin(buttonMargin);
+                // our chess pieces are 64x64 px in size, so we'll
+                // 'fill this in' using a transparent icon..
+                ImageIcon icon = new ImageIcon(
+                        new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
+                b.setIcon(icon);
+                if ((j % 2 == 1 && i % 2 == 1)
+                        //) {
+                        || (j % 2 == 0 && i % 2 == 0)) {
+                    b.setBackground(Color.DARK_GRAY);
                 } else {
-                	if (x%2==0) {
-                    	squareBtn[x][y].setBackground(Color.LIGHT_GRAY);
-                	} else {
-                    	squareBtn[x][y].setBackground(Color.DARK_GRAY);
-                	}
+                    b.setBackground(Color.LIGHT_GRAY);
                 }
-               
-                
-                this.add(squareBtn[x][y]);
-        	}   
+                squareBtn[j][i] = b;
+            }
         }
+        
+        // fill the black non-pawn piece row
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) 
+            {
+            	add(squareBtn[j][i]);
+            }
+        }
+		 // add JButtons dynamically
+//        for(int y=0; y < this.row; y++) {
+//        	for (int x=0; x<this.column; x++) {
+//        		squareBtn[x][y] = new SquareBtn(frame, model, x,y);
+//        		SquareActionListener squareActionListener = new SquareActionListener(squareBtn[x][y], frame,model);
+//        		squareBtn[x][y].addActionListener(squareActionListener);
+//                if (y%2==0) {
+//                	if (x%2==0) {
+//                    	squareBtn[x][y].setBackground(Color.DARK_GRAY);
+//
+//                	} else {
+//                    	squareBtn[x][y].setBackground(Color.LIGHT_GRAY);
+//                	}
+//                } else {
+//                	if (x%2==0) {
+//                    	squareBtn[x][y].setBackground(Color.LIGHT_GRAY);
+//                	} else {
+//                    	squareBtn[x][y].setBackground(Color.DARK_GRAY);
+//                	}
+//                }
+//               
+//                
+//                this.add(squareBtn[x][y]);
+//        	}   
+//        }
 	}
 	
 	 public void drawBoardPieces() { 	
