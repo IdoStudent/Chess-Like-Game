@@ -35,7 +35,7 @@ public class GameEngineGUI extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.getContentPane();
 		this.setBackground(Color.LIGHT_GRAY);
-		this.renderGUI(this, gameEngine);
+		this.renderGameGUI();
 		this.setSize(1200, 1000);
 		this.setLocationRelativeTo(null);
 		// this.setResizable(false);
@@ -43,16 +43,16 @@ public class GameEngineGUI extends JFrame {
 		this.setVisible(true);
 	}
 
-	public void renderGUI(GameEngineGUI frame, GameEngine model) {
+	public void renderGameGUI() {
 
 		// Center chess board
 		chessBoard = new ChessBoard(this, this.gameEngine);
 		chessBoard.setPreferredSize(new Dimension(600, 600));
-		add(chessBoard, BorderLayout.CENTER);
+		this.add(chessBoard, BorderLayout.CENTER);
 
 		// West score panel
 		scorePanel = new ScorePanel(this, this.gameEngine);
-		add(scorePanel, BorderLayout.WEST);
+		this.add(scorePanel, BorderLayout.WEST);
 
 		// South panel which includes the console
 		console = new Panel();
@@ -60,7 +60,7 @@ public class GameEngineGUI extends JFrame {
 		Console cons = new Console(text, 10);
 		System.setOut(new PrintStream(cons));
 		console.add(new JScrollPane(text));
-		frame.add(console, BorderLayout.SOUTH);
+		this.add(console, BorderLayout.SOUTH);
 		System.out.println("Game started...");
 		System.out.println("Credits to: Anna Tran, Walaa Aqeel, Brandon Sarkis, Ido Yaron & Yasir Fayrooz.");
 		System.out.println(

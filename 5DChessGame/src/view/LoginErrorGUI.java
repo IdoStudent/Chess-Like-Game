@@ -19,7 +19,6 @@ public class LoginErrorGUI extends JDialog{
 		super(frame, "", Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		add(loginError());
-		
 		setSize(350,250);
 		setLocationRelativeTo(null);
 		setResizable(false);

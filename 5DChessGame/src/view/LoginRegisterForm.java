@@ -20,15 +20,16 @@ public class LoginRegisterForm extends JFrame{
 	Label user = new Label("Username: ");
 	Label pass = new Label("Password: ");
 	
-	TextField userTextBox = new TextField(15);
-	TextField passTextBox = new TextField(15);
-	
-	JButton registerButton = new JButton("Register");
-	JButton loginButton = new JButton("Login");
+	private TextField userTextBox = new TextField(15);
+	private TextField passTextBox = new TextField(15);
+	private JButton registerButton = new JButton("Register");
+	private JButton loginButton = new JButton("Login");
+	private GameEngine gameEngine;
 	
 	public LoginRegisterForm(GameEngine gameEngine)
 	{
 		super("5D Chess");
+		this.gameEngine = gameEngine;
 		int playerNo = gameEngine.getNumOfPlayers()+1;
 		this.playerLabel = new Label("Player " + playerNo + " enter details:");
 		this.renderGUI(gameEngine);
