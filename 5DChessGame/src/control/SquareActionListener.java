@@ -56,17 +56,20 @@ public class SquareActionListener implements ActionListener{
 						 moveResult = model.movePiece(selectedPiece, x, y);
 						 frame.updateGameGUI();	 
 						 this.model.setSelectedPiece(null);
-						 this.frame.getChessBoard().removeHighLine();
-		
+						 this.frame.getChessBoard().removeHighLine();	
+						 // Logging to the  console
+						 System.out.println("Selected [x,y] " + selectedPiece.getPosX()+ ":" + selectedPiece.getPosY());
+						 System.out.println("Move Result:" + moveResult);
+						 System.out.println("Current turn:" + this.model.getCurrentTurn());
+
 					} else {
 						 this.model.setSelectedPiece(null);
 						 this.frame.getChessBoard().removeHighLine();
 					}
+	
 				}
 				
-				System.out.println("Selected [x,y] " + selectedPiece.getPosX()+ ":" + selectedPiece.getPosY());
-				System.out.println("Move Result:" + moveResult);
-				System.out.println("Current tuen:" + this.model.getCurrentTurn());
+				
 
 			}
 			
