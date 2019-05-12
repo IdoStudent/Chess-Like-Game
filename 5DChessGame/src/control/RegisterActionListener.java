@@ -32,6 +32,7 @@ public class RegisterActionListener implements ActionListener {
 		{
 			frame.dispose();
 			JOptionPane.showMessageDialog(frame, "You have successfully registered an account");
+			model.loadUserData();
 			if (model.getNumOfPlayers()<2) {
 				new LoginRegisterForm(model);
 			}
