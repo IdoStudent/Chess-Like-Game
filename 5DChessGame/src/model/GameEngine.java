@@ -161,12 +161,7 @@ public class GameEngine {
 		opponentPiece.setStatus(false);
 
 		// Update score
-		if (opponentPiece instanceof MergedPiece) {
-			piece.getPlayer()
-					.setScore(piece.getPlayer().getScore() + 5 * ((MergedPiece) opponentPiece).getPieces().size());
-		} else {
-			piece.getPlayer().setScore(piece.getPlayer().getScore() + 5);
-		}
+		updateScoreWhenRemoveOppopent(piece,opponentPiece);
 
 		// Update number of move
 		this.numOfMoves++;
@@ -221,6 +216,16 @@ public class GameEngine {
 
 		return false;
 
+	}
+	
+	private void updateScoreWhenRemoveOppopent(Piece piece, Piece opponentPiece) {
+		// Update score
+				if (opponentPiece instanceof MergedPiece) {
+					piece.getPlayer()
+							.setScore(piece.getPlayer().getScore() + 5 * ((MergedPiece) opponentPiece).getPieces().size());
+				} else {
+					piece.getPlayer().setScore(piece.getPlayer().getScore() + 5);
+				}
 	}
 
 	public void updateGameState() {
