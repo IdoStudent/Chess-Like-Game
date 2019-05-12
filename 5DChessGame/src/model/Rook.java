@@ -1,12 +1,12 @@
 package model;
 
-public class Rook extends CombinablePiece{
+public class Rook extends Piece{
 
 	
 	public Rook(Player player, Board board, String name, String color, int X, int Y) {
 		super(player, board, name, color, X, Y);
 		// TODO Auto-generated constructor stub
-		this.addPiece(this);
+//		this.addPiece(this);
 
 	}
 
@@ -17,7 +17,7 @@ public class Rook extends CombinablePiece{
 		int fromY= this.getPosY(); 
 		int spaceX = Math.abs(fromX - toX);
 		int spaceY = Math.abs(fromY - toY);
-		if ((spaceX<=2 &&spaceY==0) || (spaceY<=2 &&spaceX==0) )
+		if (((spaceX<=2 &&spaceY==0) || (spaceY<=2 &&spaceX==0)) && !isMovingOverPiece(toX,toY))
 		{
 			return true;
 		}
@@ -26,8 +26,7 @@ public class Rook extends CombinablePiece{
 		
 	}
 	
-	@Override
-	public boolean isMovingOverPiece(int toX, int toY) {
+	private boolean isMovingOverPiece(int toX, int toY) {
 		int fromX = this.getPosX();
 		int fromY = this.getPosY();
 		if (fromX == toX) {// Vertically move

@@ -4,7 +4,7 @@ public class Square {
 	private int posX;
 	private int posY;
 	private String name;
-	private CombinablePiece piece;
+	private Piece piece;
 	public Square(int X, int Y) {
 		// TODO Auto-generated constructor stub
 		this.posX = X;
@@ -13,7 +13,7 @@ public class Square {
 		this.name="(  )";
 	}
 	
-	public Square(int X, int Y, CombinablePiece piece) {
+	public Square(int X, int Y, Piece piece) {
 		// TODO Auto-generated constructor stub
 		this.posX = X;
 		this.posY = Y;
@@ -37,11 +37,11 @@ public class Square {
 		this.posY = posY;
 	}
 
-	public CombinablePiece getPiece() {
+	public Piece getPiece() {
 		return piece;
 	}
 
-	public void setPiece(CombinablePiece piece) {
+	public void setPiece(Piece piece) {
 		this.piece = piece;
 	}
 
@@ -54,6 +54,6 @@ public class Square {
 	}
 	@Override
 	public String toString() {
-		return String.format("Name:%s, X:%s, Y:%s\t", this.getPiece()!=null?this.getPiece().getCombinedName():this.name, this.getPosX(), this.getPosY());
+		return String.format("Name:%s, X:%s, Y:%s\t", this.getPiece()!=null?this.getPiece().getName():this.name, this.getPosX(), this.getPosY());
 	}
 }

@@ -48,7 +48,7 @@ public class User {
 		else
 		{
 			Player player = new Player(username);
-			gameEngine.addPlayer(player);
+			gameEngine.addUser(username, password);
 			return true;
 		}
 	}

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Board;
-import model.CombinablePiece;
+import model.MergedPiece;
 import model.GameEngine;
 import model.Piece;
 import model.Player;
@@ -18,7 +18,7 @@ import model.User;
 class testMoveRook {
 	User user1, user2;
 	Player player1, player2;
-	CombinablePiece rook1, rook2;
+	Piece rook1, rook2;
 	GameEngine game;
 	
 	@BeforeEach

@@ -1,11 +1,11 @@
 package model;
 
-public class Bishop extends CombinablePiece{
+public class Bishop extends Piece{
 
 	public Bishop(Player player,Board board, String name, String color, int X, int Y) {
 		super(player, board, name, color, X, Y);
 		// TODO Auto-generated constructor stub
-		this.addPiece(this);
+//		this.addPiece(this);
 	}
 	
 	@Override
@@ -15,7 +15,7 @@ public class Bishop extends CombinablePiece{
 		int fromY= this.getPosY(); 
 		int spaceX = Math.abs(fromX - toX);
 		int spaceY = Math.abs(fromY - toY);
-		if (spaceX == spaceY && spaceX<=2 )
+		if (spaceX == spaceY && spaceX<=2  && !isMovingOverPiece(toX,toY))
 		{
 			return true;
 		}
@@ -23,7 +23,7 @@ public class Bishop extends CombinablePiece{
 		return false;
 	}
 	
-	public boolean isMovingOverPiece(int toX, int toY) { 
+	private boolean isMovingOverPiece(int toX, int toY) { 
 		int fromX = this.getPosX();
 		int fromY = this.getPosY();
 		

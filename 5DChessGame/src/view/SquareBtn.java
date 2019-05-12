@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.border.LineBorder;
 
 import control.SquareActionListener;
-import model.CombinablePiece;
+import model.MergedPiece;
 import model.GameEngine;
 import model.Square;
 

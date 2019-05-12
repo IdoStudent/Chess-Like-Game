@@ -17,13 +17,9 @@ public class GameEngine {
 	private int numOfPlayers = 0;
 	private int numOfMoves = 0;
 	private int currentTurn;
-	
-
 	private int maxMove = 0;
 	private Player winner = null;
-	
-
-	private CombinablePiece selectedPiece;
+	private Piece selectedPiece;
 	private boolean isGameOver;
 
 	public GameEngine() {
@@ -41,113 +37,8 @@ public class GameEngine {
 		return false;
 	}
 
-	public void StartGame() {
-		// Set max moves
-		this.setMaxMove()
-		;
-		// Randomly select the first turn
-		this.setCurrentTurn((int) (Math.random() * 2 + 1)); // will return either 1 or 2
-		
-		// Connect player's pieces to the board
-		for(Player player: this.getAllPlayers()){
-			this.board.connectPlayerPieces(player);
-		}
-	}
-
-	public void flipTurn() {
-		if (this.currentTurn == 1) {
-			currentTurn = 2;
-		} else {
-			currentTurn = 1;
-		}
-	}
-	
-	
-	//YASIR CODE BEGIN
-	public boolean login(String username, String password)
-	{
-		User user = new User(username, password);
-		return user.loginPlayer(username, password, this);
-	}
-	
-	public boolean register(String username, String password)
-	{
-		User user = new User(username, password);
-		return user.registerPlayer(username, password, this);
-	}
-	
-	public void addPlayer(Player player)
-	{
-		if(players[0] == null)
-		{
-			players[0] = player;
-		}
-		else if(players[1] == null)
-		{
-			players[1] = player;
-		}
-	}
-	
-	public void addMaxMoves(int maxMoves)
-	{
-		if(players[0].getNumOfMove() == 0)
-		{
-			players[0].setNumOfMove(maxMoves);
-		}
-		else if(players[1].getNumOfMove() == 0)
-		{
-			players[1].setNumOfMove(maxMoves);
-		}
-	}
-	
-	public void writeDataToFile(String username, String password)
-	{
-		Scanner scanner;
-		StringBuilder sb = new StringBuilder();
-		try
-		{
-			scanner = new Scanner(new File("database.txt"));
-			scanner.useDelimiter(":");
-			while(scanner.hasNextLine())
-			{
-				if(sb.length() != 0)
-				{
-					sb.append("\n");
-				}
-				
-				String user = scanner.next();
-				String pass = scanner.next();
-				int win = Integer.parseInt(scanner.next());
-				int loss = Integer.parseInt(scanner.next());
-				
-				sb.append(user + ":" + 
-						  pass + ":" + 
-						  win + ":" + 
-						  loss + ":");
-				
-				scanner.nextLine();
-			}
-			scanner.close();
-		}
-		catch(Exception e){}
-		
-		try 
-		{
-			PrintWriter out = new PrintWriter("database.txt");
-			
-			out.println(sb);
-			out.print(username + ":" + password + ":" + 0 + ":" + 0 + ":");
-			out.close();
-		}
-		catch (FileNotFoundException e) {}
-	}
-
-	
-	
-	//YASIR CODE END
-	
 	public boolean addPlayer(String id, String pwd) {
-		if (isValidUser(id, pwd)&&!isDuplicatedPlayer(id)) {
+		if (isValidUser(id, pwd) && !isDuplicatedPlayer(id)) {
 			Player player = new Player(this, id, pwd);
 			players[numOfPlayers] = player;
 			players[numOfPlayers].setPlayerIndex(numOfPlayers + 1);
@@ -159,10 +50,6 @@ public class GameEngine {
 		return false;
 	}
 
-	public void addPieceToBoard(Player player) {
-		this.board.connectPlayerPieces(player);
-	}
-
 	public boolean isValidUser(String id, String pwd) {
 		// Return the player if id exists in a key list of the players hash map
 		for (User user : this.getAllUser()) {
@@ -172,17 +59,252 @@ public class GameEngine {
 
 		return false;
 	}
-	
+
 	public boolean isDuplicatedPlayer(String id) {
 		// Return true if the player id already exists
-		if (this.getNumOfPlayers()==1)
-		if (players[0].getUserId().equals(id)) {
-		return true;
-		} 
-		
+		if (this.getNumOfPlayers() == 1)
+			if (players[0].getUserId().equals(id)) {
+				return true;
+			}
+
 		return false;
 	}
 
+	public void StartGame() {
+		// Set max moves
+		this.setMaxMove();
+		// Randomly select the first turn
+		this.setCurrentTurn((int) (Math.random() * 2 + 1)); // will return either 1 or 2
+
+		// Connect player's pieces to the board
+		for (Player player : this.getAllPlayers()) {
+			this.board.connectPlayerPieces(player);
+		}
+	}
+
+	public void flipTurn() {
+		if (this.currentTurn == 1) {
+			currentTurn = 2;
+		} else {
+			currentTurn = 1;
+		}
+	}
+
+	public void connectPiecesToBoard(Player player) {
+		this.board.connectPlayerPieces(player);
+	}
+
+	public MoveType decideMoveType(Piece piece, int x, int y) {
+		Piece destinationPiece = board.getSquares(x, y).getPiece();
+		// Prerequisite condition to commence a game and move a piece
+		if (this.numOfPlayers == 2 && !this.isGameOver) {
+
+			// If valid player turn and valid move then start moving
+			if (piece.validMove(x, y) && board.isValidDestination(piece, x, y) && piece.getPlayer().isPlayerTurn()) {
+
+				// If destination square is empty
+				if ((destinationPiece == null)) {
+					return MoveType.NormalMove;
+				}
+				// If destination square having piece of the same player
+				if (destinationPiece.getPlayer().equals(piece.getPlayer())) {
+					return MoveType.MergePiece;
+				}
+				// If destination square having piece of the other player
+				if (!destinationPiece.getPlayer().equals(piece.getPlayer())) {
+					return MoveType.RemoveOpponent;
+				}
+			}
+		}
+
+		return MoveType.InvalidMove;
+
+	}
+
+	public boolean normalMove(Piece piece, int toX, int toY) {
+		// Disconnect piece from the current square
+		board.disconnectPiece(piece.getPosX(), piece.getPosY());
+
+		// Move piece to the new position
+		piece.move(toX, toY);
+
+		// Connect piece to the corresponding square
+		board.connectPiece(piece, toX, toY);
+
+		// Update number of move
+		this.numOfMoves++;
+
+		// Update the game status and the result
+		updateGameState();
+
+		// Change player's turn
+		if (!this.isGameOver)
+			this.flipTurn();
+
+		return true;
+	}
+
+	public boolean removeOpponent(Piece piece, int toX, int toY) {
+		// get opponent piece at destination position
+		Piece opponentPiece = board.getSquares(toX, toY).getPiece();
+
+		// Disconnect piece from the current square
+		board.disconnectPiece(piece.getPosX(), piece.getPosY());
+
+		// Move piece to the new position
+		piece.move(toX, toY);
+
+		// Connect piece to the corresponding square;
+		board.connectPiece(piece, toX, toY);
+
+		// Set the status of the opponent piece has been removed to inactive state
+		opponentPiece.setStatus(false);
+
+		// Update score
+		if (opponentPiece instanceof MergedPiece) {
+			piece.getPlayer()
+					.setScore(piece.getPlayer().getScore() + 5 * ((MergedPiece) opponentPiece).getPieces().size());
+		} else {
+			piece.getPlayer().setScore(piece.getPlayer().getScore() + 5);
+		}
+
+		// Update number of move
+		this.numOfMoves++;
+
+		// Update the game status and the result
+		updateGameState();
+
+		// Change player's turn
+		if (!this.isGameOver)
+			this.flipTurn();
+
+		return true;
+	}
+
+	public boolean mergePiece(Piece piece, int toX, int toY) {
+		// Disconnect piece from the current square
+		board.disconnectPiece(piece.getPosX(), piece.getPosY());
+
+		// Move piece to the new position
+		piece.move(toX, toY);
+
+		// Create a merge piece
+		MergedPiece mPiece = createMergePiece(piece, toX, toY);
+
+		// Connect the merged piece to the corresponding square;
+		board.connectPiece(mPiece, toX, toY);
+
+		// Update number of move
+		this.numOfMoves++;
+
+		// Update the game status and the result
+		updateGameState();
+
+		// Change player's turn
+		if (!this.isGameOver)
+			this.flipTurn();
+
+		return true;
+	}
+
+	public boolean movePiece(Piece piece, int toX, int toY) {
+		switch (this.decideMoveType(piece, toX, toY)) {
+		case NormalMove:
+			return normalMove(piece, toX, toY);
+		case RemoveOpponent:
+			return removeOpponent(piece, toX, toY);
+		case MergePiece:
+			return mergePiece(piece, toX, toY);
+		default:
+			break;
+		}
+
+		return false;
+
+	}
+
+	public void updateGameState() {
+
+		// Case 1: Number of moves exceed the maximum number of moves
+		if (this.numOfMoves >= this.maxMove) {
+			if (players[0].getScore() > players[1].getScore()) {
+				winner = players[0];
+			}
+
+			if (players[0].getScore() < players[1].getScore()) {
+				winner = players[1];
+			}
+
+			setGameStatus(true);
+
+		} else {
+			// Case 2: one player takes out all the pieces of the opponent
+			if (players[0].getNumOfRemainingPiece() == 0) {
+				winner = players[1];
+				setGameStatus(true);
+			}
+
+			if (players[1].getNumOfRemainingPiece() == 0) {
+				winner = players[0];
+				setGameStatus(true);
+			}
+		}
+
+	}
+
+	public String getGameResult() {
+		if (this.isGameOver) {
+			if (this.winner != null) {
+				String color = winner.getPlayerIndex() == 1 ? "BLACK" : "WHITE";
+				return "WINNER: " + winner.getUserId() + "(" + color + ")";
+			} else {
+				return "DRAW";
+			}
+		} else {
+			return "";
+		}
+	}
+
+	public MergedPiece createMergePiece(Piece piece, int toX, int toY) {
+		Piece secondPiece = board.getSquares(toX, toY).getPiece();
+		MergedPiece mergedPiece = null;
+
+		if (!(piece instanceof MergedPiece) && !(secondPiece instanceof MergedPiece)) {
+			mergedPiece = new MergedPiece(piece.getPlayer(), board, null, piece.getColor(), toX, toY);
+			mergedPiece.addPiece(piece);
+			mergedPiece.addPiece(secondPiece);
+			piece.getPlayer().removePiece(piece);
+			piece.getPlayer().removePiece(secondPiece);
+			piece.getPlayer().addPiece(mergedPiece);
+		}
+
+		if (!(piece instanceof MergedPiece) && (secondPiece instanceof MergedPiece)) {
+			mergedPiece = (MergedPiece) secondPiece;
+			mergedPiece.addPiece(piece);
+			piece.getPlayer().removePiece(piece);
+		}
+
+		if ((piece instanceof MergedPiece) && !(secondPiece instanceof MergedPiece)) {
+			mergedPiece = (MergedPiece) piece;
+			mergedPiece.addPiece(secondPiece);
+			piece.getPlayer().removePiece(secondPiece);
+		}
+
+		mergedPiece.setName();
+
+		return mergedPiece;
+
+	}
+
+	public void unmergePiece(MergedPiece combinedPiece, MergedPiece singlePiece, int toX, int toY) {
+
+		if (movePiece((MergedPiece) singlePiece, toX, toY)) {
+			combinedPiece.removePieceMember(singlePiece);
+			combinedPiece.getPlayer().getAllPieces().add(singlePiece);
+			combinedPiece.setName();
+			board.connectPiece(combinedPiece, combinedPiece.getPosX(), combinedPiece.getPosY());
+		}
+	}
 
 	public User getMember(String id) {
 		// Return the player if id exists in a key list of the players hash map
@@ -202,35 +324,44 @@ public class GameEngine {
 		Collection<User> userList = users.values();
 		return userList;
 	}
-	
-	public void loadUserData() {
-		
-		String filePath = "database.txt";
-	    String line;
-	    try  {
-		    BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
-		    while ((line = reader.readLine()) != null)
-		    {
-		        String[] parts = line.split(":", 4);
-		        if (parts.length >= 2)
-		        {
-		            String id = parts[0];
-		            String pwd = parts[1];
-		            User user = new User(id, pwd);
-					this.users.put(id, user);
-		        } 
-		    }
-		    reader.close();
-	    	
-	    }
-	    catch(Exception e) {
-	    	  //  Block of code to handle errors
-	    }
-	   
+	public Piece getSelectedPiece() {
+		return selectedPiece;
 	}
-	
-	
+
+	public void setSelectedPiece(Piece selectedPiece) {
+		this.selectedPiece = selectedPiece;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("numOfMoves:%s, Score-Player1:%s, Score-Player1:%s\n", this.numOfMoves,
+				this.players[0].getScore(), this.players[1].getScore());
+	}
+
+	public void setWinner(Player winner) {
+		this.winner = winner;
+	}
+
+	public Player getWinner() {
+		return winner;
+	}
+
+	public boolean isGameOver() {
+		return isGameOver;
+	}
+
+	public void setGameStatus(boolean gameStatus) {
+		this.isGameOver = gameStatus;
+	}
+
+	public int getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(int currentTurn) {
+		this.currentTurn = currentTurn;
+	}
 
 	public Player[] getAllPlayers() {
 		// Collection<Player> playerList = new ArrayList<Player>(players);
@@ -269,230 +400,66 @@ public class GameEngine {
 	public void setNumOfMoves(int numOfMoves) {
 		this.numOfMoves = numOfMoves;
 	}
+	// YASIR CODE BEGIN
 
-
-	public boolean movePiece(CombinablePiece piece, int toX, int toY) {
-		// Prerequisite condition to commence a game and move a piece
-		if (this.numOfPlayers == 2 && !this.isGameOver) {
-			
-			// If valid player turn and valid move then start moving
-			if (piece.combinedValidMove(toX, toY) && piece.getPlayer().isPlayerTurn()) { 
-
-				if (this.decideMoveType(piece, toX, toY) == MoveType.NormalMove) {
-					// Disconnect piece from the current square
-					board.disconnectPiece(piece.getPosX(), piece.getPosY());
-
-					// Move piece to the new position
-					piece.combinedMove(toX, toY);
-
-					// Connect piece to the corresponding square
-					board.connectPiece(piece, toX, toY);
-
-					// Update number of move
-					this.numOfMoves++;
-
-					// Update the game status and the result
-					updateGameState();
-					
-					// Change player's turn
-					this.flipTurn();
-
-					return true;
+	public void writeDataToFile(String username, String password) {
+		Scanner scanner;
+		StringBuilder sb = new StringBuilder();
+		try {
+			scanner = new Scanner(new File("database.txt"));
+			scanner.useDelimiter(":");
+			while (scanner.hasNextLine()) {
+				if (sb.length() != 0) {
+					sb.append("\n");
 				}
 
-				if (this.decideMoveType(piece, toX, toY) == MoveType.RemoveOpponent) {
+				String user = scanner.next();
+				String pass = scanner.next();
+				int win = Integer.parseInt(scanner.next());
+				int loss = Integer.parseInt(scanner.next());
 
-					// get opponent piece at destination position
-					CombinablePiece opponentPiece = board.getSquares(toX, toY).getPiece();
+				sb.append(user + ":" + pass + ":" + win + ":" + loss + ":");
 
-					// Disconnect piece from the current square
-					board.disconnectPiece(piece.getPosX(), piece.getPosY());
-
-					// Move piece to the new position
-					piece.combinedMove(toX, toY);
-
-					// Connect piece to the corresponding square;
-					board.connectPiece(piece, toX, toY);
-
-					// Set the status of the opponent piece has been removed to inactive state
-					opponentPiece.setStatus(false);
-
-					// Update score
-					piece.getPlayer().setScore(piece.getPlayer().getScore() + 5);
-
-					// Update opponent's remaining number of pieces
-					opponentPiece.getPlayer().updateRemainingPiece(-opponentPiece.getPieces().size());
-
-					// Update number of move
-					this.numOfMoves++;
-
-					// Update the game status and the result
-					updateGameState();
-					
-					// Change player's turn
-					this.flipTurn();
-
-					return true;
-				}
-
-				if (this.decideMoveType(piece, toX, toY) == MoveType.MergePiece) {
-					// Disconnect piece from the current square
-					board.disconnectPiece(piece.getPosX(), piece.getPosY());
-
-					// Move piece to the new position
-					piece.combinedMove(toX, toY);
-
-					// Merge piece and connect the merged piece to the corresponding square;
-					mergePiece(piece, toX, toY);
-
-					// Update number of move
-					this.numOfMoves++;
-
-					// Update the game status and the result
-					updateGameState();
-					
-					// Change player's turn
-					this.flipTurn();
-
-					return true;
-				}
-
+				scanner.nextLine();
 			}
+			scanner.close();
+		} catch (Exception e) {
 		}
-		return false;
+
+		try {
+			PrintWriter out = new PrintWriter("database.txt");
+
+			out.println(sb);
+			out.print(username + ":" + password + ":" + 0 + ":" + 0 + ":");
+			out.close();
+		} catch (FileNotFoundException e) {
+		}
 	}
 
-	public void updateGameState() {
+	// YASIR CODE END
 
-		// Case 1: Number of moves exceed the maximum number of moves
-		if (this.numOfMoves >= this.maxMove) {
-			if (players[0].getScore() > players[1].getScore()) {
-				winner = players[0];
-			}
+	public void loadUserData() {
 
-			if (players[0].getScore() < players[1].getScore()) {
-				winner = players[1];
-			}
+		String filePath = "database.txt";
+		String line;
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
-			setGameStatus(true);
-
-		} else {
-			// Case 2: one player takes out all the pieces of the opponent
-			for (int i = 0; i < players.length; i++) {
-				if (players[i].getNumOfRemainingPiece() == 0) {
-					winner = players[i];
-					setGameStatus(true);
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split(":", 4);
+				if (parts.length >= 2) {
+					String id = parts[0];
+					String pwd = parts[1];
+					User user = new User(id, pwd);
+					this.users.put(id, user);
 				}
 			}
+			reader.close();
+
+		} catch (Exception e) {
+			// Block of code to handle errors
 		}
 
 	}
-
-	public String getGameResult() {
-		if (this.isGameOver) {	
-			if (this.winner != null) {
-			String color = winner.getPlayerIndex()==1?"BLACK":"WHITE";
-			return "WINNER: " + winner.getUserId() + "(" + color + ")" ;
-			} else {
-				return "DRAW";
-			}
-		} else {
-			return "";
-		}	
-	}
-
-	public void setWinner(Player winner) {
-		this.winner = winner;
-	}
-	
-	public Player getWinner() {
-		return winner;
-	}
-
-	public boolean isGameOver() {
-		return isGameOver;
-	}
-
-	public void setGameStatus(boolean gameStatus) {
-		this.isGameOver = gameStatus;
-	}
-	
-	public int getCurrentTurn() {
-		return currentTurn;
-	}
-
-	public void setCurrentTurn(int currentTurn) {
-		this.currentTurn = currentTurn;
-	}
-
-	public MoveType decideMoveType(CombinablePiece piece, int x, int y) {
-		CombinablePiece destinationPiece = board.getSquares(x, y).getPiece();
-
-		if ((destinationPiece == null)) {
-			return MoveType.NormalMove;
-		}
-		if (destinationPiece.getPlayer().equals(piece.getPlayer()) && piece.isValidToCombine(destinationPiece)) {
-			return MoveType.MergePiece;
-		}
-
-		if (!destinationPiece.getPlayer().equals(piece.getPlayer())) {
-			return MoveType.RemoveOpponent;
-		}
-
-		return MoveType.InvalidMove;
-
-	}
-
-	public void mergePiece(CombinablePiece piece, int toX, int toY) {
-		CombinablePiece secondPiece = board.getSquares(toX, toY).getPiece();
-		CombinablePiece masterPiece = null;
-		CombinablePiece slavePiece = null;
-		if (piece.getPieces().size() > secondPiece.getPieces().size()) {
-			masterPiece = piece;
-			slavePiece = secondPiece;
-		} else {
-			masterPiece = secondPiece;
-			slavePiece = piece;
-		}
-
-		for (CombinablePiece p : slavePiece.getPieces()) {
-			masterPiece.addPiece(p);
-		}
-
-		masterPiece.setCombinedName(masterPiece);
-
-		piece.getPlayer().getAllPieces().remove(slavePiece);
-
-		// Add the merged piece to the corresponding square;
-		board.connectPiece(masterPiece, toX, toY);
-
-	}
-
-	public void unmergePiece(CombinablePiece combinedPiece, CombinablePiece singlePiece, int toX, int toY) {
-
-		if (movePiece((CombinablePiece) singlePiece, toX, toY)) {
-			combinedPiece.removePieceMember(singlePiece);
-			combinedPiece.getPlayer().getAllPieces().add(singlePiece);
-			combinedPiece.setCombinedName(combinedPiece);
-			board.connectPiece(combinedPiece, combinedPiece.getPosX(), combinedPiece.getPosY());
-		}
-	}
-
-
-	public CombinablePiece getSelectedPiece() {
-		return selectedPiece;
-	}
-
-	public void setSelectedPiece(CombinablePiece selectedPiece) {
-		this.selectedPiece = selectedPiece;
-	}
-
-	@Override
-	public String toString() {
-		return String.format("numOfMoves:%s, Score-Player1:%s, Score-Player1:%s\n", this.numOfMoves,
-				this.players[0].getScore(), this.players[1].getScore());
-	}
-	
-	
 
 }

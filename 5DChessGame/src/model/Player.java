@@ -8,12 +8,11 @@ public class Player extends User{
 //	private Rook[] rooks = new Rook[2];
 //	private Knight[] knights = new Knight[2];
 //	private Bishop[] bishops = new Bishop[2];
-	private Collection<CombinablePiece> pieces = new ArrayList<CombinablePiece>();
+	private Collection<Piece> pieces = new ArrayList<Piece>();
 	private GameEngine game = new GameEngine();
 //	private Board board;
 	private int playerIndex;
-	private int numOfRemainingPiece;
-	
+//	private int numOfRemainingPiece;
 	private int win;
 	private int loss;
 
@@ -24,6 +23,7 @@ public class Player extends User{
 	public Player(String userId, String userPwd) {
 		super(userId, userPwd);
 		// TODO Auto-generated constructor stub
+//		numOfRemainingPiece = 6;
 	}
 	
 	public Player(String userId) {
@@ -66,12 +66,26 @@ public class Player extends User{
 		pieces.add(new Knight(this, board, "K", color, 2, y));
 		pieces.add(new Knight(this, board, "K", color, 3, y));
 		pieces.add(new Bishop(this, board, "B", color, 4, y));
-		pieces.add(new Rook(this, board, "R", color, 5, y));
-		
-		numOfRemainingPiece += 6;
+		pieces.add(new Rook(this, board, "R", color, 5, y));		
 	}
 	
 
+	public Collection<Piece> getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(Collection<Piece> pieces) {
+		this.pieces = pieces;
+	}
+
+	public void addPiece(Piece piece) {
+		this.pieces.add(piece);
+	}
+	
+	public void removePiece(Piece piece) {
+		this.pieces.remove(piece);
+	}
+	
 	public int getPlayerIndex() {
 		return playerIndex;
 	}
@@ -82,12 +96,12 @@ public class Player extends User{
 	}
 
 
-	public Collection<CombinablePiece> getAllPieces() {
+	public Collection<Piece> getAllPieces() {
 		return pieces;
 	}
 	
-	public CombinablePiece getPiece(int x, int y) {
-		for (CombinablePiece piece : pieces)
+	public Piece getPiece(int x, int y) {
+		for (Piece piece : pieces)
 	      {
 			if (piece.getPosX()==x && piece.getPosY()==y) {
 				return piece;
@@ -96,13 +110,23 @@ public class Player extends User{
 		return null;
 	}
 
+
 	public int getNumOfRemainingPiece() {
-		return numOfRemainingPiece;
-	}
-
-
-	public void updateRemainingPiece(int num) {
-		this.numOfRemainingPiece += num;
+		int num =0;
+		for (Piece piece : pieces)
+	      {
+			if (piece instanceof MergedPiece) {
+				if (piece.getStatus()) {
+					num +=((MergedPiece) piece).getPieces().size();
+				}	
+			} else {
+				if (piece.getStatus()) {
+					num++;
+				}	
+			}
+				
+	      }
+		return num;
 	}
 
 	

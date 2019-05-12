@@ -12,8 +12,9 @@ import javax.swing.border.LineBorder;
 
 import control.SquareActionListener;
 import model.Board;
-import model.CombinablePiece;
+import model.MergedPiece;
 import model.GameEngine;
+import model.Piece;
 import model.Square;
 
 public class ChessBoard extends JPanel {
@@ -51,7 +52,8 @@ public class ChessBoard extends JPanel {
 				// 'fill this in' using a transparent icon..
 				ImageIcon icon = new ImageIcon(new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB));
 				squareBtn[x][y].setIcon(icon);
-				SquareActionListener squareActionListener = new SquareActionListener(squareBtn[x][y], frame, gameEngine);
+				SquareActionListener squareActionListener = new SquareActionListener(squareBtn[x][y], frame,
+						gameEngine);
 				squareBtn[x][y].addActionListener(squareActionListener);
 				// squareBtn[x][y].setLabel("["+x+y+"]");
 				if (y % 2 == 0) {
@@ -104,15 +106,15 @@ public class ChessBoard extends JPanel {
 		int x = sqr.getPosX();
 		int y = sqr.getPosY();
 		Square square = this.gameEngine.getBoard().getAllSquares()[x][y];
-		CombinablePiece p = square.getPiece();
+		Piece p = square.getPiece();
 		for (int i = 0; i < column; i++) {
 			for (int j = 0; j < row; j++) {
-				if (p.combinedValidMove(i, j)) {
-					squareBtn[i][j].setBorder(new LineBorder(Color.RED, 2));
+				if (p.validMove(i, j) && gameEngine.getBoard().isValidDestination(p, i, j)) {
+					squareBtn[i][j].setBorder(new LineBorder(Color.GREEN, 10));
 				}
 			}
 		}
-		sqr.setBorder(new LineBorder(Color.ORANGE, 2));
+		sqr.setBorder(new LineBorder(Color.ORANGE, 10));
 
 	}
 
@@ -128,7 +130,7 @@ public class ChessBoard extends JPanel {
 
 	private void setIconToSquare(int x, int y, Square sq) {
 		// TODO Auto-generated method stub
-		String pieceName = sq.getPiece().getCombinedName() + sq.getPiece().getColor();
+		String pieceName = sq.getPiece().getName() + sq.getPiece().getColor();
 		ImageIcon pieceIcon = new ImageIcon("img/" + pieceName + ".png");
 		this.squareBtn[x][y].setIcon(pieceIcon);
 

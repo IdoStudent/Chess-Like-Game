@@ -15,8 +15,7 @@ public abstract class Piece {
 		this.setBoard(board);
 		this.name = name;
 		this.color = color;
-		this.status = status;
-		this.status=true;
+		this.status = true;
 		this.posX = X;
 		this.posY = Y;
 	}
@@ -37,9 +36,10 @@ public abstract class Piece {
 		this.posY = posY;
 	}
 
-	public boolean isStatus() {
+	public boolean getStatus() {
 		return status;
 	}
+	
 
 	public void setStatus(boolean status) {
 		this.status = status;
@@ -49,8 +49,8 @@ public abstract class Piece {
 		return name;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setName() {
+//		this.name = name;
 	}
 	
 
@@ -71,12 +71,24 @@ public abstract class Piece {
 	}
 	
 	public void move(int X, int Y) {
-		this.posX = X;
-		this.posY = Y;
+		if (this.validMove(X, Y)) {
+			this.posX = X;
+			this.posY = Y;
+		}
 	}
 	
 	public boolean equals(Piece piece) {
-		return (piece.getName().equals(this.getName()) && piece.getColor() == this.getColor());
+		return (piece.getName().equals(this.getName()) && piece.getPosX()==this.getPosX()  && piece.getPosY()==this.getPosY() && piece.getColor() == this.getColor());
+	}
+	
+	public boolean isValidToCombine(Piece destinationPiece) {
+		
+		if (this.equals(destinationPiece)) {
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 
 	@Override
@@ -99,7 +111,7 @@ public abstract class Piece {
 		return String.format("SName:%s, Color:%s, X:%s, Y:%s\n", this.name, this.color, this.posX, this.posY);
 	}
 	public abstract boolean  validMove(int toX, int toY);
-	public abstract boolean isMovingOverPiece(int toX, int toY);
+//	public abstract boolean isMovingOverPiece(int toX, int toY);
 
 	public Board getBoard() {
 		return board;

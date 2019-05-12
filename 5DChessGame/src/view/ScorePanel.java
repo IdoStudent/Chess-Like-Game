@@ -26,6 +26,8 @@ public class ScorePanel extends JPanel {
 	    private CustomJLabel[] playerinfo = new CustomJLabel[2];
 	    private CustomJLabel[] playerId  = new CustomJLabel[2];;
 	    private CustomJLabel[] playerScore  = new CustomJLabel[2];;
+	    private CustomJLabel[] remainPiece  = new CustomJLabel[2];;
+
 
 	    private CustomJLabel currentTurn;
 	    private CustomJLabel remainMove;
@@ -49,9 +51,12 @@ public class ScorePanel extends JPanel {
 			playerinfo[0]=new CustomJLabel("");
 			playerId[0] = new CustomJLabel(""); 
 			playerScore[0] = new CustomJLabel(""); 
+			remainPiece[0] = new CustomJLabel(""); 
+
 			player1_panel.add(playerinfo[0]);
 			player1_panel.add(playerId[0]);
 			player1_panel.add(playerScore[0]);
+			player1_panel.add(remainPiece[0]);
 			this.add(player1_panel);
 
 			
@@ -70,13 +75,16 @@ public class ScorePanel extends JPanel {
 			player2_panel.setLayout(new GridLayout(6,1));
 			player2_panel.add(new CustomJLabel(""));
 			player2_panel.add(new CustomJLabel(""));
-			player2_panel.add(new CustomJLabel(""));
 			playerinfo[1]=new CustomJLabel("");
 			playerId[1] = new CustomJLabel(""); 
 			playerScore[1] = new CustomJLabel(""); 
+			remainPiece[1] = new CustomJLabel(""); 
+
 			player2_panel.add(playerinfo[1]);
 			player2_panel.add(playerId[1]);
 			player2_panel.add(playerScore[1]);
+			player2_panel.add(remainPiece[1]);
+
 			this.add(player2_panel);
 		
 	}
@@ -88,14 +96,18 @@ public class ScorePanel extends JPanel {
 		this.playerinfo[0].setText("Player 1: BLACK");
 		this.playerId[0].setText("Player ID: " + player1.getUserId());
 		this.playerScore[0].setText("Score: " + player1.getScore());
+		this.remainPiece[0].setText("Remain Piece: " + player1.getNumOfRemainingPiece());
+
 		
-		this.currentTurn.setText("Current turn:" + this.gameEngine.getCurrentTurn());
+		this.currentTurn.setText("Current turn: " + (this.gameEngine.getCurrentTurn()==1?"BLACK":"WHITE"));
 		this.remainMove.setText("Remain moves: " + (this.gameEngine.getMaxMove() - this.gameEngine.getNumOfMoves()));
 		this.gameResult.setText(this.gameEngine.getGameResult().toString());
 		
 		this.playerinfo[1].setText("Player 2: WHITE");
 		this.playerId[1].setText("Player ID: " + player2.getUserId());
 		this.playerScore[1].setText("Score: " + player2.getScore());
+		this.remainPiece[1].setText("Remain Piece: " + player2.getNumOfRemainingPiece());
+
 	}
 }
 

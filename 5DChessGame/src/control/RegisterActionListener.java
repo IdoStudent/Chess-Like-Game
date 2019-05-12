@@ -28,11 +28,10 @@ public class RegisterActionListener implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {		
-		if(model.register(user.getText(), pass.getText()) == true)
+		if(model.addUser(user.getText(), pass.getText()) == true)
 		{
 			frame.dispose();
 			JOptionPane.showMessageDialog(frame, "You have successfully registered an account");
-			model.loadUserData();
 			if (model.getNumOfPlayers()<2) {
 				new LoginRegisterForm(model);
 			}
