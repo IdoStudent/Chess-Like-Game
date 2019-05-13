@@ -49,16 +49,16 @@ public class Board {
 			} else { // pieces belong to a same player
 
 				if ((piece instanceof MergedPiece) && !(destinationPiece instanceof MergedPiece)) {
-					if (piece.isValidToCombine(destinationPiece))
+					if (piece.isValidToCombine(destinationPiece.getName(),destinationPiece.getPosX(),destinationPiece.getPosY(),destinationPiece.getColor()))
 						return true;
 				}
 
 				if ((destinationPiece instanceof MergedPiece) && !(piece instanceof MergedPiece)) {
-					if (destinationPiece.isValidToCombine(piece))
+					if (destinationPiece.isValidToCombine(piece.getName(),destinationPiece.getPosX(),destinationPiece.getPosY(),destinationPiece.getColor()))
 						return true;
 				}
 				if (!(destinationPiece instanceof MergedPiece) && !(piece instanceof MergedPiece)) {
-					if (destinationPiece.isValidToCombine(piece))
+					if (destinationPiece.isValidToCombine(piece.getName(),destinationPiece.getPosX(),destinationPiece.getPosY(),destinationPiece.getColor()))
 						return true;
 				}
 

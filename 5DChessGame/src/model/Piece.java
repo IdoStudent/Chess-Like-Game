@@ -10,41 +10,27 @@ public abstract class Piece {
 	protected String name;
 	protected Board board;
 
-	public Piece(Player player,Board board, String name,String color, int X, int Y) {
+	public Piece(Player player,Board board, String name,String color, int x, int y) {
 		this.player = player;
 		this.board = board;
 		this.name = name;
 		this.color = color;
 		status = true;
-		posX = X;
-		posY = Y;
+		posX = x;
+		posY = y;
 	}
 	
-	public void move(int X, int Y) {
-		if (validMove(X, Y)) {
-			posX = X;
-			posY = Y;
+	public void move(int x, int y) {
+		if (validMove(x, y)) {
+			posX = x;
+			posY = y;
 		}
 	}
 	
-	public boolean equals(Piece piece) {		//??
-		return (piece.name.equals(name) && piece.getPosX()==posX  && piece.getPosY()==posY && piece.getColor() == color);
-	}
+	public abstract boolean  validMove(int toX, int toY);
 	
-	public boolean isValidToCombine(Piece destinationPiece) {
-		if (equals(destinationPiece)) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	@Override
-	public boolean equals(Object piece) {
-		if (!(piece instanceof Piece)) {
-			return false;
-		}
-		return equals((Piece) piece);
+	public boolean isValidToCombine(String name,int x,int y, String color) {
+		return name.equals(this.name) && x == posX  && y == posY && color == this.color;
 	}
 
 	public int getPosX() {
@@ -74,18 +60,5 @@ public abstract class Piece {
 	public String getName() {
 		return name;
 	}
-	
-	@Override
-	public int hashCode() {
-		return name.hashCode(); 			//?
-	}
-
-	@Override
-	public String toString() {
-		return String.format("SName:%s, Color:%s, X:%s, Y:%s\n", this.name, this.color, this.posX, this.posY);
-	}
-	
-	public abstract boolean  validMove(int toX, int toY);
-//	public abstract boolean isMovingOverPiece(int toX, int toY);
 }
 

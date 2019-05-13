@@ -49,9 +49,8 @@ public class MergedPiece extends Piece {
 		return name;
 	}
 
-	public boolean isValidToCombine(Piece destinationPiece) {
-		if (this.pieceMembers.containsKey(destinationPiece.getName())) {
-
+	public boolean isValidToCombine(String name) {
+		if (pieceMembers.containsKey(name)) {
 			return false;
 		}
 		return true;
