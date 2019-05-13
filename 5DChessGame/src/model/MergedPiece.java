@@ -8,26 +8,13 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class MergedPiece extends Piece {
-
+	
 	private HashMap<String, Piece> pieceMembers = new HashMap<String, Piece>();
-	private String name;
 
-	public MergedPiece(Player player, Board board, String name, String color, int X, int Y) {
-		super(player, board, name, color, X, Y);
-		// TODO Auto-generated constructor stub
+	public MergedPiece(Player player, Board board, String name, String color, int x, int y) {
+		super(player, board, name, color, x, y);
 	}
-
-	@Override
-	public boolean validMove(int toX, int toY) {
-		// TODO Auto-generated method stub
-		for (Piece piece : this.getPieces()) {
-			if (piece.validMove(toX, toY))
-				return true;
-		}
-
-		return false;
-	}
-
+	
 	@Override
 	public void move(int x, int y) {
 		if (validMove(x, y)) {
@@ -38,13 +25,23 @@ public class MergedPiece extends Piece {
 		}
 	}
 
+	@Override
+	public boolean validMove(int toX, int toY) {
+		for (Piece piece : getPieces()) {
+			if (piece.validMove(toX, toY))
+				return true;
+		}
+		return false;
+	}
+	
+	//change name
 	public void setName() {
 		// mergedpiece name is the combined name of all child pieces
 		String combinedName = "";
-		for (Piece p : this.getPieces()) {
+		for (Piece p : getPieces()) {
 			combinedName += p.getName();
 		}
-		this.name = combinedName;
+		name = combinedName;
 	}
 
 	@Override
@@ -53,7 +50,6 @@ public class MergedPiece extends Piece {
 	}
 
 	public boolean isValidToCombine(Piece destinationPiece) {
-
 		if (this.pieceMembers.containsKey(destinationPiece.getName())) {
 
 			return false;
@@ -61,7 +57,7 @@ public class MergedPiece extends Piece {
 		return true;
 	}
 
-	public Collection<Piece> getPieces() {
+	public Collection<Piece> getPieces() {					// ???
 		Collection<Piece> p = new ArrayList<Piece>();
 		TreeMap<String, Piece> sorted = new TreeMap<>(pieceMembers);
 		Set<Entry<String, Piece>> mappings = sorted.entrySet();
@@ -92,5 +88,4 @@ public class MergedPiece extends Piece {
 		return String.format("CombinedName:%s,Name:%s, Color:%s, X:%s, Y:%s\n", this.name, this.getName(),
 				this.getColor(), this.getPosX(), this.getPosY());
 	}
-
 }

@@ -7,7 +7,7 @@ public abstract class Piece {
 	private String color;
 	private Player player;
 	private boolean status; // Current status (die or alive)
-	private String name;
+	protected String name;
 	protected Board board;
 
 	public Piece(Player player,Board board, String name,String color, int X, int Y) {
