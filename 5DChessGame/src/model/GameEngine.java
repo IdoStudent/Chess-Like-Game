@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class GameEngine {
+	
 	private Map<String, User> users = new HashMap<String, User>();
 	private Player[] players = new Player[2];
 	private Board board;
@@ -23,7 +24,7 @@ public class GameEngine {
 	private boolean isGameOver;
 
 	public GameEngine() {
-		this.board = new Board(6, 6);
+		board = new Board(6, 6);
 		this.isGameOver = false;
 		this.loadUserData();
 	}
