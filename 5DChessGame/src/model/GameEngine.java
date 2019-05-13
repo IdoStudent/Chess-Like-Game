@@ -51,11 +51,12 @@ public class GameEngine {
 
 	public boolean isValidUser(String id, String pwd) {
 		for (User user : getAllUser()) { // Return the player if id exists in a key list of the players hash map
-			if (user.getUserId().equals(id) && user.getUserPwd().equals(pwd))
-				if (numOfPlayers == 1)
-					if (players[0].getUserId().equals(id)) {
-						return true;
-					}
+			if (user.getUserId().equals(id) && user.getUserPwd().equals(pwd)) {
+				if (numOfPlayers == 1 && players[0].getUserId().equals(id)) {
+					return false;
+				}
+				return true;
+			}	
 		}
 		return false;
 	}

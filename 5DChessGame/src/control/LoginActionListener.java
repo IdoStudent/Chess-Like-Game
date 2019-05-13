@@ -10,37 +10,26 @@ import view.MaxMovesForm;
 
 public class LoginActionListener implements ActionListener  {
 
-	GameEngine model;
+	private GameEngine gameEngine;
+	private TextField playerId;
+	private TextField playerPwd;
+	private LoginRegisterForm frame;
 	
-	TextField playerId;
-	TextField playerPwd;
-	LoginRegisterForm frame;
-	
-	public LoginActionListener(GameEngine model, TextField user, TextField passTextBox, LoginRegisterForm frame) {
+	public LoginActionListener(GameEngine gameEngine, TextField user, TextField passTextBox, LoginRegisterForm frame) {
 		
-		this.model = model;
-		this.playerId = user;
-		this.playerPwd = passTextBox;
+		this.gameEngine = gameEngine;
+		playerId = user;
+		playerPwd = passTextBox;
 		this.frame = frame;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		//LoginForm loginForm = new LoginForm(frame, model);
-//		   JOptionPane.showMessageDialog(frame, "Simple Information Message"); 
-		
-		if(model.addPlayer(playerId.getText(), playerPwd.getText()))
-		{
-			this.frame.dispose();
-			new MaxMovesForm(playerId.getText(),model);
-//			maxMovesForm.renderGUI(playerId.getText(),model);
-			
-		}
-		else
-		{
+		if(gameEngine.addPlayer(playerId.getText(), playerPwd.getText())){
+			frame.dispose();
+			new MaxMovesForm(playerId.getText(),gameEngine);		
+		}else{
 			new LoginErrorGUI(frame);
 		}
 	}
-
 }
