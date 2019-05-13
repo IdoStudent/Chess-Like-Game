@@ -71,6 +71,10 @@ public abstract class Piece {
 		return player;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
 	@Override
 	public int hashCode() {
 		return name.hashCode(); 			//?
