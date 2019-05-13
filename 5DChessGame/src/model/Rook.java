@@ -34,7 +34,7 @@ public class Rook extends Piece{
 			int maxY = Math.max(fromY, toY);
 			int x = toX;
 			for (int y = minY + 1; y < maxY; y++) {
-				if (this.getBoard().getSquares(x, y).getPiece() != null)
+				if (board.getSquares(x, y).getPiece() != null)
 					return true;
 			}
 		}
@@ -44,7 +44,7 @@ public class Rook extends Piece{
 			int maxX = Math.max(fromX, toX);
 			int y = toY;
 			for (int x = minX + 1; x < maxX; x++) {
-				if (this.getBoard().getSquares(x, y).getPiece() != null)
+				if (board.getSquares(x, y).getPiece() != null)
 					return true;
 
 			}

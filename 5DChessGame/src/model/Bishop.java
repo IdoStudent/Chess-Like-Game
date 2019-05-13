@@ -32,7 +32,7 @@ public class Bishop extends Piece{
 		int maxY = Math.max(fromY, toY);
 		int x = minX+1;
 		for (int y=minY+1;y< maxY;y++) { //Diagonally move
-				if (this.getBoard().getSquares(x, y).getPiece()!=null)
+				if (board.getSquares(x, y).getPiece()!=null)
 					return true;
 				x++;
 			}
