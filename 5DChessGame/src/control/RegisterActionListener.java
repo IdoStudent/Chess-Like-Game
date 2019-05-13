@@ -11,37 +11,28 @@ import view.RegisterErrorGUI;
 
 public class RegisterActionListener implements ActionListener {
 	
-	GameEngine model;
-	
+	GameEngine gameEngine;
 	TextField user;
 	TextField pass;
 	JFrame frame;
 
-
-	public RegisterActionListener(GameEngine model, TextField user, TextField passTextBox, JFrame frame) {
-		// TODO Auto-generated constructor stub
-		this.model = model;
+	public RegisterActionListener(GameEngine gameEngine, TextField user, TextField passTextBox, JFrame frame) {
+		this.gameEngine = gameEngine;
 		this.user = user;
-		this.pass = passTextBox;
+		pass = passTextBox;
 		this.frame = frame;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {		
-		if(model.addUser(user.getText(), pass.getText()) == true)
-		{
+	public void actionPerformed(ActionEvent e) {	
+		if(gameEngine.addUser(user.getText(), pass.getText())){
 			frame.dispose();
 			JOptionPane.showMessageDialog(frame, "You have successfully registered an account");
-			model.loadUserData();
-			if (model.getNumOfPlayers()<2) {
-				new LoginRegisterForm(model);
+			if (gameEngine.getNumOfPlayers()<2) {
+				new LoginRegisterForm(gameEngine);
 			}
-		}
-		else
-		{
+		}else{
 			new RegisterErrorGUI(frame);
 		}
-
 	}
-
 }

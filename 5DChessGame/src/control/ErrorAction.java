@@ -18,5 +18,4 @@ public class ErrorAction implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		frame.dispose();
 	}
-
 }
