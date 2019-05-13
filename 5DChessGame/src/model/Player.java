@@ -5,37 +5,18 @@ import java.util.Collection;
 
 public class Player extends User{
 	private int numOfMove = 0;
-//	private Rook[] rooks = new Rook[2];
-//	private Knight[] knights = new Knight[2];
-//	private Bishop[] bishops = new Bishop[2];
 	private Collection<Piece> pieces = new ArrayList<Piece>();
-	private GameEngine game = new GameEngine();
-//	private Board board;
+	private GameEngine gameEngine;
 	private int playerIndex;
-//	private int numOfRemainingPiece;
 	private int win;
 	private int loss;
-
-
 	private int score;
-
-
-	public Player(String userId, String userPwd) {
-		super(userId, userPwd);
-		// TODO Auto-generated constructor stub
-//		numOfRemainingPiece = 6;
-	}
 	
-	public Player(String userId) {
+	public Player(GameEngine gameEngine, String userId, String userPwd,int playerIndex) {
 		super(userId);
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	public Player(GameEngine game, String userId, String userPwd) {
-		super(userId);
-		this.game=game;
-		// TODO Auto-generated constructor stub
+		this.gameEngine = gameEngine;
+		this.playerIndex = playerIndex;
+		initPieces();
 	}
 	
 	
@@ -47,12 +28,12 @@ public class Player extends User{
 	}
 	
 	public boolean isPlayerTurn() {
-		return this.playerIndex == game.getCurrentTurn();
+		return playerIndex == gameEngine.getCurrentTurn();
 	}
 	
 	public void initPieces() {
-		int w = game.getBoard().getWidth();
-		Board board = this.game.getBoard();
+		int w = gameEngine.getBoard().getWidth();
+		Board board = gameEngine.getBoard();
 
 		// Select color based on player index
 		String color = this.getPlayerIndex() == 1 ? "b" : "w";

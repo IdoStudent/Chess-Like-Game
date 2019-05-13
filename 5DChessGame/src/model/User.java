@@ -38,7 +38,7 @@ public class User {
 	{
 		//validate username and password,
 		//check if username is already logged in,
-		//create new player object,
+		//create new player. object,
 		//run addPlayer method and pass in new player object
 		
 		if(checkUsernamePasswordCorrect(username, password) == false)

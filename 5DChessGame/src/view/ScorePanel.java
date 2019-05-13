@@ -99,8 +99,8 @@ public class ScorePanel extends JPanel {
 		this.remainPiece[0].setText("Remain Piece: " + player1.getNumOfRemainingPiece());
 
 		
-		this.currentTurn.setText("Current turn: " + (this.gameEngine.getCurrentTurn()==1?"BLACK":"WHITE"));
-		this.remainMove.setText("Remain moves: " + (this.gameEngine.getMaxMove() - this.gameEngine.getNumOfMoves()));
+		this.currentTurn.setText("Current turn: " + (gameEngine.getCurrentTurn()==1?"BLACK":"WHITE"));
+		this.remainMove.setText("Remain moves: " + (gameEngine.getMaxMove() - gameEngine.getNumOfMoves()));
 		this.gameResult.setText(this.gameEngine.getGameResult().toString());
 		
 		this.playerinfo[1].setText("Player 2: WHITE");
