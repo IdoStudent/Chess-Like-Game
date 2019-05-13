@@ -29,18 +29,15 @@ public class MergedPiece extends Piece {
 	}
 
 	@Override
-	public void move(int X, int Y) {
-		if (this.validMove(X, Y)) {
+	public void move(int x, int y) {
+		if (validMove(x, y)) {
 			for (Piece piece : pieceMembers.values()) {
-				piece.setPosX(X);
-				piece.setPosY(Y);
+				posX = x;
+				posY = y;
 			}
-			this.setPosX(X);
-			this.setPosY(Y);
 		}
 	}
 
-	@Override
 	public void setName() {
 		// mergedpiece name is the combined name of all child pieces
 		String combinedName = "";
