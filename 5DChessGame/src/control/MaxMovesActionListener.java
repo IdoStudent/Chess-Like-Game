@@ -13,13 +13,12 @@ import view.MaxMovesForm;
 
 public class MaxMovesActionListener implements ActionListener {
 
-	String playerID;
-	TextField maxMovesText;
-	MaxMovesForm maxMovesForm;
-	GameEngine gameEngine;
+	private String playerID;
+	private TextField maxMovesText;
+	private MaxMovesForm maxMovesForm;
+	private GameEngine gameEngine;
 	
-	public MaxMovesActionListener(String playerID, GameEngine gameEngine, TextField maxMovesText, MaxMovesForm maxMovesForm)
-	{
+	public MaxMovesActionListener(String playerID, GameEngine gameEngine, TextField maxMovesText, MaxMovesForm maxMovesForm){
 		this.playerID = playerID;
 		this.maxMovesText = maxMovesText;
 		this.gameEngine = gameEngine;
@@ -28,31 +27,23 @@ public class MaxMovesActionListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
 		int max = 0;
-		try
-		{
+		try{
 			max = Integer.parseInt(maxMovesText.getText());
-			if(max >= 10 && max <= 90)
-			{
+			if(max >= 10 && max <= 90){
 				gameEngine.assignNumofMove(playerID, Integer.parseInt(maxMovesText.getText()));
-				
-				if (this.gameEngine.getNumOfPlayers()==1) {
+				if (gameEngine.getNumOfPlayers() == 1) {
 					new LoginRegisterForm(gameEngine);
 				}
-				
-				if (gameEngine.getNumOfPlayers()==2) {
+				if (gameEngine.getNumOfPlayers() == 2) {
 					gameEngine.StartGame();
 					GameEngineGUI gameGUI = new GameEngineGUI(gameEngine);
 					gameGUI.updateGameGUI();
 				}
 				maxMovesForm.dispose();
-			}
-			else
-			{
+			}else{
 				maxMovesForm.renderError();
 			}
 		} catch(Exception x) {maxMovesForm.renderError();}
 	}
-
 }

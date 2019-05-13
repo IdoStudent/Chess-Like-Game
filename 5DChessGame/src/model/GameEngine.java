@@ -41,7 +41,7 @@ public class GameEngine {
 
 	public boolean addPlayer(String id, String pwd) {
 		if (isValidUser(id, pwd)) {
-			Player player = new Player(this, id, pwd,numOfPlayers + 1);
+			Player player = new Player(this, id, numOfPlayers + 1);
 			players[numOfPlayers] = player;
 			numOfPlayers++;
 			return true;

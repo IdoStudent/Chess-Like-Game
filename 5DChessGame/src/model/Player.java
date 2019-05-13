@@ -4,21 +4,33 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Player extends User{
+	
 	private int numOfMove = 0;
 	private Collection<Piece> pieces = new ArrayList<Piece>();
 	private GameEngine gameEngine;
 	private int playerIndex;
-	private int win;
-	private int loss;
 	private int score;
 	
-	public Player(GameEngine gameEngine, String userId, String userPwd,int playerIndex) {
+	public Player(GameEngine gameEngine, String userId,int playerIndex) {
 		super(userId);
 		this.gameEngine = gameEngine;
 		this.playerIndex = playerIndex;
 		initPieces();
 	}
 	
+	public void initPieces() {
+		Board board = gameEngine.getBoard();
+		String color = playerIndex == 1 ? "b" : "w"; // Select color based on player index
+		int y = playerIndex == 1 ? 0 : 5; // Select initial y position
+		
+		// Assign 06 pieces to a player
+		pieces.add(new Rook(this, board, "R", color, 0, y));
+		pieces.add(new Bishop(this, board, "B", color, 1, y));
+		pieces.add(new Knight(this, board, "K", color, 2, y));
+		pieces.add(new Knight(this, board, "K", color, 3, y));
+		pieces.add(new Bishop(this, board, "B", color, 4, y));
+		pieces.add(new Rook(this, board, "R", color, 5, y));		
+	}
 	
 	public int getNumOfMove() {
 		return numOfMove;
@@ -30,37 +42,9 @@ public class Player extends User{
 	public boolean isPlayerTurn() {
 		return playerIndex == gameEngine.getCurrentTurn();
 	}
-	
-	public void initPieces() {
-		int w = gameEngine.getBoard().getWidth();
-		Board board = gameEngine.getBoard();
-
-		// Select color based on player index
-		String color = this.getPlayerIndex() == 1 ? "b" : "w";
-		
-		// Select initial y position
-		int y = this.getPlayerIndex() == 1 ? 0 : 5;
-		
-		// Assign 06 pieces to a player
-		pieces.add(new Rook(this, board, "R", color, 0, y));
-		pieces.add(new Bishop(this, board, "B", color, 1, y));
-		pieces.add(new Knight(this, board, "K", color, 2, y));
-		pieces.add(new Knight(this, board, "K", color, 3, y));
-		pieces.add(new Bishop(this, board, "B", color, 4, y));
-		pieces.add(new Rook(this, board, "R", color, 5, y));		
-	}
-	
-
-	public Collection<Piece> getPieces() {
-		return pieces;
-	}
-
-	public void setPieces(Collection<Piece> pieces) {
-		this.pieces = pieces;
-	}
 
 	public void addPiece(Piece piece) {
-		this.pieces.add(piece);
+		pieces.add(piece);
 	}
 	
 	public void removePiece(Piece piece) {
@@ -71,19 +55,12 @@ public class Player extends User{
 		return playerIndex;
 	}
 
-
-	public void setPlayerIndex(int playerIndex) {
-		this.playerIndex = playerIndex;
-	}
-
-
 	public Collection<Piece> getAllPieces() {
 		return pieces;
 	}
 	
 	public Piece getPiece(int x, int y) {
-		for (Piece piece : pieces)
-	      {
+		for (Piece piece : pieces){
 			if (piece.getPosX()==x && piece.getPosY()==y) {
 				return piece;
 			}		
@@ -91,11 +68,9 @@ public class Player extends User{
 		return null;
 	}
 
-
 	public int getNumOfRemainingPiece() {
-		int num =0;
-		for (Piece piece : pieces)
-	      {
+		int num = 0;
+		for (Piece piece : pieces){
 			if (piece instanceof MergedPiece) {
 				if (piece.getStatus()) {
 					num +=((MergedPiece) piece).getPieces().size();
@@ -104,13 +79,11 @@ public class Player extends User{
 				if (piece.getStatus()) {
 					num++;
 				}	
-			}
-				
+			}	
 	      }
 		return num;
 	}
 
-	
 	public int getScore() {
 		return score;
 	}
@@ -118,15 +91,4 @@ public class Player extends User{
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	public int getWins()
-	{
-		return win;
-	}
-	
-	public int getLosses()
-	{
-		return loss;
-	}
-
 }
