@@ -2,8 +2,8 @@ package model;
 
 public abstract class Piece {
 	
-	private int posX; // X coordinate
-	private int posY; // Y coordinate
+	protected int posX; // X coordinate
+	protected int posY; // Y coordinate
 	private String color;
 	private Player player;
 	private boolean status; // Current status (die or alive)
@@ -27,8 +27,8 @@ public abstract class Piece {
 		}
 	}
 	
-	public boolean equals(Piece piece) {
-		return (piece.getName().equals(name) && piece.getPosX()==posX  && piece.getPosY()==posY && piece.getColor() == color);
+	public boolean equals(Piece piece) {		//??
+		return (piece.name.equals(name) && piece.getPosX()==posX  && piece.getPosY()==posY && piece.getColor() == color);
 	}
 	
 	public boolean isValidToCombine(Piece destinationPiece) {
@@ -51,16 +51,8 @@ public abstract class Piece {
 		return posX;
 	}
 
-	public void setPosX(int posX) {
-		this.posX = posX;
-	}
-
 	public int getPosY() {
 		return posY;
-	}
-
-	public void setPosY(int posY) {
-		this.posY = posY;
 	}
 
 	public boolean getStatus() {
@@ -70,30 +62,18 @@ public abstract class Piece {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-	public String getName() {
-		return name;
-	}
 	
 	public String getColor() {
 		return color;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
-	}
-
 	public Player getPlayer() {
 		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 	
 	@Override
 	public int hashCode() {
-		return name.hashCode();
+		return name.hashCode(); 			//?
 	}
 
 	@Override
