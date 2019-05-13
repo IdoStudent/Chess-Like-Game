@@ -50,10 +50,9 @@ public class GameEngine {
 	}
 
 	public boolean isValidUser(String id, String pwd) {
-		// Return the player if id exists in a key list of the players hash map
-		for (User user : this.getAllUser()) {
+		for (User user : getAllUser()) { // Return the player if id exists in a key list of the players hash map
 			if (user.getUserId().equals(id) && user.getUserPwd().equals(pwd))
-				if (this.getNumOfPlayers() == 1)
+				if (numOfPlayers == 1)
 					if (players[0].getUserId().equals(id)) {
 						return true;
 					}
@@ -255,36 +254,4 @@ public class GameEngine {
 	public int getNumOfMoves() {
 		return numOfMoves;
 	}
-	// YASIR CODE BEGIN
-
-	public void writeDataToFile(String username, String password) {
-		Scanner scanner;
-		StringBuilder sb = new StringBuilder();
-		try {
-			scanner = new Scanner(new File("database.txt"));
-			scanner.useDelimiter(":");
-			while (scanner.hasNextLine()) {
-				if (sb.length() != 0) {
-					sb.append("\n");
-				}
-				String user = scanner.next();
-				String pass = scanner.next();
-				int win = Integer.parseInt(scanner.next());
-				int loss = Integer.parseInt(scanner.next());
-				sb.append(user + ":" + pass + ":" + win + ":" + loss + ":");
-				scanner.nextLine();
-			}
-			scanner.close();
-		} catch (Exception e) {
-		}
-		try {
-			PrintWriter out = new PrintWriter("database.txt");
-
-			out.println(sb);
-			out.print(username + ":" + password + ":" + 0 + ":" + 0 + ":");
-			out.close();
-		} catch (FileNotFoundException e) {
-		}
-	}
-	// YASIR CODE END
 }
