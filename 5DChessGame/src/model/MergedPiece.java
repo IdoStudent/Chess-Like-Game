@@ -35,8 +35,8 @@ public class MergedPiece extends Piece {
 	}
 	
 	//change name
+	// mergedpiece name is the combined name of all child pieces
 	public void setName() {
-		// mergedpiece name is the combined name of all child pieces
 		String combinedName = "";
 		for (Piece p : getPieces()) {
 			combinedName += p.getName();
@@ -49,13 +49,6 @@ public class MergedPiece extends Piece {
 		return name;
 	}
 
-	public boolean isValidToCombine(String name) {
-		if (pieceMembers.containsKey(name)) {
-			return false;
-		}
-		return true;
-	}
-
 	public Collection<Piece> getPieces() {					// ???
 		Collection<Piece> p = new ArrayList<Piece>();
 		TreeMap<String, Piece> sorted = new TreeMap<>(pieceMembers);
@@ -64,27 +57,16 @@ public class MergedPiece extends Piece {
 		for (Entry<String, Piece> mapping : mappings) {
 			p.add(mapping.getValue());
 		}
-
 		return p;
 	}
 
 	public void addPiece(Piece piece) {
 		if (!pieceMembers.containsKey(piece.getName())) {
-			this.pieceMembers.put(piece.getName(), piece);
+			pieceMembers.put(piece.getName(), piece);
 		}
 	}
 
 	public void removePieceMember(Piece piece) {
 		pieceMembers.remove(piece.getName());
-	}
-
-	public Piece getPieceMember(String name) {
-		return pieceMembers.get(name);
-	}
-
-	@Override
-	public String toString() {
-		return String.format("CombinedName:%s,Name:%s, Color:%s, X:%s, Y:%s\n", this.name, this.getName(),
-				this.getColor(), this.getPosX(), this.getPosY());
 	}
 }

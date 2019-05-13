@@ -17,10 +17,10 @@ public class Bishop extends Piece{
 	private boolean isMovingOverPiece(int toX, int toY) { 
 		int x = Math.min(posX, toX)+1;
 		for (int y=Math.min(posY, toY)+1;y<Math.max(posY, toY);y++) { //Diagonally move
-				if (board.getSquares(x, y).getPiece()!=null)
-					return true;
-				x++;
-			}
+			if (board.getSquares(x, y).getPiece()!=null)
+				return true;
+			x++;
+		}
 		return false;
 	}
 }

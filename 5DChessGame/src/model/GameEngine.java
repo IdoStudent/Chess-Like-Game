@@ -276,7 +276,7 @@ public class GameEngine {
 
 		if (!(piece instanceof MergedPiece) && !(secondPiece instanceof MergedPiece)) {
 			mergedPiece = new MergedPiece(piece.getPlayer(), board, null, piece.getColor(), toX, toY);
-			mergedPiece.addPiece(piece);
+			mergedPiece.addPiece(piece.getName());
 			mergedPiece.addPiece(secondPiece);
 			piece.getPlayer().removePiece(piece);
 			piece.getPlayer().removePiece(secondPiece);

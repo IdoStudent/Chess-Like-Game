@@ -21,7 +21,9 @@ public abstract class Piece {
 	}
 	
 	public void move(int x, int y) {
+		System.out.println("move piece");
 		if (validMove(x, y)) {
+			System.out.println("valid move");
 			posX = x;
 			posY = y;
 		}
@@ -30,7 +32,7 @@ public abstract class Piece {
 	public abstract boolean  validMove(int toX, int toY);
 	
 	public boolean isValidToCombine(String name,int x,int y, String color) {
-		return name.equals(this.name) && x == posX  && y == posY && color == this.color;
+		return name.equals(this.name) && x == posX && y == posY && color == this.color;
 	}
 
 	public int getPosX() {
