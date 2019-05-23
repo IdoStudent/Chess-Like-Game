@@ -47,7 +47,7 @@ public class User {
 		}
 		else
 		{
-			Player player = new Player(username);
+//			Player player = new Player(username);
 			gameEngine.addUser(username, password);
 			return true;
 		}
@@ -72,9 +72,9 @@ public class User {
 			}
 			else
 			{
-				Player player = new Player(username);
+//				Player player = new Player(username);
 				gameEngine.addPlayer(username,username);
-				gameEngine.writeDataToFile(username, password);
+				gameEngine.getIo().writeDataToFile(username, password);
 				return true;
 			}
 		}

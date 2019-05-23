@@ -24,6 +24,8 @@ public class GameEngine {
 	private boolean isGameOver;
 	private IO io;
 
+
+
 	public GameEngine() {
 		board = new Board(6, 6);
 		isGameOver = false;
@@ -254,5 +256,8 @@ public class GameEngine {
 
 	public int getNumOfMoves() {
 		return numOfMoves;
+	}
+	public IO getIo() {
+		return io;
 	}
 }
