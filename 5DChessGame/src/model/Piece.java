@@ -2,8 +2,8 @@ package model;
 
 public abstract class Piece {
 	
-	protected int x; // X coordinate
-	protected int y; // Y coordinate
+	protected int posX; // X coordinate
+	protected int posY; // Y coordinate
 	private String color;
 	private Player player;
 	private boolean status; // Current status (dead or alive)
@@ -16,29 +16,29 @@ public abstract class Piece {
 		this.name = name;
 		this.color = color;
 		status = true;
-		this.x = x;
-		this.y = y;
+		posX = x;
+		posY = y;
 	}
 	
 	public void move(int x, int y) {
 		if (validMove(x, y)) {
-			this.x = x;
-			this.y = y;
+			posX = x;
+			posY = y;
 		}
 	}
 	
 	public abstract boolean validMove(int toX, int toY);
 	
 	public boolean isValidToCombine(String name,int x,int y, String color) {
-		return name.equals(this.name) && x == this.x && y == this.y && color == this.color;
+		return name.equals(this.name) && x == posX && y == posY && color == this.color;
 	}
 
 	public int getPosX() {
-		return x;
+		return posX;
 	}
 
 	public int getPosY() {
-		return y;
+		return posY;
 	}
 
 	public boolean getStatus() {
