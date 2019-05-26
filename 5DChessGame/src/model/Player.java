@@ -10,9 +10,11 @@ public class Player extends User{
 	private GameEngine gameEngine;
 	private int playerIndex;
 	private int score;
+	private String userId;
 	
 	public Player(GameEngine gameEngine, String userId,int playerIndex) {
 		super(userId);
+		this.userId = userId;
 		this.gameEngine = gameEngine;
 		this.playerIndex = playerIndex;
 		initPieces();
@@ -87,8 +89,12 @@ public class Player extends User{
 	public int getScore() {
 		return score;
 	}
-
+	
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public String getUserId() {
+		return userId;
 	}
 }
