@@ -84,10 +84,10 @@ public class GameEngine {
 		if (numOfPlayers == 2 && !isGameOver) { // Prerequisite condition to commence a game and move a piece
 			if (piece.validMove(x, y) && board.isValidDestination(piece, x, y) && piece.getPlayer().isPlayerTurn()) { // If valid player turn and valid move then start moving
 				if ((destinationPiece == null)) { // If destination square is empty
-					return normalMove(piece, x, y, false);
+					return normalMove(piece, x, y);
 				}
 				if (destinationPiece.getPlayer().equals(piece.getPlayer())) {// If destination square having piece of the same player
-					return normalMove(piece, x, y, true);
+					return mergeMove(piece, x, y);
 				}
 				if (!destinationPiece.getPlayer().equals(piece.getPlayer())) {// If destination square having piece of the other player
 					return removeOpponent(piece, x, y);
@@ -97,15 +97,22 @@ public class GameEngine {
 		return false;
 	}
 
-	public boolean normalMove(Piece piece, int toX, int toY, boolean merge) {
+	public boolean normalMove(Piece piece, int toX, int toY) {
 		board.disconnectPiece(piece.getPosX(), piece.getPosY()); // Disconnect piece from the current square
 		piece.move(toX, toY); // Move piece to the new position
-		if (merge) {
-			MergedPiece mPiece = createMergePiece(piece, toX, toY); // Create a merge piece
-			board.connectPiece(mPiece, toX, toY); // Connect the merged piece to the corresponding square;
-		}else {
-			board.connectPiece(piece, toX, toY); // Connect piece to the corresponding square
-		}
+		board.connectPiece(piece, toX, toY); // Connect piece to the corresponding square
+		numOfMoves++; // Update number of move
+		updateGameState(); // Update the game status and the result
+		if (!isGameOver) // Change player's turn
+			flipTurn();
+		return true;
+	}
+	
+	public boolean mergeMove(Piece piece, int toX, int toY) {
+		board.disconnectPiece(piece.getPosX(), piece.getPosY()); // Disconnect piece from the current square
+		piece.move(toX, toY); // Move piece to the new position
+		MergedPiece mPiece = createMergePiece(piece, toX, toY); // Create a merge piece
+		board.connectPiece(mPiece, toX, toY); // Connect the merged piece to the corresponding square;
 		numOfMoves++; // Update number of move
 		updateGameState(); // Update the game status and the result
 		if (!isGameOver) // Change player's turn
