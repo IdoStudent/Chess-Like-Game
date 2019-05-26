@@ -2,8 +2,8 @@ package model;
 
 public class Knight extends Piece {
 
-	public Knight(Player player, Board board, String name, String color, int X, int Y) {
-		super(player, board, name, color, X, Y);
+	public Knight(Player player, Board board, String name, String color, int x, int y) {
+		super(player, board, name, color, x, y);
 	}
 
 	@Override

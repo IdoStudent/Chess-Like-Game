@@ -2,8 +2,8 @@ package model;
 
 public class Rook extends Piece{
 
-	public Rook(Player player, Board board, String name, String color, int X, int Y) {
-		super(player, board, name, color, X, Y);
+	public Rook(Player player, Board board, String name, String color, int x, int y) {
+		super(player, board, name, color, x, y);
 	}
 
 	@Override
