@@ -48,18 +48,8 @@ public class Board {
 				int posX = destinationPiece.getPosX();
 				int posY = destinationPiece.getPosY();
 				String color = destinationPiece.getColor();
-				if ((piece instanceof MergedPiece) && !(destinationPiece instanceof MergedPiece)) {
-					if (piece.isValidToCombine(name,posX,posY,color))
-						return true;
-				}
-				if ((destinationPiece instanceof MergedPiece) && !(piece instanceof MergedPiece)) {
-					if (destinationPiece.isValidToCombine(name,posX,posY,color))
-						return true;
-				}
-				if (!(destinationPiece instanceof MergedPiece) && !(piece instanceof MergedPiece)) {
-					if (destinationPiece.isValidToCombine(name,posX,posY,color))
-						return true;
-				}
+				if (piece.isValidToCombine(name,posX,posY,color))
+					return true;
 			}
 		}
 		return false;

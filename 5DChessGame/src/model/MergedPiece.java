@@ -34,6 +34,10 @@ public class MergedPiece extends Piece {
 		return false;
 	}
 	
+	public boolean isValidToCombine(String name,int x,int y, String color) {
+		return !(this.name.contains(name)|| name.contains(this.name));
+	}
+
 	//change name
 	// mergedpiece name is the combined name of all child pieces
 	public void setName() {
@@ -61,9 +65,15 @@ public class MergedPiece extends Piece {
 	}
 
 	public void addPiece(Piece piece) {
-		if (!pieceMembers.containsKey(piece.getName())) {
-			pieceMembers.put(piece.getName(), piece);
-		}
+		if (!(piece instanceof MergedPiece)) {
+			this.pieceMembers.put(piece.getName(), piece);
+		} else {
+			MergedPiece mPiece = (MergedPiece) piece;
+			for (Piece p: mPiece.getPieces()) {
+				this.pieceMembers.put(p.getName(), p);
+
+			}
+		}	
 	}
 
 	public void removePieceMember(Piece piece) {

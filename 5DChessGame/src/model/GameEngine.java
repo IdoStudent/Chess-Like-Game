@@ -172,28 +172,17 @@ public class GameEngine {
 			return "";
 		}
 	}
-
+	
 	public MergedPiece createMergePiece(Piece piece, int toX, int toY) {
+		Player player = piece.getPlayer();
 		Piece secondPiece = board.getSquares(toX, toY).getPiece();
-		MergedPiece mergedPiece = null;
-		if (!(piece instanceof MergedPiece) && !(secondPiece instanceof MergedPiece)) {
-			mergedPiece = new MergedPiece(piece.getPlayer(), board, null, piece.getColor(), toX, toY);
-			mergedPiece.addPiece(piece);
-			mergedPiece.addPiece(secondPiece);
-			piece.getPlayer().removePiece(piece);
-			piece.getPlayer().removePiece(secondPiece);
-			piece.getPlayer().addPiece(mergedPiece);
-		}
-		if (!(piece instanceof MergedPiece) && (secondPiece instanceof MergedPiece)) {
-			mergedPiece = (MergedPiece) secondPiece;
-			mergedPiece.addPiece(piece);
-			piece.getPlayer().removePiece(piece);
-		}
-		if ((piece instanceof MergedPiece) && !(secondPiece instanceof MergedPiece)) {
-			mergedPiece = (MergedPiece) piece;
-			mergedPiece.addPiece(secondPiece);
-			piece.getPlayer().removePiece(secondPiece);
-		}
+		MergedPiece mergedPiece = new MergedPiece(player, board, null, piece.getColor(), toX, toY);
+		mergedPiece.addPiece(piece);
+		mergedPiece.addPiece(secondPiece);
+		player.addPiece(mergedPiece);
+		
+		player.removePiece(piece);
+		player.removePiece(secondPiece);
 		mergedPiece.setName();
 		return mergedPiece;
 	}
