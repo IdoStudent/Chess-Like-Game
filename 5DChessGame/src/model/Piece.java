@@ -21,10 +21,8 @@ public abstract class Piece {
 	}
 	
 	public void move(int x, int y) {
-		if (validMove(x, y)) {
-			posX = x;
-			posY = y;
-		}
+		posX = x;
+		posY = y;
 	}
 	
 	public abstract boolean validMove(int toX, int toY);
