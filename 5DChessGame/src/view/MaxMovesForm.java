@@ -50,7 +50,7 @@ public class MaxMovesForm extends JFrame{
 		panel.add(bottomPanel);
 		
 		
-		this.setSize(300,120);
+		this.setSize(350,120);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
